@@ -1,0 +1,24 @@
+# disable auto crlf
+# TODO: this does not seems to work on windows
+* text=false
+
+# force lf
+*.sh text eol=lf
+*.go eol=lf
+*.java eol=lf
+.gitignore eol=lf
+.gitattributes eol=lf
+*.yml eol=lf
+*.md eol=lf
+
+*.html eol=lf
+*.js eol=lf
+*.ts eol=lf
+*.css eol=lf
+*.json eol=lf
+
+# force encoding
+*.md encoding=utf-8
+*.sh encoding=utf-8
+*.go encoding=utf-8
+*.java encoding=utf-8
