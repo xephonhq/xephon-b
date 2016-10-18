@@ -7,14 +7,17 @@ A time series database benchmark tool and benchmark result sharing platform
 ## FAQ
 
 Q: How can I get involved?
+
 A: Thanks for your interest, but this project is still in very early stage,
 the best we can provide you for now is the [reading list](doc/reading.md) and [awesome list](https://github.com/xephonhq/awesome-time-series-database),
-which can provide you some insight on both usage and internals.
+which can provide you some insight on both usage and internals of time series databases.
 
 Q: Is this benchmark suite for time series database only?
+
 A: Yes, its load is quite different from both RDMS and NoSQL store. That's why we create a new tool.
 
 Q: Why Xephon-B?
+
 A: B is for benchmark and Xephon comes from the animation [RahXephon](https://en.wikipedia.org/wiki/RahXephon).
 
 ## License
