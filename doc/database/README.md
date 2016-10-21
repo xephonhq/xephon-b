@@ -16,7 +16,7 @@ That support time series
   - Nagios
   - Ganglia
 - memory
-  - Gorilla
+  - [Gorilla](gorilla.md)
 - custom
   - InfluxDB
   - ElasticSearch

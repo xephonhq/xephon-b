@@ -9,6 +9,7 @@ Mainly about the following three areas
 ## Time series databases design
 
 - Cassandra http://www.datastax.com/dev/blog/advanced-time-series-with-cassandra
+- Gorilla http://www.vldb.org/pvldb/vol8/p1816-teller.pdf
 - A survey blog http://jmoiron.net/blog/thoughts-on-timeseries-databases
 
 ## Benchmark tool design
