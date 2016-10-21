@@ -1,0 +1,8 @@
+package: github.com/xephonhq/xephon-b
+import: 
+- package: github.com/spf13/cobra
+  vcs: git
+  version: 856b96dcb49d6427babe192998a35190a12c2230
+- package: github.com/spf13/viper
+  vcs: git
+  version: 50515b700e02658272117a72bd641b6b7f1222e5
