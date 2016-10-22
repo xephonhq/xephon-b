@@ -4,6 +4,11 @@
 
 - [Initial Design Paper](http://dl.acm.org/citation.cfm?id=1773922) Cassandra: a decentralized structured storage system
 
+## Docker
+
+- https://hub.docker.com/_/cassandra/
+- `docker run --name cassandra cassandra:3.9`
+
 ## Time series
 
 - [ ] http://www.datastax.com/dev/blog/advanced-time-series-with-cassandra
