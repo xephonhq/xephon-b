@@ -8,6 +8,7 @@
 
 - [Docker official client](https://github.com/docker/docker/tree/master/client)
 - [Another client in golang](https://github.com/fsouza/go-dockerclient) via @gaocegege this one is more user friendly
+- [Gosu](https://github.com/tianon/gosu) Simple Go-based setuid+setgid+setgroups+exec found in official Dockerfile
 
 ## Monitor
 
