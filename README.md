@@ -3,6 +3,7 @@ A time series database benchmark tool and benchmark result sharing platform
 
 - [Documentation](doc)
 
+![system design](doc/system-design.png)
 
 ## FAQ
 
@@ -19,6 +20,10 @@ A: Yes, its load is quite different from both RDMS and NoSQL store. That's why w
 Q: Why Xephon-B?
 
 A: B is for benchmark and Xephon comes from the animation [RahXephon](https://en.wikipedia.org/wiki/RahXephon).
+
+## Related Projects
+
+- [awesome-time-series-database](https://github/xephonhq/awesome-time-series-database)
 
 ## License
 
