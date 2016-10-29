@@ -2,6 +2,7 @@
 
 ## Usage
 
+- [Manual](manual.md)
 - [Feature](feature.md) Main features of Xephon-B.
 
 ## Design
