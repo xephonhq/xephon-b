@@ -16,3 +16,4 @@ vendor
 
 *.log
 node_modules
+.idea
