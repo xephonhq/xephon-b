@@ -5,7 +5,7 @@ That support time series
 - distributed (column) database
   - [Cassandra](cassandra.md)
     - [Heroic](spotify-heroic.md)
-    - KairosDB
+    - [KairosDB](kairosdb.md)
   - HBase (OpenTSDB)
   - Riak TS (on Riak K-V?)
   - TiDB (on TiKV)
