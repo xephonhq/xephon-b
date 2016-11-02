@@ -23,7 +23,7 @@ A: B is for benchmark and Xephon comes from the animation [RahXephon](https://en
 
 ## Related Projects
 
-- [awesome-time-series-database](https://github/xephonhq/awesome-time-series-database)
+- [awesome-time-series-database](https://github.com/xephonhq/awesome-time-series-database)
 
 ## License
 
