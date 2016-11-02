@@ -73,23 +73,23 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="intro-message">
-                    <h1>Landing Page</h1>
-                    <h3>A Template by Start Bootstrap</h3>
+                    <h1 class="hidden">Xephon-B</h1>
+                    <h3>A Time series database benchmark suite</h3>
                     <hr class="intro-divider">
                     <ul class="list-inline intro-social-buttons">
+                        <!--<li>-->
+                        <!--<a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i-->
+                        <!--class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>-->
+                        <!--</li>-->
                         <li>
-                            <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i
-                                    class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/IronSummitMedia/startbootstrap"
+                            <a href="https://github.com/xephonhq/xephon-b" target="_blank"
                                class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span
                                     class="network-name">Github</span></a>
                         </li>
-                        <li>
-                            <a href="#" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span
-                                    class="network-name">Linkedin</span></a>
-                        </li>
+                        <!--<li>-->
+                        <!--<a href="#" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span-->
+                        <!--class="network-name">Linkedin</span></a>-->
+                        <!--</li>-->
                     </ul>
                 </div>
             </div>
@@ -109,15 +109,50 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-5 col-sm-6">
-                <hr class="section-heading-spacer">
+                <!--<hr class="section-heading-spacer">-->
                 <div class="clearfix"></div>
-                <h2 class="section-heading">Death to the Stock Photo:<br>Special Thanks</h2>
-                <p class="lead">A special thanks to <a target="_blank" href="http://join.deathtothestockphoto.com/">Death
-                    to the Stock Photo</a> for providing the photographs that you see in this template. Visit their
-                    website to become a member.</p>
+                <h2 class="section-heading">Load designed for TSDB</h2>
+                <p class="lead">Like <a href="https://github.com/brianfrankcooper/YCSB" target="_blank">YCSB</a> we
+                    provide different load for different use case</p>
+                <!--<ul class="points">-->
+                <!--<li>Monitor: Heavy write, high read rate on latest data, normal meta data</li>-->
+                <!--<li>IoT: Extreme heavy write, low read rate on a long range, a few meta data</li>-->
+                <!--<li>User activity: Extreme heavy write, read on both latest and long range, large meta data</li>-->
+                <!--</ul>-->
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Write</th>
+                        <th>Read</th>
+                        <th>Meta</th>
+                    </tr>
+
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Monitor</td>
+                        <td>Heavy</td>
+                        <td>high rate on latest</td>
+                        <td>normal</td>
+                    </tr>
+                    <tr>
+                        <td>IoT</td>
+                        <td>Extreme heavy</td>
+                        <td>low rate on long range</td>
+                        <td>a few</td>
+                    </tr>
+                    <tr>
+                        <td>User activity</td>
+                        <td>Extreme heavy</td>
+                        <td>high rate on both latest and long range</td>
+                        <td>large</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-                <img class="img-responsive" src="img/ipad.png" alt="">
+                <img class="img-responsive" src="assets/img/commit.png" alt="">
             </div>
         </div>
 
@@ -133,15 +168,18 @@
 
         <div class="row">
             <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
-                <hr class="section-heading-spacer">
+                <!--<hr class="section-heading-spacer">-->
                 <div class="clearfix"></div>
-                <h2 class="section-heading">3D Device Mockups<br>by PSDCovers</h2>
-                <p class="lead">Turn your 2D designs into high quality, 3D product shots in seconds using free Photoshop
-                    actions by <a target="_blank" href="http://www.psdcovers.com/">PSDCovers</a>! Visit their website to
-                    download some of their awesome, free photoshop actions!</p>
+                <h2 class="section-heading">Battery included</h2>
+                <p class="lead">Tired of setting up database before benchmark? We have all the configuration and
+                    provision script
+                    included. Using our powerful cli tool, you can have the benchmark running on your local machine and
+                    cloud service
+                    with single command.</p>
             </div>
             <div class="col-lg-5 col-sm-pull-6  col-sm-6">
-                <img class="img-responsive" src="img/dog.png" alt="">
+               <img class="img-responsive" src="assets/img/cli.png" alt="">
+
             </div>
         </div>
 
@@ -157,16 +195,14 @@
 
         <div class="row">
             <div class="col-lg-5 col-sm-6">
-                <hr class="section-heading-spacer">
+                <!--<hr class="section-heading-spacer">-->
                 <div class="clearfix"></div>
-                <h2 class="section-heading">Google Web Fonts and<br>Font Awesome Icons</h2>
-                <p class="lead">This template features the 'Lato' font, part of the <a target="_blank"
-                                                                                       href="http://www.google.com/fonts">Google
-                    Web Font library</a>, as well as <a target="_blank" href="http://fontawesome.io">icons from Font
-                    Awesome</a>.</p>
+                <h2 class="section-heading">Continuous Integration</h2>
+                <p class="lead">Easily integrate with your existing CI tools. Knowing
+                the performance impact of every commit and pull request</p>
             </div>
             <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-                <img class="img-responsive" src="img/phones.png" alt="">
+                <img class="img-responsive" src="assets/img/commit.png" alt="">
             </div>
         </div>
 
@@ -175,6 +211,32 @@
 
 </div>
 <!-- /.content-section-a -->
+
+<div class="content-section-b">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+                <!--<hr class="section-heading-spacer">-->
+                <div class="clearfix"></div>
+                <h2 class="section-heading">Share your result</h2>
+                <p class="lead">Submit your raw bench mark result or host it on your own server.
+                No matter you are researcher or database vendor, readers and customers can have direct
+                impression on your database with our intuitive visualization. With a single URL,
+                you can share your comparision with peers to your customers.</p>
+            </div>
+            <div class="col-lg-5 col-sm-pull-6  col-sm-6">
+                <img class="img-responsive" src="assets/img/cli.png" alt="">
+
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+</div>
+<!-- /.content-section-b -->
 
 <!-- Footer -->
 <footer>
