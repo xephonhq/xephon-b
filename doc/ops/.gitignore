@@ -1,0 +1,6 @@
+Vagrantfile
+ansible.cfg
+.vagrant
+*.yml
+*.retry
+*.log

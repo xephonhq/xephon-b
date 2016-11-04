@@ -1,0 +1,12 @@
+- hosts: all
+  become: true
+
+
+  tasks:
+  - name: update repository
+    apt:
+      update_cache: yes
+  - name: install essential tools
+    apt:
+      name: git
+      state: present

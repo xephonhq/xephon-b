@@ -1,0 +1,16 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.box = "ubuntu/xenial64"
+
+  # Run Ansible from the Vagrant Host
+  config.vm.provision "ansible" do |ansible|
+  # config.vm.provision "ansible_local" do |ansible|
+    ansible.playbook = "site.yml"
+  end
+
+end
