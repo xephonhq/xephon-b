@@ -23,4 +23,4 @@ That support time series
   - InfluxDB
   - ElasticSearch
   - Prometheus
-  - Druid
+  - [Druid](druid.md)
