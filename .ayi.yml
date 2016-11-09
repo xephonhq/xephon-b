@@ -1,0 +1,2 @@
+install:
+    - go install github.com/xephonhq/xephon-b/cmd/xephon
