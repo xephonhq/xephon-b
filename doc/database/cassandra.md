@@ -15,6 +15,7 @@
 
 ## Time series
 
+- [Mini-impl](https://github.com/at15/mini-impl/tsdb-cassandra)
 - [ ] http://www.datastax.com/dev/blog/advanced-time-series-with-cassandra
   - [ ] http://www.rubyscale.com/post/143067470585/basic-time-series-with-cassandra
 

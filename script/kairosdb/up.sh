@@ -24,6 +24,7 @@ exists docker || { ERROR "Please install docker (https://docs.docker.com/engine/
 exists docker-compose || { ERROR "Please install docker-compose (https://docs.docker.com/compose/install/)"; exit 1; }
 
 INFO "Running \`docker-compose build\`"
+# docker-compose build --no-cache
 docker-compose build
 
 INFO "Running \`docker-compose up\`"

@@ -14,9 +14,13 @@ RUN mkdir /opt; \
 # Use H2
 # COPY kairosdb.h2.properties /opt/kairosdb/conf/kairosdb.properties
 
-# Use Cassandra 
+# Use Cassandra
 COPY kairosdb.properties /opt/kairosdb/conf/kairosdb.properties
 
+# COPY wait for it and kairosdb
+COPY wait-for-it.sh /usr/bin/wait-for-it
+COPY kairosdb.sh /usr/bin/kairosdb
+
 EXPOSE 4242 8080 2003 2004
-ENTRYPOINT [ "/opt/kairosdb/bin/kairosdb.sh"]
-CMD [ "run" ]
+ENTRYPOINT []
+CMD [ "/usr/bin/kairosdb" ]
