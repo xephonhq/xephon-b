@@ -1,0 +1,21 @@
+version: '2'
+services:
+  kairosdb:
+    container_name: xephonhq-kairosdb-cp
+    hostname: kairosdb
+    build: ./node
+    ports:
+      # Web UI and HTTP API
+      - "8080:8080"
+    depends_on:
+      - c1
+    links:
+      - c1
+      # FIXME: need to wait for cassandra to start, kairosdb simply fail when cassandra is not started .... 
+      # https://docs.docker.com/compose/startup-order/
+
+  c1:
+    hostname: cassandra
+    image: cassandra:2.2
+    environment:
+      - CASSANDRA_START_RPC=true
