@@ -11,6 +11,10 @@ TODO: need to manually change to H2 in kairosdb.properties
 - `docker build -t xephonhq/kairosdb ./node`
 - `docker run -p 8080:8080 --name xephonhq-kairosdb xephonhq/kairosdb`
 
+## NOTE
+
+- wait-for-it does not support alpine, some pr may help https://github.com/vishnubob/wait-for-it/pull/6
+
 ## Requirement
 
 - [official docker support for Kairosdb?](https://github.com/kairosdb/kairosdb/issues/288)
