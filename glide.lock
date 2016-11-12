@@ -1,5 +1,5 @@
-hash: 34d0edba5d9eeaf9354d3f747a25c3387e4fc4240a23cf73c5be64f0440a41c8
-updated: 2016-10-22T10:46:04.33485998-07:00
+hash: d62e494fc8c298e24784f4ec0836ab0bfd7bd0983a68f90c48100e3ffc192595
+updated: 2016-11-12T14:20:01.237679407-08:00
 imports:
 - name: github.com/inconshreveable/mousetrap
   version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
@@ -11,4 +11,17 @@ imports:
 - name: github.com/spf13/viper
   version: 50515b700e02658272117a72bd641b6b7f1222e5
   vcs: git
-testImports: []
+- name: github.com/stretchr/testify
+  version: 976c720a22c8eb4eb6a0b4348ad85ad12491a506
+  vcs: git
+  subpackages:
+  - assert
+testImports:
+- name: github.com/davecgh/go-spew
+  version: 6d212800a42e8ab5c146b8ace3490ee17e5225f9
+  subpackages:
+  - spew
+- name: github.com/pmezard/go-difflib
+  version: d8ed2627bdf02c080bf22230dbb337003b7aba2d
+  subpackages:
+  - difflib

@@ -7,6 +7,8 @@ import (
 )
 
 // ConstantIntGenerator generate int point over a time range
+// start is included
+// end may not be included
 type ConstantIntGenerator struct {
 	start   int64
 	end     int64
@@ -15,6 +17,7 @@ type ConstantIntGenerator struct {
 	V       int
 }
 
+// NewConstantIntGenerator create a generator, see test for example usage
 func NewConstantIntGenerator(start int64, end int64, step int64, V int) *ConstantIntGenerator {
 	// TODO: check
 	return &ConstantIntGenerator{
