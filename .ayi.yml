@@ -1,2 +1,4 @@
 install:
     - go install github.com/xephonhq/xephon-b/cmd/xephon
+test:
+    - sh -c "go test -v -cover $(glide novendor)"
