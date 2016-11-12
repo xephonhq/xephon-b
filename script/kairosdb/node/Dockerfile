@@ -2,13 +2,13 @@ FROM java:8-alpine
 
 MAINTAINER at15 at15@dongyue.io
 
-# Thanks to https://github.com/kairosdb/kairosdb/issues/288
+# Thanks to @zbintliff in https://github.com/kairosdb/kairosdb/issues/288
 RUN apk upgrade libssl1.0 --update-cache && \
     apk add curl ca-certificates bash
 
 RUN mkdir /opt; \
   cd /opt; \
-  curl -L https://github.com/kairosdb/kairosdb/releases/download/v1.1.1/kairosdb-1.1.1-1.tar.gz | \
+  curl -L https://github.com/kairosdb/kairosdb/releases/download/v1.1.2/kairosdb-1.1.2-1.tar.gz | \
   tar zxvfp -
 
 # Use Cassandra
