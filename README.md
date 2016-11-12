@@ -1,4 +1,13 @@
 # xephon-b
+
+<h1 align="center">
+	<br>
+	<img width="400" src="https://cdn.rawgit.com/xephonhq/xephon-b/master/doc/xephon.png" alt="xephon-b">
+	<br>
+	<br>
+	<br>
+</h1>
+
 A time series database benchmark tool and benchmark result sharing platform
 
 - [Documentation](doc)
