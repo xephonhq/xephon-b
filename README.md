@@ -2,6 +2,7 @@
 
 <h1 align="center">
 	<br>
+  <!-- TODO: should be logo for Xephon-B but not xephon ...  -->
 	<img width="400" src="https://raw.githubusercontent.com/xephonhq/xephon-b/master/doc/xephon.png" alt="xephon-b">
 	<br>
 	<br>

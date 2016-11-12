@@ -1,0 +1,14 @@
+version: '2'
+services:
+  heroic:
+    container_name: xephonhq-heroic-cp
+    hostname: heroic
+    build: ./node
+    # ports:
+    depends_on:
+      - c1
+    links:
+      - c1
+  c1:
+    image: cassandra:2.2
+    # environment:

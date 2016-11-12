@@ -30,6 +30,7 @@ Build and run a single KairosDB node with H2
 - [ ] switch to Oracle JDK for Cassandra
 - [ ] switch to Oracle JDK for KairosDB
 - [ ] support 3 Node Cassandra cluster (TODO: does C* has 2n+1 requirement?)
+- [ ] mount volume
 
 ## Docker images
 
