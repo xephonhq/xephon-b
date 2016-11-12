@@ -11,13 +11,9 @@ RUN mkdir /opt; \
   curl -L https://github.com/kairosdb/kairosdb/releases/download/v1.1.1/kairosdb-1.1.1-1.tar.gz | \
   tar zxvfp -
 
-# Use Cassandra
-COPY kairosdb.properties /opt/kairosdb/conf/kairosdb.properties
-
-# KairosDB must start after Cassandra is running and thrift protocol is enabled
-COPY wait-for-it.sh /usr/bin/wait-for-it
-COPY kairosdb.sh /usr/bin/kairosdb
+# Use H2
+COPY kairosdb.h2.properties /opt/kairosdb/conf/kairosdb.properties
 
 EXPOSE 4242 8080 2003 2004
-ENTRYPOINT []
-CMD [ "/usr/bin/kairosdb" ]
+ENTRYPOINT [ "/opt/kairosdb/bin/kairosdb.sh" ]
+CMD [ "run" ]

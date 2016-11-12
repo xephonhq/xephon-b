@@ -7,15 +7,13 @@ services:
     ports:
       # Web UI and HTTP API
       - "8080:8080"
+    # NOTE: depends_on is not enough, wait-for-it is used in kairosdb.sh
+    # in order to let cassandra running before KairosDB start 
     depends_on:
       - c1
     links:
       - c1
-      # FIXME: need to wait for cassandra to start, kairosdb simply fail when cassandra is not started .... 
-      # https://docs.docker.com/compose/startup-order/
-
   c1:
-    hostname: cassandra
     image: cassandra:2.2
     environment:
       - CASSANDRA_START_RPC=true
