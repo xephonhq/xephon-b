@@ -28,8 +28,7 @@ func TestConstantIntGenerator(t *testing.T) {
 		}
 	}
 
-	// NOTE: the number of points is not accurate like the one in the test for arbitray input
-	assert.Equal(7, len(points))
+	assert.Equal((end-start)/step+1, int64(len(points)))
 
 	assert.Equal(V, points[0].V)
 

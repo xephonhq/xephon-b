@@ -9,6 +9,7 @@ import (
 // ConstantIntGenerator generate int point over a time range
 // start is included
 // end may not be included
+// number of points = (end - start) / step + 1
 type ConstantIntGenerator struct {
 	start   int64
 	end     int64

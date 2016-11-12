@@ -29,3 +29,7 @@ type SeriesWithDoublePoint struct {
 	Series
 	Points []DoublePoint
 }
+
+//func HashCode() string {
+//
+//}
