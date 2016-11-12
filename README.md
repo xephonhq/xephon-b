@@ -2,7 +2,7 @@
 
 <h1 align="center">
 	<br>
-	<img width="400" src="https://cdn.rawgit.com/xephonhq/xephon-b/master/doc/xephon.png" alt="xephon-b">
+	<img width="400" src="https://raw.githubusercontent.com/xephonhq/xephon-b/master/doc/xephon.png" alt="xephon-b">
 	<br>
 	<br>
 	<br>
