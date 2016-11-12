@@ -2,4 +2,4 @@
 
 # https://hub.docker.com/_/redis/
 
-docker run -p 6379:6379 redis
+docker run -p 6379:6379 redis:3.2
