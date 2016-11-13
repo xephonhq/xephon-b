@@ -6,12 +6,12 @@ package common
 
 // IntPoint has integer value and unix nano timestamp in int64
 type IntPoint struct {
-	V int
-	T int64
+	V        int
+	TimeNano int64
 }
 
 // DoublePoint has double value and unix nano timestamp in int64
 type DoublePoint struct {
-	V float64
-	T int64
+	V        float64
+	TimeNano int64
 }

@@ -35,7 +35,7 @@ func NewConstantIntGenerator(start int64, end int64, step int64, V int) *Constan
 func (c *ConstantIntGenerator) Next() (common.IntPoint, error) {
 	p := common.IntPoint{
 		V: c.V,
-		T: c.current,
+		TimeNano: c.current,
 	}
 	c.current += c.step
 	if c.current >= c.end {

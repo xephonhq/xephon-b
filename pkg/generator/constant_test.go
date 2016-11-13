@@ -32,7 +32,7 @@ func TestConstantIntGenerator(t *testing.T) {
 
 	assert.Equal(V, points[0].V)
 
-	assert.Equal(start, points[0].T)
+	assert.Equal(start, points[0].TimeNano)
 	// t.Logf("end %v, last point %v", end, points[len(points)-1].T)
-	assert.True(end >= points[len(points)-1].T)
+	assert.True(end >= points[len(points)-1].TimeNano)
 }

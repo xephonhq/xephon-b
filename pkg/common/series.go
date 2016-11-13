@@ -21,13 +21,13 @@ type Series struct {
 type SeriesWithIntPoint struct {
 	Series
 	// TODO: store two arrays, one for timestamp, one for value might be more efficient
-	Points []IntPoint
+	Points []*IntPoint
 }
 
 // SeriesWithDoublePoint is a series with double value points
 type SeriesWithDoublePoint struct {
 	Series
-	Points []DoublePoint
+	Points []*DoublePoint
 }
 
 //func HashCode() string {
