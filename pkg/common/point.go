@@ -10,8 +10,20 @@ type IntPoint struct {
 	TimeNano int64
 }
 
+// IntPointWithSeries contains a point to its series
+type IntPointWithSeries struct {
+	IntPoint
+	*Series
+}
+
 // DoublePoint has double value and unix nano timestamp in int64
 type DoublePoint struct {
 	V        float64
 	TimeNano int64
+}
+
+// DoublePointWithSeries contains a pointer to its series
+type DoublePointWithSeries struct {
+	DoublePoint
+	*Series
 }

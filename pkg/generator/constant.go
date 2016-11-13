@@ -6,7 +6,7 @@ import (
 	"github.com/xephonhq/xephon-b/pkg/common"
 )
 
-// ConstantIntGenerator generate int point over a time range
+// ConstantIntGenerator generate int point over a time range in fixed interval
 // start is included
 // end may not be included
 // number of points = (end - start) / step + 1
@@ -34,7 +34,7 @@ func NewConstantIntGenerator(start int64, end int64, step int64, V int) *Constan
 // TODO: return pointer or value, use buffer, pool etc
 func (c *ConstantIntGenerator) Next() (common.IntPoint, error) {
 	p := common.IntPoint{
-		V: c.V,
+		V:        c.V,
 		TimeNano: c.current,
 	}
 	c.current += c.step
