@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/xephonhq/xephon-b/pkg/common"
 )
 
 func TestSeriesWithGenerator(t *testing.T) {
@@ -19,8 +20,9 @@ func TestSeriesWithGenerator(t *testing.T) {
 
 	g := NewConstantIntGenerator(start, end, step, V)
 
-	//s := SeriesWithIntPointGenerator{Series: name, Generator: &g}
 	s := SeriesWithIntPointGenerator{Generator: g}
+	s.Series = common.Series{Name: name}
 	assert.Equal(name, s.Name)
-	assert.Equal(start, s.Generator.Next())
+	p, _ := s.Generator.Next()
+	assert.Equal(start, p.TimeNano)
 }

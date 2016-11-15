@@ -12,6 +12,9 @@ import (
 func TestConstantIntGenerator(t *testing.T) {
 	assert := assert.New(t)
 
+	// test if it satisfies the interface
+	var _ IntPointGenerator = (*ConstantIntGenerator)(nil)
+	
 	start := time.Now().UnixNano()
 	end := time.Now().Add(time.Minute).UnixNano()
 	step := time.Duration(10 * time.Second).Nanoseconds()
