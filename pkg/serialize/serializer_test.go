@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 // test implementation satisfies the interface
-func TestGeneratorInterface(t *testing.T) {
+func TestSerializerInterface(t *testing.T) {
 	t.Parallel()
 	var _ Serializer = (*DebugSerializer)(nil)
 }
