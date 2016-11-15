@@ -18,3 +18,4 @@ func TestSeriesString(t *testing.T) {
 	assert.Equal("cpu.idle:os=ubuntu,arch=amd64,", fmt.Sprintf("%v", s))
 
 }
+

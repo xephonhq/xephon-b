@@ -24,6 +24,8 @@ type SeriesWithIntPoint struct {
 	Points []*IntPoint
 }
 
+
+
 // SeriesWithDoublePoint is a series with double value points
 type SeriesWithDoublePoint struct {
 	Series
