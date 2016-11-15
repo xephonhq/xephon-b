@@ -6,11 +6,11 @@ import (
 	"github.com/xephonhq/xephon-b/pkg/common"
 )
 
-// ConstantIntGenerator generate int point over a time range in fixed interval
+// ConstantIntPointGenerator generate int point over a time range in fixed interval
 // start is included
 // end may not be included
 // number of points = (end - start) / step + 1
-type ConstantIntGenerator struct {
+type ConstantIntPointGenerator struct {
 	start   int64
 	end     int64
 	step    int64
@@ -18,10 +18,10 @@ type ConstantIntGenerator struct {
 	V       int
 }
 
-// NewConstantIntGenerator create a generator, see test for example usage
-func NewConstantIntGenerator(start int64, end int64, step int64, V int) *ConstantIntGenerator {
+// NewConstantIntPointGenerator create a generator, see test for example usage
+func NewConstantIntPointGenerator(start int64, end int64, step int64, V int) *ConstantIntPointGenerator {
 	// TODO: check
-	return &ConstantIntGenerator{
+	return &ConstantIntPointGenerator{
 		start:   start,
 		end:     end,
 		step:    step,
@@ -32,7 +32,7 @@ func NewConstantIntGenerator(start int64, end int64, step int64, V int) *Constan
 
 // Next return a new int point
 // TODO: return pointer or value, use buffer, pool etc
-func (c *ConstantIntGenerator) Next() (common.IntPoint, error) {
+func (c *ConstantIntPointGenerator) Next() (common.IntPoint, error) {
 	p := common.IntPoint{
 		V:        c.V,
 		TimeNano: c.current,
@@ -45,7 +45,7 @@ func (c *ConstantIntGenerator) Next() (common.IntPoint, error) {
 }
 
 // IsValid check if all the required values are set and valid
-func (c *ConstantIntGenerator) IsValid() bool {
+func (c *ConstantIntPointGenerator) IsValid() bool {
 	// TODO: /w\
 	return true
 }

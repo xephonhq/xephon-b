@@ -13,15 +13,15 @@ func TestConstantIntGenerator(t *testing.T) {
 	assert := assert.New(t)
 
 	// test if it satisfies the interface
-	var _ IntPointGenerator = (*ConstantIntGenerator)(nil)
-	
+	var _ IntPointGenerator = (*ConstantIntPointGenerator)(nil)
+
 	start := time.Now().UnixNano()
 	end := time.Now().Add(time.Minute).UnixNano()
 	step := time.Duration(10 * time.Second).Nanoseconds()
 	V := 10086
 	// t.Logf("start %v, end %v, step %v", start, end, step)
 
-	g := NewConstantIntGenerator(start, end, step, V)
+	g := NewConstantIntPointGenerator(start, end, step, V)
 	var points []common.IntPoint
 	for {
 		p, err := g.Next()

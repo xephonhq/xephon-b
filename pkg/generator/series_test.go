@@ -18,7 +18,7 @@ func TestSeriesWithGenerator(t *testing.T) {
 	V := 10086
 	// t.Logf("start %v, end %v, step %v", start, end, step)
 
-	g := NewConstantIntGenerator(start, end, step, V)
+	g := NewConstantIntPointGenerator(start, end, step, V)
 
 	s := SeriesWithIntPointGenerator{Generator: g}
 	s.Series = common.Series{Name: name}
