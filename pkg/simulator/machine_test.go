@@ -36,7 +36,7 @@ func TestAddDefaultMachine(t *testing.T) {
 	sm := MachineSimulator{}
 	sm.AddDefaultMachine()
 	allSeries := sm.Series()
-	assert.Equal("cpu_core", allSeries[0].TagKeys[1])
+	assert.Equal("1", allSeries[0].Tags["cpu_core"])
 }
 
 func TestMachineSimulator(t *testing.T) {

@@ -12,10 +12,8 @@ package common
 // Series is a time series
 type Series struct {
 	// TODO: string or []byte
-	Name      string            `json:"name"`
-	TagKeys   []string          `json:"-"`
-	TagValues []string          `json:"-"`
-	Tags      map[string]string `json:"tag"`
+	Name string            `json:"name"`
+	Tags map[string]string `json:"tag"`
 }
 
 // SeriesWithIntPoint is a series with int value points
@@ -33,8 +31,6 @@ type SeriesWithDoublePoint struct {
 
 // AddTag adds a key value pair WITHOUT ANY checking for duplication
 func (s *Series) AddTag(key string, val string) {
-	s.TagKeys = append(s.TagKeys, key)
-	s.TagValues = append(s.TagValues, val)
 	s.Tags[key] = val
 }
 
@@ -45,8 +41,8 @@ func (s Series) String() string {
 	// name:k1=v1,k2=v2
 	// TODO: more efficient
 	str := s.Name + ":"
-	for i, k := range s.TagKeys {
-		str += k + "=" + s.TagValues[i] + ","
+	for k, v := range s.Tags {
+		str += k + "=" + v + ","
 	}
 	return str
 }

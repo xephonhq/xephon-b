@@ -1,7 +1,6 @@
 package common
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -14,7 +13,5 @@ func TestSeriesString(t *testing.T) {
 	s := NewSeries(name)
 	s.AddTag("os", "ubuntu")
 	s.AddTag("arch", "amd64")
-	assert.Equal("cpu.idle:os=ubuntu,arch=amd64,", s.String())
-	assert.Equal("cpu.idle:os=ubuntu,arch=amd64,", fmt.Sprintf("%v", s))
-
+	assert.Contains(s.String(), "cpu.idle", "os=ubuntu", "arch=amd64")
 }
