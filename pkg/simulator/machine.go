@@ -90,8 +90,8 @@ func (ms *MachineSimulator) Start() {
 	go func() {
 		for p := range intPointChan {
 			sp, err := ms.serializer.WriteInt(p)
-			fmt.Println("serialized!")
-			if err != nil {
+			fmt.Printf("serialized to %s \b", sp)
+			if err == nil {
 				intSPointChan <- string(sp)
 			}
 		}
