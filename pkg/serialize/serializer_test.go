@@ -46,8 +46,8 @@ func (suite *SerializeTestSuite) SetupTest() {
 
 }
 
-func (suite *SerializeTestSuite) TestDebugSerializer(t *testing.T) {
-	assert := assert.New(t)
+func (suite *SerializeTestSuite) TestDebugSerializer() {
+	assert := assert.New(suite.T())
 	ds := DebugSerializer{}
 
 	o := fmt.Sprintf("cpu.idle:os=ubuntu,arch=amd64, %d %d", 123, suite.ts)
