@@ -66,9 +66,10 @@ func (ms *MachineSimulator) Start() {
 	// TODO: config the start and end
 	// assume we have then configured when add them
 
-	// all the int points
 	intPointChan := make(chan *common.IntPointWithSeries)
-	intSPointChan := make(chan string)
+	// TODO: passing byte array may not be efficient, but leave it to later ...
+	serializedIntPointChan := make(chan []byte)
+	// TODO:
 	// doublePointChan := make(chan *common.DoublePointWithSeries)
 	var wg sync.WaitGroup
 	wg.Add(len(ms.Series()))
@@ -76,7 +77,6 @@ func (ms *MachineSimulator) Start() {
 		go func(g generator.IntPointGenerator, s common.Series) {
 			for {
 				p, err := g.Next()
-				fmt.Println("point generated")
 				if err == generator.ErrEndOfPoints {
 					break
 				}
@@ -90,31 +90,19 @@ func (ms *MachineSimulator) Start() {
 	go func() {
 		for p := range intPointChan {
 			sp, err := ms.serializer.WriteInt(p)
-			fmt.Printf("serialized to %s \b", sp)
-			if err == nil {
-				intSPointChan <- string(sp)
+			if err != nil {
+				continue
 			}
+			serializedIntPointChan <- sp
 		}
-		close(intSPointChan)
+		close(serializedIntPointChan)
 		wg.Done()
 	}()
 	wg.Add(1)
 	go func() {
-		fmt.Println("start writer routine")
-		// for s := range intSPointChan {
-		// 	// FIXME: this part is never executed
-		// 	fmt.Printf("need to write it! %s", s)
-		// 	// ms.writer.Write(sp)
-		// }
-		for {
-			s, ok := <-intSPointChan
-			if !ok {
-				fmt.Println("done")
-				break
-			}
-			fmt.Printf("need to write it! %s", s)
+		for sp := range serializedIntPointChan {
+			ms.writer.Write(sp)
 		}
-		fmt.Println("I am done")
 		wg.Done()
 	}()
 	wg.Wait()
@@ -144,7 +132,7 @@ func (ms *MachineSimulator) AddMachine(m Machine) {
 	baseSeries.AddTag("os", m.OS)
 	for i := 1; i < m.CPU; i++ {
 		s := baseSeries
-		s.AddTag("cpu_core", string(i))
+		s.AddTag("cpu_core", fmt.Sprintf("%d", i))
 		start := time.Now().UnixNano()
 		end := time.Now().Add(time.Minute).UnixNano()
 		step := time.Duration(10 * time.Second).Nanoseconds()
