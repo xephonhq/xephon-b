@@ -1,10 +1,11 @@
 package simulator
 
 import (
-	"github.com/xephonhq/xephon-b/pkg/common"
-	"github.com/xephonhq/xephon-b/pkg/serialize"
 	"io"
+
+	"github.com/xephonhq/xephon-b/pkg/common"
 	"github.com/xephonhq/xephon-b/pkg/generator"
+	"github.com/xephonhq/xephon-b/pkg/serialize"
 )
 
 // Simulator contains multiple series and represent one type of source of time series data
@@ -15,4 +16,5 @@ type Simulator interface {
 	AddSeriesWithDoublePointGenerator(*generator.SeriesWithDoublePointGenerator)
 	SetSerializer(serialize.Serializer)
 	SetWriter(io.Writer)
+	Start()
 }
