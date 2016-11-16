@@ -1,0 +1,13 @@
+language: go
+sudo: false
+
+go:
+  - 1.7
+  - tip
+
+install:
+  - ./script/travis_install.sh
+
+script:
+  - go test -v -cover ./pkg/...
+  - go test -race ./pkg/...

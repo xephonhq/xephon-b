@@ -6,3 +6,6 @@ import:
 - package: github.com/spf13/viper
   vcs: git
   version: 50515b700e02658272117a72bd641b6b7f1222e5
+- package: github.com/stretchr/testify
+  vcs: git
+  version: 976c720a22c8eb4eb6a0b4348ad85ad12491a506

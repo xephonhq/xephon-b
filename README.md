@@ -9,6 +9,8 @@
 	<br>
 </h1>
 
+[![Build Status](https://travis-ci.org/xephonhq/xephon-b.svg?branch=feature%2Fdata-generation)](https://travis-ci.org/xephonhq/xephon-b)
+
 A time series database benchmark tool and benchmark result sharing platform
 
 - [Documentation](doc)

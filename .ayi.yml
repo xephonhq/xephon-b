@@ -1,2 +1,10 @@
 install:
-    - go install github.com/xephonhq/xephon-b/cmd/xephon
+    - go install github.com/xephonhq/xephon-b/cmd/xb
+    - go install github.com/xephonhq/xephon-b/cmd/xephon-b
+test:
+    - go test -v -cover ./pkg/...
+    - go test -race ./pkg/...
+    # - sh -c "go test -v -cover $(glide novendor)"
+scripts:
+  ft: go test ./pkg/...
+  sm: go test -v ./pkg/simulator -run TestMachineSimulator

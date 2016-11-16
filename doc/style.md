@@ -31,6 +31,13 @@
 - use `vendor` with [glide](https://github.com/Masterminds/glide) for dependency management
 - use specific version for you dependency
 
+
+#### Interface 
+
+- each package put interface in its package name file, ie: `generator/generator.go`
+- check implementation match interface in package name test file, ie : `generator/generator_test.go`, 
+using `var _ InterafaceName = (*ImplementationName)(nil)`
+
 ### JavaScript
 
 - do what ever you want
