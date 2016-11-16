@@ -68,7 +68,8 @@ func (ms *MachineSimulator) Start() {
 
 	// all the int points
 	intPointChan := make(chan *common.IntPointWithSeries)
-	intSPointChan := make(chan []byte)
+	// intSPointChan := make(chan []byte)
+	tChan := make(chan int)
 	// doublePointChan := make(chan *common.DoublePointWithSeries)
 	var wg sync.WaitGroup
 	wg.Add(len(ms.Series()))
@@ -89,22 +90,28 @@ func (ms *MachineSimulator) Start() {
 	wg.Add(1)
 	go func() {
 		for p := range intPointChan {
-			sp, err := ms.serializer.WriteInt(p)
+			ms.serializer.WriteInt(p)
 			fmt.Println("serialized!")
-			if err != nil {
-				intSPointChan <- sp
-			}
+			// if err != nil {
+			// 	// intSPointChan <- sp
+			// }
+
+			tChan <- 1
+
 		}
-		close(intSPointChan)
+		// close(intSPointChan)
+		close(tChan)
 		wg.Done()
 	}()
 	wg.Add(1)
 	go func() {
 		fmt.Println("start writer routine")
-		for sp := range intSPointChan {
+		// for sp := range intSPointChan {
+		for t := range tChan {
+
 			// FIXME: this part is never executed
-			fmt.Println("need to write it!")
-			ms.writer.Write(sp)
+			fmt.Printf("need to write it! %d \n", t)
+			// ms.writer.Write(sp)
 		}
 		wg.Done()
 	}()
