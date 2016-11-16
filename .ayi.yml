@@ -6,3 +6,4 @@ test:
     # - sh -c "go test -v -cover $(glide novendor)"
 scripts:
   ft: go test ./pkg/...
+  sm: go test -v ./pkg/simulator -run TestMachineSimulator

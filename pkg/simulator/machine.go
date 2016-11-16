@@ -60,6 +60,7 @@ func (ms *MachineSimulator) AddSeriesWithDoublePointGenerator(g *generator.Serie
 }
 
 func (ms *MachineSimulator) Start() {
+	fmt.Println("started!")
 	// TODO: check series are valid and writer is SetWriter
 
 	// TODO: config the start and end
@@ -75,6 +76,7 @@ func (ms *MachineSimulator) Start() {
 		go func(g generator.IntPointGenerator, s common.Series) {
 			for {
 				p, err := g.Next()
+				fmt.Println("point generated")
 				if err == generator.ErrEndOfPoints {
 					break
 				}
@@ -88,15 +90,20 @@ func (ms *MachineSimulator) Start() {
 	go func() {
 		for p := range intPointChan {
 			sp, err := ms.serializer.WriteInt(p)
+			fmt.Println("serialized!")
 			if err != nil {
 				intSPointChan <- sp
 			}
 		}
+		close(intSPointChan)
 		wg.Done()
 	}()
 	wg.Add(1)
 	go func() {
+		fmt.Println("start writer routine")
 		for sp := range intSPointChan {
+			// FIXME: this part is never executed
+			fmt.Println("need to write it!")
 			ms.writer.Write(sp)
 		}
 		wg.Done()
