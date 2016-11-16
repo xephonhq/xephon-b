@@ -1,5 +1,6 @@
 install:
-    - go install github.com/xephonhq/xephon-b/cmd/xephon
+    - go install github.com/xephonhq/xephon-b/cmd/xb
+    - go install github.com/xephonhq/xephon-b/cmd/xephon-b
 test:
     - go test -v -cover ./pkg/...
     - go test -race ./pkg/...
