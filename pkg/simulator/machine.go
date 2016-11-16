@@ -126,9 +126,7 @@ func (ms *MachineSimulator) AddDefaultMachine() {
 func (ms *MachineSimulator) AddMachine(m Machine) {
 	// add one machine == add a bunch of series, the simulator does NOT keep the machine
 	// TODO: a base series and clone it to add more tags
-	baseSeries := common.Series{
-		Name: "machine",
-	}
+	baseSeries := common.NewSeries("machine")
 	baseSeries.AddTag("os", m.OS)
 	for i := 1; i < m.CPU; i++ {
 		s := baseSeries
@@ -140,7 +138,7 @@ func (ms *MachineSimulator) AddMachine(m Machine) {
 		g := generator.NewConstantIntPointGenerator(start, end, step, V)
 
 		// let's just assume we only have cpu usage and it is a constant int
-		ms.AddSeriesWithIntPointGenerator(&generator.SeriesWithIntPointGenerator{Series: s, Generator: g})
+		ms.AddSeriesWithIntPointGenerator(&generator.SeriesWithIntPointGenerator{Series: *s, Generator: g})
 	}
 	// what about mem and disk and etc ... e... wait until other thing is finished
 }

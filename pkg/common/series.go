@@ -15,6 +15,7 @@ type Series struct {
 	// TODO: string or []byte
 	TagKeys   []string
 	TagValues []string
+	Tags      map[string]string
 }
 
 // SeriesWithIntPoint is a series with int value points
@@ -32,8 +33,9 @@ type SeriesWithDoublePoint struct {
 
 // AddTag adds a key value pair WITHOUT ANY checking for duplication
 func (s *Series) AddTag(key string, val string) {
-	s.TagKeys = append(s.TagKeys, key)
-	s.TagValues = append(s.TagValues, val)
+	//s.TagKeys = append(s.TagKeys, key)
+	//s.TagValues = append(s.TagValues, val)
+	s.Tags[key] = val
 }
 
 // https://nathanleclaire.com/blog/2014/08/09/dont-get-bitten-by-pointer-vs-non-pointer-method-receivers-in-golang/
@@ -43,8 +45,19 @@ func (s Series) String() string {
 	// name:k1=v1,k2=v2
 	// TODO: more efficient
 	str := s.Name + ":"
-	for i, k := range s.TagKeys {
-		str += k + "=" + s.TagValues[i] + ","
+	//for i, k := range s.TagKeys {
+	//	str += k + "=" + s.TagValues[i] + ","
+	//}
+	for k, v := range s.Tags {
+		str += k + "=" + v + ","
 	}
 	return str
+}
+
+// NewSeries return a series with its tag map intitialized
+func NewSeries(name string) *Series {
+	return &Series{
+		Name: name,
+		Tags: make(map[string]string),
+	}
 }

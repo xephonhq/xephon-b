@@ -11,7 +11,7 @@ func TestSeriesString(t *testing.T) {
 	assert := assert.New(t)
 
 	name := "cpu.idle"
-	s := Series{Name: name}
+	s := NewSeries(name)
 	s.AddTag("os", "ubuntu")
 	s.AddTag("arch", "amd64")
 	assert.Equal("cpu.idle:os=ubuntu,arch=amd64,", s.String())
