@@ -11,11 +11,11 @@ package common
 
 // Series is a time series
 type Series struct {
-	Name string
 	// TODO: string or []byte
-	TagKeys   []string `json:"-"`
-	TagValues []string `json:"-"`
-	Tags      map[string]string
+	Name      string            `json:"name"`
+	TagKeys   []string          `json:"-"`
+	TagValues []string          `json:"-"`
+	Tags      map[string]string `json:"tag"`
 }
 
 // SeriesWithIntPoint is a series with int value points

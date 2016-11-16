@@ -6,8 +6,8 @@ package common
 
 // IntPoint has integer value and unix nano timestamp in int64
 type IntPoint struct {
-	V        int
-	TimeNano int64
+	V        int   `json:"v"`
+	TimeNano int64 `json:"t"`
 }
 
 // IntPointWithSeries contains a point to its series
@@ -18,8 +18,8 @@ type IntPointWithSeries struct {
 
 // DoublePoint has double value and unix nano timestamp in int64
 type DoublePoint struct {
-	V        float64
-	TimeNano int64
+	V        float64 `json:"v"`
+	TimeNano int64   `json:"t"`
 }
 
 // DoublePointWithSeries contains a pointer to its series

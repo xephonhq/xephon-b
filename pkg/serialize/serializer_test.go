@@ -43,7 +43,6 @@ func (suite *SerializeTestSuite) SetupTest() {
 	suite.dP = &common.DoublePointWithSeries{Series: s}
 	suite.dP.V = 12.03
 	suite.dP.TimeNano = ts
-
 }
 
 func (suite *SerializeTestSuite) TestDebugSerializer() {
@@ -56,5 +55,21 @@ func (suite *SerializeTestSuite) TestDebugSerializer() {
 
 	o = fmt.Sprintf("cpu.idle:os=ubuntu,arch=amd64, %0.2f %d", 12.03, suite.ts)
 	w, _ = ds.WriteDouble(suite.dP)
+	assert.Equal(o, string(w))
+}
+
+func (suite *SerializeTestSuite) TestJsonSerializer() {
+	assert := assert.New(suite.T())
+	js := JsonSerializer{}
+	w, err := js.WriteInt(suite.iP)
+	o := fmt.Sprintf("{\"v\":123,\"t\":%d,\"name\":\"cpu.idle\",\"tag\":{\"arch\":\"amd64\",\"os\":\"ubuntu\"}}", suite.ts )
+	assert.Nil(err)
+	//suite.T().Log(string(w))
+	assert.Equal(o, string(w))
+
+	w, err = js.WriteDouble(suite.dP)
+	o = fmt.Sprintf("{\"v\":12.03,\"t\":%d,\"name\":\"cpu.idle\",\"tag\":{\"arch\":\"amd64\",\"os\":\"ubuntu\"}}", suite.ts)
+	assert.Nil(err)
+	//suite.T().Log(string(w))
 	assert.Equal(o, string(w))
 }
