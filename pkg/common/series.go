@@ -13,8 +13,8 @@ package common
 type Series struct {
 	Name string
 	// TODO: string or []byte
-	TagKeys   []string
-	TagValues []string
+	TagKeys   []string `json:"-"`
+	TagValues []string `json:"-"`
 	Tags      map[string]string
 }
 
@@ -33,23 +33,20 @@ type SeriesWithDoublePoint struct {
 
 // AddTag adds a key value pair WITHOUT ANY checking for duplication
 func (s *Series) AddTag(key string, val string) {
-	//s.TagKeys = append(s.TagKeys, key)
-	//s.TagValues = append(s.TagValues, val)
+	s.TagKeys = append(s.TagKeys, key)
+	s.TagValues = append(s.TagValues, val)
 	s.Tags[key] = val
 }
 
 // https://nathanleclaire.com/blog/2014/08/09/dont-get-bitten-by-pointer-vs-non-pointer-method-receivers-in-golang/
-// NOTE: must use non-pointer reciver in order to use %s in fmt
+// NOTE: must use non-pointer receiver in order to use %s in fmt
 func (s Series) String() string {
 	// NOTE: used for debug only
 	// name:k1=v1,k2=v2
 	// TODO: more efficient
 	str := s.Name + ":"
-	//for i, k := range s.TagKeys {
-	//	str += k + "=" + s.TagValues[i] + ","
-	//}
-	for k, v := range s.Tags {
-		str += k + "=" + v + ","
+	for i, k := range s.TagKeys {
+		str += k + "=" + s.TagValues[i] + ","
 	}
 	return str
 }
