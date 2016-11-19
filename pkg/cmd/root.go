@@ -5,8 +5,10 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/xephonhq/xephon-b/pkg/config"
 )
 
+// Version need to be manuaully updated
 const Version = "0.0.1-dev"
 
 // RootCmd is the top command, other commands should be its child
@@ -27,6 +29,13 @@ func Execute() {
 }
 
 func init() {
+	cobra.OnInitialize(initConfig)
+
+	RootCmd.PersistentFlags().StringVar(&config.ConfigFile, "config", "", "config file (default is ./xephon-b.yml)")
+
 	RootCmd.AddCommand(VersionCmd)
 	RootCmd.AddCommand(SimulatorCmd)
+}
+
+func initConfig() {
 }

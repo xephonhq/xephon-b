@@ -1,0 +1,6 @@
+# The example xephon-b configuration file
+# TODO: might be split to several config files like ansible 
+simulator:
+    machine:
+        num: 100
+        start: 

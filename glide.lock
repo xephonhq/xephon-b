@@ -1,8 +1,11 @@
-hash: d62e494fc8c298e24784f4ec0836ab0bfd7bd0983a68f90c48100e3ffc192595
-updated: 2016-11-12T14:20:01.237679407-08:00
+hash: 71604f5ca436f7347ddcf13f5b3e0e9a0deb3af0aa34a69c9d4c988aeb4f4174
+updated: 2016-11-18T23:02:04.81118595-08:00
 imports:
 - name: github.com/inconshreveable/mousetrap
   version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
+- name: github.com/Sirupsen/logrus
+  version: d26492970760ca5d33129d2d799e34be5c4782eb
+  vcs: git
 - name: github.com/spf13/cobra
   version: 856b96dcb49d6427babe192998a35190a12c2230
   vcs: git
@@ -16,6 +19,12 @@ imports:
   vcs: git
   subpackages:
   - assert
+  - require
+  - suite
+- name: golang.org/x/sys
+  version: a408501be4d17ee978c04a618e7a1b22af058c0e
+  subpackages:
+  - unix
 testImports:
 - name: github.com/davecgh/go-spew
   version: 6d212800a42e8ab5c146b8ace3490ee17e5225f9
