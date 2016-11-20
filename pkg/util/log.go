@@ -8,7 +8,9 @@ import (
 var Logger = logrus.New()
 
 // Short name use in util package
-var log = Logger
+var log = Logger.WithFields(logrus.Fields{
+	"pkg":"x.util",
+})
 
 func init() {
 	Logger.Formatter = &logrus.TextFormatter{ForceColors: true}
@@ -18,4 +20,5 @@ func init() {
 // UseVerboseLog set logger level to debug
 func UseVerboseLog() {
 	Logger.Level = logrus.DebugLevel
+	log.Debug("enable debug logging")
 }

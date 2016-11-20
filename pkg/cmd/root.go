@@ -6,6 +6,8 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/xephonhq/xephon-b/pkg/config"
+	"github.com/xephonhq/xephon-b/pkg/util"
+	"github.com/spf13/viper"
 )
 
 // Version need to be manuaully updated
@@ -31,11 +33,19 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	RootCmd.PersistentFlags().StringVar(&config.ConfigFile, "config", "", "config file (default is ./xephon-b.yml)")
+	RootCmd.PersistentFlags().StringVar(&config.ConfigFile, "config", config.DefaultConfigFile, "config file (default is ./xephon-b.yml)")
+	RootCmd.PersistentFlags().BoolVar(&config.Debug, "debug", false, "debug")
 
 	RootCmd.AddCommand(VersionCmd)
 	RootCmd.AddCommand(SimulatorCmd)
 }
 
 func initConfig() {
+	if config.Debug {
+		util.UseVerboseLog()
+	}
+	viper.AutomaticEnv()
+	// TODO: check file existence
+	viper.SetConfigFile(config.ConfigFile)
+	viper.ReadInConfig()
 }

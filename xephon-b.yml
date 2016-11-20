@@ -1,4 +1,4 @@
-# The example xephon-b configuration file
+ww# The example xephon-b configuration file
 # TODO: might be split to several config files like ansible 
 simulator:
     machine:
