@@ -4,12 +4,14 @@ import (
 	"github.com/Sirupsen/logrus"
 )
 
+// Log util
+
 // Logger is the default logger with info level
 var Logger = logrus.New()
 
 // Short name use in util package
 var log = Logger.WithFields(logrus.Fields{
-	"pkg":"x.util",
+	"pkg": "x.util",
 })
 
 func init() {

@@ -12,7 +12,7 @@ import (
 	"github.com/xephonhq/xephon-b/pkg/serialize"
 )
 
-var defaulMachineNumber int64 = 0
+var defaultMachineNumber int64 = 0
 
 type Machine struct {
 	Name string
@@ -109,7 +109,7 @@ func (ms *MachineSimulator) Start() {
 }
 
 func GenerateDefaultMachine() Machine {
-	num := atomic.AddInt64(&defaulMachineNumber, 1)
+	num := atomic.AddInt64(&defaultMachineNumber, 1)
 	return Machine{
 		Name: fmt.Sprintf("default-%d", num),
 		OS:   "ubuntu16.04",
