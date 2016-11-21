@@ -61,4 +61,8 @@ func TestMachineSimulatorNew(t *testing.T) {
 	}
 	sm := NewMachineSimulator(c)
 	t.Log(sm)
+	sm.SetWriter(os.Stdout)
+	s := serialize.DebugSerializer{}
+	sm.SetSerializer(&s)
+	sm.StartNew()
 }

@@ -3,8 +3,14 @@ package generator
 import (
 	"errors"
 
+	"github.com/Sirupsen/logrus"
 	"github.com/xephonhq/xephon-b/pkg/common"
+	"github.com/xephonhq/xephon-b/pkg/util"
 )
+
+var log = util.Logger.WithFields(logrus.Fields{
+	"pkg": "x.generator",
+})
 
 // ErrEndOfPoints is end of points
 var ErrEndOfPoints = errors.New("EOP")

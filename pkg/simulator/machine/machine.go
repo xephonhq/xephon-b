@@ -6,6 +6,7 @@ import (
 
 	"github.com/xephonhq/xephon-b/pkg/common"
 	"github.com/xephonhq/xephon-b/pkg/generator"
+	"github.com/xephonhq/xephon-b/pkg/generator/value"
 )
 
 type Machine struct {
@@ -41,7 +42,8 @@ func GenerateDefaultMachineNew() Machine {
 	baseSeries := common.NewSeries("machine")
 	for i := 0; i < 4; i++ {
 		s := generator.SeriesWithValueGenerator{
-			Series: *baseSeries,
+			Series:         *baseSeries,
+			ValueGenerator: value.NewConstantIntGenerator(1),
 		}
 		s.AddTag("host", m.Name)
 		s.AddTag("os", m.OS)
