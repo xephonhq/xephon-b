@@ -8,3 +8,6 @@ test:
 scripts:
   ft: go test ./pkg/...
   sm: go test -v ./pkg/simulator -run TestMachineSimulator
+  format: 
+    - gofmt -d -l -w ./pkg
+    - git status

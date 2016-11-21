@@ -23,3 +23,10 @@ func ReadMachineSimulatorConfigFromViper() *MachineSimulatorConfig {
 	c.Step = viper.GetInt("simulator.machine.step")
 	return c
 }
+
+//func (config *MachineSimulatorConfig) ToMachineSimulator() *simulator.MachineSimulator {
+//	sm := &simulator.MachineSimulator{
+//		start:
+//	}
+//	return sm
+//}

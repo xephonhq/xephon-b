@@ -5,9 +5,9 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/util"
-	"github.com/spf13/viper"
 )
 
 // Version need to be manuaully updated

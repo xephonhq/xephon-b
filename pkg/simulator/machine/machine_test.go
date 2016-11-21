@@ -1,4 +1,4 @@
-package simulator
+package machine
 
 import (
 	"os"

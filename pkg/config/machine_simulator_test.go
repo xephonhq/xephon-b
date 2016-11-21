@@ -1,8 +1,8 @@
 package config
 
 import (
-	"testing"
 	"github.com/xephonhq/xephon-b/pkg/util"
+	"testing"
 )
 
 func TestReadMachineSimulatorConfigFromViper(t *testing.T) {

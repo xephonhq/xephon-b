@@ -1,8 +1,8 @@
 package serialize
 
 import (
-	"github.com/xephonhq/xephon-b/pkg/common"
 	"encoding/json"
+	"github.com/xephonhq/xephon-b/pkg/common"
 )
 
 type JsonSerializer struct {
@@ -17,4 +17,3 @@ func (j *JsonSerializer) WriteDouble(p *common.DoublePointWithSeries) ([]byte, e
 	s, err := json.Marshal(p)
 	return s, err
 }
-
