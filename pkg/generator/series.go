@@ -2,6 +2,7 @@ package generator
 
 import (
 	"github.com/xephonhq/xephon-b/pkg/common"
+	"github.com/xephonhq/xephon-b/pkg/generator/value"
 )
 
 // SeriesWithIntPointGenerator generate int point with series data attached to it
@@ -17,4 +18,9 @@ type SeriesWithIntPointGenerator struct {
 type SeriesWithDoublePointGenerator struct {
 	common.Series
 	Generator DoublePointGenerator
+}
+
+type SeriesWithValueGenerator struct {
+	common.Series
+	ValueGenerator value.ValueGenerator
 }

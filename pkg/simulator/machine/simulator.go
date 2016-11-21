@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/xephonhq/xephon-b/pkg/common"
+	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/generator"
 	"github.com/xephonhq/xephon-b/pkg/serialize"
 )
@@ -20,6 +21,8 @@ type MachineSimulator struct {
 	series                         []*common.Series
 	seriesWithIntPointGenerator    []*generator.SeriesWithIntPointGenerator
 	seriesWithDoublePointGenerator []*generator.SeriesWithDoublePointGenerator
+	config                         config.MachineSimulatorConfig
+	machines                       []*Machine
 	serializer                     serialize.Serializer
 	writer                         io.Writer
 }
