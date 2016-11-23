@@ -80,6 +80,7 @@ func (ms *MachineSimulator) Start() {
 	wg.Add(1)
 	go func() {
 		for p := range intPointChan {
+			log.Debug("need to serialize")
 			sp, err := ms.serializer.WriteInt(p)
 			if err != nil {
 				continue
