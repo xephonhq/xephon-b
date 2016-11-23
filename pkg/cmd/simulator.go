@@ -47,6 +47,7 @@ var SimulatorCmd = &cobra.Command{
 				log.Fatalf(err.Error())
 				return
 			}
+			defer f.Close()
 			sm.SetWriter(f)
 		default:
 			log.Fatalf("unsupported output type %s", simulatorOutput)
