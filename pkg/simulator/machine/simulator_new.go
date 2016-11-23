@@ -11,18 +11,18 @@ import (
 func NewMachineSimulator(c config.MachineSimulatorConfig) *MachineSimulator {
 	ms := MachineSimulator{config: c}
 	for i := 0; i < c.Num; i++ {
-		m := GenerateDefaultMachineNew()
-		ms.AddMachineNew(&m)
+		m := GenerateDefaultMachine()
+		ms.AddMachine(&m)
 	}
 	return &ms
 }
 
 // A temp file before remove the old code
-func (ms *MachineSimulator) AddMachineNew(m *Machine) {
+func (ms *MachineSimulator) AddMachine(m *Machine) {
 	ms.machines = append(ms.machines, m)
 }
 
-func (ms *MachineSimulator) StartNew() {
+func (ms *MachineSimulator) Start() {
 	intPointChan := make(chan *common.IntPointWithSeries)
 	// TODO: passing byte array may not be efficient, but leave it to later ...
 	serializedIntPointChan := make(chan []byte)

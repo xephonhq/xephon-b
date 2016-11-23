@@ -4,12 +4,11 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-	"github.com/xephonhq/xephon-b/pkg/common"
-	"github.com/xephonhq/xephon-b/pkg/config"
-	"github.com/xephonhq/xephon-b/pkg/generator"
-	"github.com/xephonhq/xephon-b/pkg/serialize"
 	"time"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/xephonhq/xephon-b/pkg/config"
+	"github.com/xephonhq/xephon-b/pkg/serialize"
 )
 
 func TestGenerateDefaultMachine(t *testing.T) {
@@ -21,37 +20,7 @@ func TestGenerateDefaultMachine(t *testing.T) {
 	assert.Equal("default-2", m.Name)
 }
 
-func TestAddSeries(t *testing.T) {
-	assert := assert.New(t)
-	s := common.Series{Name: "demo"}
-	s2 := common.Series{Name: "demo-2"}
-	sg := generator.SeriesWithIntPointGenerator{Series: s}
-	sg2 := generator.SeriesWithDoublePointGenerator{Series: s2}
-	sm := MachineSimulator{}
-	sm.AddSeriesWithIntPointGenerator(&sg)
-	sm.AddSeriesWithDoublePointGenerator(&sg2)
-	assert.Equal(2, len(sm.Series()))
-}
-
-func TestAddDefaultMachine(t *testing.T) {
-	assert := assert.New(t)
-	sm := MachineSimulator{}
-	sm.AddDefaultMachine()
-	allSeries := sm.Series()
-	assert.Equal("1", allSeries[0].Tags["cpu_core"])
-}
-
 func TestMachineSimulator(t *testing.T) {
-	t.Parallel()
-	sm := MachineSimulator{}
-	sm.AddDefaultMachine()
-	sm.SetWriter(os.Stdout)
-	s := serialize.DebugSerializer{}
-	sm.SetSerializer(&s)
-	sm.Start()
-}
-
-func TestMachineSimulatorNew(t *testing.T) {
 	t.Parallel()
 	c := config.MachineSimulatorConfig{
 		Start: time.Now(),
@@ -64,5 +33,5 @@ func TestMachineSimulatorNew(t *testing.T) {
 	sm.SetWriter(os.Stdout)
 	s := serialize.DebugSerializer{}
 	sm.SetSerializer(&s)
-	sm.StartNew()
+	sm.Start()
 }
