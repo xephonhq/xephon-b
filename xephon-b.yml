@@ -2,7 +2,7 @@
 # TODO: might be split to several config files like ansible 
 simulator:
     machine:
-        num: 100
+        num: 3
         # start time in ISO 8601
         start: 1997-07-16T19:20:30.45+01:00
         # end time in ISO 8601

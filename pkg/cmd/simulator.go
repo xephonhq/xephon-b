@@ -36,15 +36,20 @@ var SimulatorCmd = &cobra.Command{
 
 		c := config.ReadMachineSimulatorConfigFromViper()
 		sm := machine.NewMachineSimulator(*c)
-		switch simulatorDataEncoding {
+		switch simulatorOutput {
 		case "stdout":
 			sm.SetWriter(os.Stdout)
 		}
-		switch simulatorType {
+		switch simulatorDataEncoding {
 		case "json":
+			log.Debug("set encoding to json")
 			sm.SetSerializer(&serialize.JsonSerializer{})
 		case "debug":
+			log.Debug("set encoding to debug")
 			sm.SetSerializer(&serialize.DebugSerializer{})
+		default:
+			log.Fatalf("unsupported encoding %s", simulatorOutput)
+			return
 		}
 		sm.Start()
 	},
