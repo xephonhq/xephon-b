@@ -39,6 +39,18 @@ var SimulatorCmd = &cobra.Command{
 		switch simulatorOutput {
 		case "stdout":
 			sm.SetWriter(os.Stdout)
+		case "file":
+			// try to open the file
+			f, err := os.Create(simulatorOutputLocation)
+			if err != nil {
+				log.Error("can not create output file")
+				log.Fatalf(err.Error())
+				return
+			}
+			sm.SetWriter(f)
+		default:
+			log.Fatalf("unsupported output type %s", simulatorOutput)
+			return
 		}
 		switch simulatorDataEncoding {
 		case "json":
@@ -48,7 +60,7 @@ var SimulatorCmd = &cobra.Command{
 			log.Debug("set encoding to debug")
 			sm.SetSerializer(&serialize.DebugSerializer{})
 		default:
-			log.Fatalf("unsupported encoding %s", simulatorOutput)
+			log.Fatalf("unsupported encoding %s", simulatorDataEncoding)
 			return
 		}
 		sm.Start()

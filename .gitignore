@@ -13,3 +13,6 @@ vendor
 .idea
 
 # Config
+
+# Generated data
+*.dat
