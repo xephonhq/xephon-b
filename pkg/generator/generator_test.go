@@ -7,12 +7,6 @@ import (
 	"time"
 )
 
-// test implementation satisfies the interface
-func TestGeneratorInterface(t *testing.T) {
-	t.Parallel()
-	var _ IntPointGenerator = (*ConstantIntPointGenerator)(nil)
-}
-
 func TestNewGenerator(t *testing.T) {
 	t.Parallel()
 	v := gv.NewConstantIntGenerator(1)
