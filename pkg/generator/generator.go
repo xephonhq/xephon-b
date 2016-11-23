@@ -1,7 +1,6 @@
 package generator
 
 import (
-
 	"github.com/Sirupsen/logrus"
 	"github.com/xephonhq/xephon-b/pkg/util"
 )

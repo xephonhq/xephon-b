@@ -43,6 +43,7 @@ func (ms *MachineSimulator) SetWriter(w io.Writer) {
 }
 
 func (ms *MachineSimulator) Start() {
+	log.Debug("machine simulator start")
 	intPointChan := make(chan *common.IntPointWithSeries)
 	// TODO: passing byte array may not be efficient, but leave it to later ...
 	serializedIntPointChan := make(chan []byte)
@@ -96,6 +97,7 @@ func (ms *MachineSimulator) Start() {
 		wg.Done()
 	}()
 	wg.Wait()
+	log.Debug("machine simulator end")
 }
 
 func NewMachineSimulator(c config.MachineSimulatorConfig) *MachineSimulator {

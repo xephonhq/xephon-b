@@ -4,14 +4,17 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/util"
 )
 
-// Version need to be manuaully updated
-const Version = "0.0.1-dev"
+// Short name use in machine simulator package
+var log = util.Logger.WithFields(logrus.Fields{
+	"pkg": "x.cmd",
+})
 
 // RootCmd is the top command, other commands should be its child
 var RootCmd = &cobra.Command{
@@ -47,5 +50,10 @@ func initConfig() {
 	viper.AutomaticEnv()
 	// TODO: check file existence
 	viper.SetConfigFile(config.ConfigFile)
-	viper.ReadInConfig()
+	err := viper.ReadInConfig()
+	if err != nil {
+		log.Warn(err)
+	} else {
+		log.Debugf("config file %s is loaded", config.ConfigFile)
+	}
 }
