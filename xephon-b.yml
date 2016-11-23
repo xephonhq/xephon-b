@@ -1,0 +1,11 @@
+# The example xephon-b configuration file
+# TODO: might be split to several config files like ansible 
+simulator:
+    machine:
+        num: 3
+        # start time in ISO 8601
+        start: 1997-07-16T19:20:30.45+01:00
+        # end time in ISO 8601
+        end: 1997-07-16T19:21:30.45+01:00
+        # in second
+        step: 10

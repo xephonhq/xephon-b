@@ -1,12 +1,17 @@
 package cmd
 
 import (
-	"github.com/spf13/cobra"
 	"fmt"
+
+	"github.com/spf13/cobra"
 )
 
+// Version need to be manually updated
+const Version = "0.0.1-dev"
+
+// VersionCmd print the version
 var VersionCmd = &cobra.Command{
-	Use: "version",
+	Use:   "version",
 	Short: "Show Xephon-B version",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println(Version)
