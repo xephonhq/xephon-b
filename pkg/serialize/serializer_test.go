@@ -65,7 +65,7 @@ func (suite *SerializeTestSuite) TestJsonSerializer() {
 	assert.Nil(err)
 	suite.T().Log(string(w))
 	//assert.Equal(o, string(w))
-	// NOTE: \n has no effect on json deserialization 
+	// NOTE: \n has no effect on json deserialization
 	dI, err := js.ReadInt(w)
 	assert.Nil(err)
 	suite.T().Log(dI)

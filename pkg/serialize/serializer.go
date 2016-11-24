@@ -1,9 +1,9 @@
 package serialize
 
 import (
+	"github.com/Sirupsen/logrus"
 	"github.com/xephonhq/xephon-b/pkg/common"
 	"github.com/xephonhq/xephon-b/pkg/util"
-	"github.com/Sirupsen/logrus"
 )
 
 // Short name use in machine simulator package

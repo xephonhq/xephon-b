@@ -41,7 +41,7 @@ func init() {
 
 	RootCmd.AddCommand(VersionCmd)
 	RootCmd.AddCommand(SimulatorCmd)
-	RootCmd.AddCommand(LoadCmd)
+	RootCmd.AddCommand(LoaderCmd)
 }
 
 func initConfig() {
