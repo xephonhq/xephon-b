@@ -65,10 +65,20 @@ func (suite *SerializeTestSuite) TestJsonSerializer() {
 	assert.Nil(err)
 	suite.T().Log(string(w))
 	//assert.Equal(o, string(w))
+	// NOTE: \n has no effect on json deserialization 
+	dI, err := js.ReadInt(w)
+	assert.Nil(err)
+	suite.T().Log(dI)
+	suite.T().Log(dI.V)
+	suite.T().Log(dI.TimeNano)
 
 	w, err = js.WriteDouble(suite.dP)
 	//o = fmt.Sprintf("{\"v\":12.03,\"t\":%d,\"name\":\"cpu.idle\",\"tag\":{\"arch\":\"amd64\",\"os\":\"ubuntu\"}}", suite.ts)
 	assert.Nil(err)
 	suite.T().Log(string(w))
 	//assert.Equal(o, string(w))
+	dd, err := js.ReadDouble(w)
+	assert.Nil(err)
+	suite.T().Log(dd)
+	suite.T().Log(dd.V)
 }

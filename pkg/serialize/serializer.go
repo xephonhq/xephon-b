@@ -1,6 +1,15 @@
 package serialize
 
-import "github.com/xephonhq/xephon-b/pkg/common"
+import (
+	"github.com/xephonhq/xephon-b/pkg/common"
+	"github.com/xephonhq/xephon-b/pkg/util"
+	"github.com/Sirupsen/logrus"
+)
+
+// Short name use in machine simulator package
+var log = util.Logger.WithFields(logrus.Fields{
+	"pkg": "x.serialize",
+})
 
 // Serializer transform point with series into underlying format
 type Serializer interface {
