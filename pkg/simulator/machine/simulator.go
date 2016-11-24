@@ -21,9 +21,6 @@ var log = util.Logger.WithFields(logrus.Fields{
 var defaultMachineNumber int64 = 0
 
 type MachineSimulator struct {
-	start      int64
-	end        int64
-	step       int64
 	config     config.MachineSimulatorConfig
 	machines   []*Machine
 	serializer serialize.Serializer

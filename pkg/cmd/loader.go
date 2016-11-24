@@ -5,6 +5,8 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/xephonhq/xephon-b/pkg/config"
+	"github.com/xephonhq/xephon-b/pkg/loader"
 )
 
 // flags to bind
@@ -28,13 +30,17 @@ var LoaderCmd = &cobra.Command{
 		}
 		// open the file to obtain io.Reader
 		// TODO: should check file exists, os.Create will create file if not exists
-		f, err := os.Create(loadSourceLocation)
+		f, err := os.Open(loadSourceLocation)
 		if err != nil {
 			log.Error("can't read source file")
 			log.Fatal(err.Error())
 			return
 		}
 		defer f.Close()
+
+		c := config.LoaderConfig{Source: f}
+		loader := loader.NewLoader(c)
+		loader.Start()
 	},
 }
 
