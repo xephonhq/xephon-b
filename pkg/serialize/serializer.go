@@ -15,4 +15,6 @@ var log = util.Logger.WithFields(logrus.Fields{
 type Serializer interface {
 	WriteInt(*common.IntPointWithSeries) ([]byte, error)
 	WriteDouble(*common.DoublePointWithSeries) ([]byte, error)
+	ReadInt(s []byte) (*common.IntPointWithSeries, error)
+	ReadDouble(s []byte) (*common.DoublePointWithSeries, error)
 }
