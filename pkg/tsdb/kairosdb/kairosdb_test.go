@@ -5,7 +5,17 @@ import (
 	"time"
 
 	"github.com/xephonhq/xephon-b/pkg/common"
+	"github.com/xephonhq/xephon-b/pkg/tsdb"
 )
+
+func TestTSDBClientInterface(t *testing.T) {
+	var _ tsdb.TSDBClient = (*KairosDBHTTPClient)(nil)
+}
+
+func TestTSDBPayloadInterface(t *testing.T){
+	t.Parallel()
+	var _ tsdb.TSDBPayload = (*KairosDBPayload)(nil)
+}
 
 func TestKairosDBPayload_AddIntPoint(t *testing.T) {
 	s := common.NewSeries("cpu")

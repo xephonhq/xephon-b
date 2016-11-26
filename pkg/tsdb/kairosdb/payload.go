@@ -8,6 +8,7 @@ import (
 	"github.com/xephonhq/xephon-b/pkg/common"
 )
 
+// KairosDBPayload is NOT thread safe
 type KairosDBPayload struct {
 	firstPoint           bool
 	buffer               *bytes.Buffer

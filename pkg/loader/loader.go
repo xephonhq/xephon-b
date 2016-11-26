@@ -2,9 +2,7 @@ package loader
 
 import (
 	"bufio"
-	"fmt"
 	"io"
-	"os"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/xephonhq/xephon-b/pkg/config"
@@ -34,14 +32,15 @@ func NewLoader(c config.LoaderConfig) *Loader {
 func (l *Loader) Start() {
 	scanner := bufio.NewScanner(l.source)
 	for scanner.Scan() {
-		//fmt.Println(scanner.Text()) // Println will add back the final '\n'
 		sp, err := l.serializer.ReadInt(scanner.Bytes())
 		if err != nil {
 			log.Warn(err)
 		}
+		// TODO: this might be too much ouput for debug
 		log.Debug(sp)
+		// TODO: use channel to give this to client
 	}
 	if err := scanner.Err(); err != nil {
-		fmt.Fprintln(os.Stderr, "reading standard input:", err)
+		log.Warn(err.Error())
 	}
 }
