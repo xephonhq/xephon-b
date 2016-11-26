@@ -8,6 +8,9 @@ package common
 // Expand to single value series
 // cpu.0.usage system=ubuntu, arch=amd64, 0.062, 1412312312
 // cpu.0.idle  system=ubuntu, arch=amd64, 0.034, 1412312312
+import (
+	"sort"
+)
 
 // Series is a time series
 type Series struct {
@@ -32,6 +35,19 @@ type SeriesWithDoublePoint struct {
 // AddTag adds a key value pair WITHOUT ANY checking for duplication
 func (s *Series) AddTag(key string, val string) {
 	s.Tags[key] = val
+}
+
+// SortedKeys return sorted keys
+// http://stackoverflow.com/questions/21362950/golang-getting-a-slice-of-keys-from-a-map
+func (s *Series) SortedKeys() []string {
+	keys := make([]string, len(s.Tags))
+	i := 0
+	for k := range s.Tags {
+		keys[i] = k
+		i++
+	}
+	sort.Strings(keys)
+	return keys
 }
 
 // https://nathanleclaire.com/blog/2014/08/09/dont-get-bitten-by-pointer-vs-non-pointer-method-receivers-in-golang/
