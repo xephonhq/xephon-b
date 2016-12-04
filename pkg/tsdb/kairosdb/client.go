@@ -1,9 +1,9 @@
 package kairosdb
 
 import (
+	"github.com/Sirupsen/logrus"
 	"github.com/xephonhq/xephon-b/pkg/tsdb"
 	"github.com/xephonhq/xephon-b/pkg/util"
-	"github.com/Sirupsen/logrus"
 )
 
 // Short name use in loader package
@@ -17,7 +17,7 @@ type KairosDBHTTPClient struct {
 type KairosDBTelnetClient struct {
 }
 
-func (client *KairosDBHTTPClient) Put(p tsdb.TSDBPayload) error{
+func (client *KairosDBHTTPClient) Put(p tsdb.TSDBPayload) error {
 	// cast it to its own payload
 	payload, ok := p.(*KairosDBPayload)
 	if !ok {

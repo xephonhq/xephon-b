@@ -12,7 +12,7 @@ func TestTSDBClientInterface(t *testing.T) {
 	var _ tsdb.TSDBClient = (*KairosDBHTTPClient)(nil)
 }
 
-func TestTSDBPayloadInterface(t *testing.T){
+func TestTSDBPayloadInterface(t *testing.T) {
 	t.Parallel()
 	var _ tsdb.TSDBPayload = (*KairosDBPayload)(nil)
 }
