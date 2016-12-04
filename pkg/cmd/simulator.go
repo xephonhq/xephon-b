@@ -73,4 +73,6 @@ func init() {
 	SimulatorCmd.Flags().StringVar(&simulatorDataEncoding, "encoding", "debug", "serializer encoding")
 	SimulatorCmd.Flags().StringVar(&simulatorOutput, "output", "stdout", "output type")
 	SimulatorCmd.Flags().StringVar(&simulatorOutputLocation, "location", "give_me_a_name.dat", "output destination")
+
+	RootCmd.AddCommand(SimulatorCmd)
 }

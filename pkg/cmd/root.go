@@ -38,10 +38,6 @@ func init() {
 
 	RootCmd.PersistentFlags().StringVar(&config.ConfigFile, "config", config.DefaultConfigFile, "config file (default is ./xephon-b.yml)")
 	RootCmd.PersistentFlags().BoolVar(&config.Debug, "debug", false, "debug")
-
-	RootCmd.AddCommand(VersionCmd)
-	RootCmd.AddCommand(SimulatorCmd)
-	RootCmd.AddCommand(LoaderCmd)
 }
 
 func initConfig() {

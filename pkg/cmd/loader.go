@@ -49,4 +49,6 @@ func init() {
 	LoaderCmd.Flags().StringVar(&loadDataType, "data-type", "int", "data point type, int or double")
 	LoaderCmd.Flags().StringVar(&targetType, "target-type", "void", "target database")
 	LoaderCmd.Flags().StringVar(&targetLocation, "target-location", "localhost:10086", "target url")
+
+	RootCmd.AddCommand(LoaderCmd)
 }
