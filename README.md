@@ -1,5 +1,7 @@
 # xephon-b
 
+[![Join the chat at https://gitter.im/xephonhq/xephon-b](https://badges.gitter.im/xephonhq/xephon-b.svg)](https://gitter.im/xephonhq/xephon-b?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 <h1 align="center">
 	<br>
   <!-- TODO: should be logo for Xephon-B but not xephon ...  -->
