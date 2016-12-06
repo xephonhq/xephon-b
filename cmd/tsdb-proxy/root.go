@@ -8,6 +8,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+var Version = "0.0.1-dev"
+
 var (
 	configFile        = ""
 	defaultConfigFile = "tsdb-proxy.yml"
@@ -19,7 +21,7 @@ var RootCmd = &cobra.Command{
 	Short: "Time series database proxy",
 	Long:  `TSDB proxy is a proxy for time series databases`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Proxy, hey!")
+		fmt.Println("TSDB Proxy:" + Version + " Use `tsdb-proxy -h` for more information")
 	},
 }
 
