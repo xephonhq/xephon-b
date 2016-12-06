@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 
 # This script find all the projects inside certain folder and check if the have license like GPL
