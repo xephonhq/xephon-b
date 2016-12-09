@@ -1,51 +1,68 @@
 #!/usr/bin/env python3
-import os
 
-# This script find all the projects inside certain folder and check if the have license like GPL
+"""License Checker
+
+This script find all the projects inside certain folder and list their licenses
+
+Todo:
+    * support arguments
+    * limit search level
+    * resolve path
+    * pretty print
+    * more detail license information, i.e. GPL -> GPLv3
+    * some project have vendor folder in scm, result in duplication, like testify
+"""
+
+import os
+import sys
+from collections import deque
+
+__author__ = "at15"
+
 
 def find_projects(vendor_folder):
-    # although most path should be host/owner/project
-    # there are projects using gopkg.in which result in path like gopkg.in
-    
-    # - TODO:limit level to 5
-    # - TODO: some project have vendor folder in scm, result in duplication, like testify
-    # - any folder with a license file is a project
+    """Find all the projects in sub folders
+
+    Any folder with a license file is treated as a project,
+    because although all go packages should have host/owner/project style,
+    gopkg.in results in gopkg.in/package.v1 style.
+    Also there might be vendored bash scripts
+
+    """
 
     projects = []
-    # use as a queue
-    q = [vendor_folder]
-    while len(q) > 0:
-        d = q.pop()
-        for entry in os.scandir(d):
+    folders_to_process = deque()
+    folders_to_process.append(vendor_folder)
+    while len(folders_to_process) > 0:
+        current_folder = folders_to_process.popleft()
+        for entry in os.scandir(current_folder):
             if entry.is_file() and entry.name.lower() == 'license':
-                license = get_license(d + "/" + entry.name)
-                projects.append({'p':d, 'l':license})
+                license_type = get_license(current_folder + "/" + entry.name)
+                projects.append({'p': current_folder, 'l': license_type})
             if entry.is_dir():
-                q.insert(0, d + "/" + entry.name)
+                folders_to_process.append(current_folder + "/" + entry.name)
     return projects
 
-# Common license files  https://github.com/github/choosealicense.com/tree/gh-pages/_licenses
 def get_license(license_file):
-    s = open(license_file,'r').read()
-    # TODO: switch case style?
-    if 'MIT' in s:
-        return 'MIT'
-    if 'GNU' in s:
-        # TODO: which GNU, GPLv?, LGPL
-        return 'GNU'
-    if 'Apache' in s:
-        # TODO: which Apache
-        return 'Apache'
-    if 'Creative Commons' in s:
-        # TODO: CC?
-        return 'CC'
-    if 'ISC' in s:
-        return 'ISC'
-    if 'FUCK' in s:
-        return 'WTFPL'
+    """Extract license type from license file
+
+    Common license files can be found on:
+    https://github.com/github/choosealicense.com/tree/gh-pages/_licenses
+
+    """
+    file_content = open(license_file, 'r').read()
+    license_keywords = {'MIT': 'MIT', 'GNU': 'GNU', 'Apache': 'Apache',
+                        'ISC': 'ISC', 'WTFPL': 'FUCK'}
+    for license_type, keyword in license_keywords.items():
+        if keyword in file_content:
+            return license_type
     return 'UNKNOWN'
-    
+
 
 if __name__ == "__main__":
-    print(find_projects("."))
+    if len(sys.argv) > 1:
+        print(find_projects(sys.argv[1]))
+    else:
+        print("base folder not specified, using current folder")
+        print(find_projects("."))
     print("finished")
