@@ -1,8 +1,11 @@
 package main
 
 import (
+	"strings"
+
 	"github.com/spf13/cobra"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/config"
+	"github.com/xephonhq/xephon-b/pkg/tsdb/influxdb"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/kairosdb"
 )
 
@@ -30,6 +33,8 @@ var PingCmd = &cobra.Command{
 				SSL:     false,
 			},
 		}
+
+		db = strings.ToLower(db)
 		switch db {
 		case "kairosdb":
 			client := kairosdb.KairosDBHTTPClient{Config: c}
@@ -37,6 +42,13 @@ var PingCmd = &cobra.Command{
 				log.Error(err.Error())
 			} else {
 				log.Info("KairosDB is working")
+			}
+		case "influxdb":
+			client := influxdb.InfluxDBClient{Config: c}
+			if err := client.Ping(); err != nil {
+				log.Error(err.Error())
+			} else {
+				log.Info("InfluxDB is working")
 			}
 		default:
 			log.Errorf("unsupported database %s", db)

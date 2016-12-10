@@ -13,7 +13,7 @@ import (
 	"github.com/xephonhq/xephon-b/pkg/util"
 )
 
-// Short name use in loader package
+// Short name use in KairosdDB client package
 var log = util.Logger.WithFields(logrus.Fields{
 	"pkg": "x.tsdb.kairosdb",
 })
