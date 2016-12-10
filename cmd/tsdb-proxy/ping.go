@@ -7,6 +7,7 @@ import (
 	"github.com/xephonhq/xephon-b/pkg/tsdb/config"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/influxdb"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/kairosdb"
+	"github.com/xephonhq/xephon-b/pkg/tsdb/opentsdb"
 )
 
 var (
@@ -49,6 +50,13 @@ var PingCmd = &cobra.Command{
 				log.Error(err.Error())
 			} else {
 				log.Info("InfluxDB is working")
+			}
+		case "opentsdb":
+			client := opentsdb.OpenTSDBHTTPClient{Config: c}
+			if err := client.Ping(); err != nil {
+				log.Error(err.Error())
+			} else {
+				log.Info("OpenTSDB is working")
 			}
 		default:
 			log.Errorf("unsupported database %s", db)
