@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/Sirupsen/logrus"
+	"github.com/xephonhq/xephon-b/pkg/tsdb"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/config"
 	"github.com/xephonhq/xephon-b/pkg/util"
 )
@@ -43,5 +44,9 @@ func (client *OpenTSDBHTTPClient) Ping() error {
 		return err
 	}
 	log.Info("OpenTSDB version is " + resData["version"])
+	return nil
+}
+
+func (client *OpenTSDBHTTPClient) Put(p tsdb.TSDBPayload) error {
 	return nil
 }

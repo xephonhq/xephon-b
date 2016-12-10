@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
+	"github.com/xephonhq/xephon-b/pkg/tsdb"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/config"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/influxdb"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/kairosdb"
@@ -34,39 +35,30 @@ var PingCmd = &cobra.Command{
 				SSL:     false,
 			},
 		}
-
 		db = strings.ToLower(db)
+		var client tsdb.TSDBClient
 		switch db {
 		case "kairosdb":
-			client := kairosdb.KairosDBHTTPClient{Config: c}
-			if err := client.Ping(); err != nil {
-				log.Error(err.Error())
-			} else {
-				log.Info("KairosDB is working")
-			}
+			client = &kairosdb.KairosDBHTTPClient{Config: c}
 		case "influxdb":
-			client := influxdb.InfluxDBClient{Config: c}
-			if err := client.Ping(); err != nil {
-				log.Error(err.Error())
-			} else {
-				log.Info("InfluxDB is working")
-			}
+			client = &influxdb.InfluxDBClient{Config: c}
 		case "opentsdb":
-			client := opentsdb.OpenTSDBHTTPClient{Config: c}
-			if err := client.Ping(); err != nil {
-				log.Error(err.Error())
-			} else {
-				log.Info("OpenTSDB is working")
-			}
+			client = &opentsdb.OpenTSDBHTTPClient{Config: c}
 		default:
 			log.Errorf("unsupported database %s", db)
+			return
+		}
+		if err := client.Ping(); err != nil {
+			log.Error(err.Error())
+		} else {
+			log.Infof("%s is working", db)
 		}
 	},
 }
 
 func init() {
 	PingCmd.Flags().StringVar(&db, "db", "", "target database type")
-	PingCmd.Flags().StringVar(&host, "host", "", "host address i.e. localhost")
+	PingCmd.Flags().StringVar(&host, "host", "localhost", "host address i.e. localhost")
 	PingCmd.Flags().IntVar(&port, "port", -1, "host port")
 
 	RootCmd.AddCommand(PingCmd)

@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 
 	"github.com/Sirupsen/logrus"
+	"github.com/xephonhq/xephon-b/pkg/tsdb"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/config"
 	"github.com/xephonhq/xephon-b/pkg/util"
 )
@@ -46,5 +47,9 @@ func (client *InfluxDBClient) Ping() error {
 		return err
 	}
 	log.Info("InfluxDB version is " + res.Header.Get(influxDBVersionHeader))
+	return nil
+}
+
+func (client *InfluxDBClient) Put(p tsdb.TSDBPayload) error {
 	return nil
 }
