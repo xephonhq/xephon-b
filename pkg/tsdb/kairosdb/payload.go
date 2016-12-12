@@ -11,6 +11,7 @@ import (
 // KairosDBPayload is NOT thread safe
 type KairosDBPayload struct {
 	firstPoint           bool
+	end                  bool
 	buffer               *bytes.Buffer
 	bufferedSeries       []*common.Series
 	bufferedIntPoints    []*common.IntPoint
@@ -21,6 +22,7 @@ func NewKairosDBPayload() *KairosDBPayload {
 	p := KairosDBPayload{}
 	p.buffer = bytes.NewBufferString("[")
 	p.firstPoint = true
+	p.end = false
 	return &p
 }
 
@@ -55,6 +57,9 @@ func (p *KairosDBPayload) DataSize() int {
 }
 
 func (p *KairosDBPayload) Bytes() ([]byte, error) {
-	p.buffer.WriteString("]")
+	if !p.end {
+		p.buffer.WriteString("]")
+		p.end = true
+	}
 	return p.buffer.Bytes(), nil
 }

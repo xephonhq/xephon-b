@@ -19,15 +19,15 @@ type Series struct {
 	Tags map[string]string `json:"tag"`
 }
 
-// SeriesWithIntPoint is a series with int value points
-type SeriesWithIntPoint struct {
+// SeriesWithIntPoints is a series with int value points
+type SeriesWithIntPoints struct {
 	Series
 	// TODO: store two arrays, one for timestamp, one for value might be more efficient
 	Points []*IntPoint
 }
 
-// SeriesWithDoublePoint is a series with double value points
-type SeriesWithDoublePoint struct {
+// SeriesWithDoublePoints is a series with double value points
+type SeriesWithDoublePoints struct {
 	Series
 	Points []*DoublePoint
 }

@@ -1,5 +1,10 @@
 package config
 
+// TSDBClientConfig control the concurrency of client
 type TSDBClientConfig struct {
-	Host TSDBHostConfig
+	Host                 TSDBHostConfig
+	ConcurrentConnection int
+	QPSPerClient         int
+	Timeout              int
+	EnableTrace          int // or trace level
 }

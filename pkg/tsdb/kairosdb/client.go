@@ -19,7 +19,8 @@ var log = util.Logger.WithFields(logrus.Fields{
 })
 
 type KairosDBHTTPClient struct {
-	Config config.TSDBClientConfig
+	Config    config.TSDBClientConfig
+	transport *http.Transport
 }
 
 type KairosDBTelnetClient struct {
@@ -54,8 +55,7 @@ func (client *KairosDBHTTPClient) Put(p tsdb.TSDBPayload) error {
 	// cast it to its own payload
 	payload, ok := p.(*KairosDBPayload)
 	if !ok {
-		// TODO: the logic here is quite ... strange, fatal would exit the program, but what if
-		// people want to continue? They should not, it's a problem of developer not using the right type
+		// NOTE: it's fatal because user should know what the type of payload and choose right client
 		log.Fatal("must pass KairosDBPayload to KairosDBClient")
 		return nil
 	}
