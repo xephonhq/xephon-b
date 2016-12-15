@@ -1,5 +1,5 @@
-hash: 71604f5ca436f7347ddcf13f5b3e0e9a0deb3af0aa34a69c9d4c988aeb4f4174
-updated: 2016-11-20T01:14:50.820045711-08:00
+hash: ce4b90b643328df2562568772692e866c42bf45ec68f4fc0fd24d7b8247db2f9
+updated: 2016-12-15T00:37:46.171189229-08:00
 imports:
 - name: github.com/fsnotify/fsnotify
   version: 30411dbcefb7a1da7e84f75530ad3abe4011b4f8
@@ -25,9 +25,10 @@ imports:
 - name: github.com/pelletier/go-buffruneio
   version: df1e16fde7fc330a0ca68167c23bf7ed6ac31d6d
 - name: github.com/pelletier/go-toml
-  version: 45932ad32dfdd20826f5671da37a5f3ce9f26a8d
+  version: 017119f7a78a0b5fc0ea39ef6be09f03acf3345d
 - name: github.com/pkg/errors
-  version: 01fa4104b9c248c8945d14d9f128454d5b28d595
+  version: 645ef00459ed84a119197bfb8d8205042c6df63d
+  vcs: git
 - name: github.com/pkg/sftp
   version: a71e8f580e3b622ebff585309160b1cc549ef4d2
 - name: github.com/Sirupsen/logrus

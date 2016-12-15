@@ -11,6 +11,7 @@ import (
 	"io/ioutil"
 
 	"github.com/xephonhq/xephon-b/pkg/util"
+	"errors"
 )
 
 // Short name use in KairosdDB client package
@@ -19,8 +20,9 @@ var log = util.Logger.WithFields(logrus.Fields{
 })
 
 type KairosDBHTTPClient struct {
-	Config    config.TSDBClientConfig
-	transport *http.Transport
+	Config      config.TSDBClientConfig
+	transport   *http.Transport
+	httpClients []*http.Client
 }
 
 type KairosDBTelnetClient struct {
@@ -48,6 +50,23 @@ func (client *KairosDBHTTPClient) Ping() error {
 		return err
 	}
 	log.Info("KairosDB version is " + resData["version"])
+	return nil
+}
+
+func (client *KairosDBHTTPClient) Initialize() error {
+	if client.Config.ConcurrentConnection < 1 {
+		// TODO: panic
+		log.Fatal("concurrent connection must be larger than 1")
+		// FIXME: this error is never returned
+		return errors.New("concurrent connection must be larger than 1")
+	}
+	client.transport = &http.Transport{}
+	// create clients based on concurrent connection
+	for i := 0; i < client.Config.ConcurrentConnection; i++ {
+		// TODO: should allocate a fixed size array and assign
+		client.httpClients = append(client.httpClients,
+			&http.Client{Transport: client.transport})
+	}
 	return nil
 }
 

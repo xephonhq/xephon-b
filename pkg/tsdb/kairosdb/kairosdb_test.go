@@ -6,6 +6,7 @@ import (
 
 	"github.com/xephonhq/xephon-b/pkg/common"
 	"github.com/xephonhq/xephon-b/pkg/tsdb"
+	"github.com/xephonhq/xephon-b/pkg/tsdb/config"
 )
 
 func TestTSDBClientInterface(t *testing.T) {
@@ -28,4 +29,18 @@ func TestKairosDBPayload_AddIntPoint(t *testing.T) {
 	payload.AddIntPoint(&sp)
 	b, _ := payload.Bytes()
 	t.Log(string(b))
+}
+
+func TestKairosDBHTTPClient_Initialize(t *testing.T) {
+	c := config.TSDBClientConfig{
+		Host: config.TSDBHostConfig{
+			Address: "localhost",
+			Port:    8080,
+			SSL:     false,
+		},
+	}
+	client := KairosDBHTTPClient{Config: c}
+	//client.Initialize()
+	client.Config.ConcurrentConnection = 100
+	client.Initialize()
 }
