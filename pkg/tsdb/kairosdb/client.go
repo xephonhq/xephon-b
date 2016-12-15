@@ -11,7 +11,6 @@ import (
 	"io/ioutil"
 
 	"github.com/xephonhq/xephon-b/pkg/util"
-	"errors"
 )
 
 // Short name use in KairosdDB client package
@@ -55,11 +54,9 @@ func (client *KairosDBHTTPClient) Ping() error {
 
 func (client *KairosDBHTTPClient) Initialize() error {
 	if client.Config.ConcurrentConnection < 1 {
-		// TODO: panic
-		log.Fatal("concurrent connection must be larger than 1")
-		// FIXME: this error is never returned
-		return errors.New("concurrent connection must be larger than 1")
+		log.Panic("concurrent connection must be larger thant 1")
 	}
+
 	client.transport = &http.Transport{}
 	// create clients based on concurrent connection
 	for i := 0; i < client.Config.ConcurrentConnection; i++ {

@@ -31,7 +31,13 @@ func TestKairosDBPayload_AddIntPoint(t *testing.T) {
 	t.Log(string(b))
 }
 
-func TestKairosDBHTTPClient_Initialize(t *testing.T) {
+func TestKairosDBHTTPClient_Initialize_Panic(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Log("should panic when concurrent is not set")
+			t.Fail()
+		}
+	}()
 	c := config.TSDBClientConfig{
 		Host: config.TSDBHostConfig{
 			Address: "localhost",
@@ -40,7 +46,18 @@ func TestKairosDBHTTPClient_Initialize(t *testing.T) {
 		},
 	}
 	client := KairosDBHTTPClient{Config: c}
-	//client.Initialize()
-	client.Config.ConcurrentConnection = 100
+	client.Initialize()
+}
+
+func TestKairosDBHTTPClient_Initialize(t *testing.T) {
+	c := config.TSDBClientConfig{
+		Host: config.TSDBHostConfig{
+			Address: "localhost",
+			Port:    8080,
+			SSL:     false,
+		},
+		ConcurrentConnection: 100,
+	}
+	client := KairosDBHTTPClient{Config: c}
 	client.Initialize()
 }
