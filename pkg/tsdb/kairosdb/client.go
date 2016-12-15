@@ -22,12 +22,15 @@ type KairosDBHTTPClient struct {
 	Config      config.TSDBClientConfig
 	transport   *http.Transport
 	httpClients []*http.Client
+	requestChan chan *http.Request // TODO: maybe a buffered channel
+	putURL      string
 }
 
 type KairosDBTelnetClient struct {
 }
 
 // Ping use KairosDB version API to check if it alive
+// Ping does not require Initialize to be called
 func (client *KairosDBHTTPClient) Ping() error {
 	res, err := http.Get(client.Config.Host.HostURL() + "/api/v1/version")
 	if err != nil {
@@ -52,29 +55,45 @@ func (client *KairosDBHTTPClient) Ping() error {
 	return nil
 }
 
+// Initialize creates a bunch of http clients
 func (client *KairosDBHTTPClient) Initialize() error {
 	if client.Config.ConcurrentConnection < 1 {
 		log.Panic("concurrent connection must be larger thant 1")
 	}
 
-	client.transport = &http.Transport{}
+	concurrency := client.Config.ConcurrentConnection
+	client.transport = &http.Transport{
+		MaxIdleConnsPerHost: concurrency,
+	}
 	// create clients based on concurrent connection
-	for i := 0; i < client.Config.ConcurrentConnection; i++ {
+	// all clients share one transport
+	for i := 0; i < concurrency; i++ {
 		// TODO: should allocate a fixed size array and assign
 		client.httpClients = append(client.httpClients,
 			&http.Client{Transport: client.transport})
 	}
+	client.requestChan = make(chan *http.Request)
+	client.putURL = client.Config.Host.HostURL() + "/api/v1/datapoints"
+	// TODO: start go routine for each client
+	// TODO: external methods to shut down all go routines, (close the channel seems to be the best)
+	// TODO: give each go routine and id for debug
+
 	return nil
 }
 
+// Shutdown stops all go routine
+func (client *KairosDBHTTPClient) Shutdown() {
+	close(client.requestChan)
+}
+
+// Put sends payload using one of the many http clients
 func (client *KairosDBHTTPClient) Put(p tsdb.TSDBPayload) error {
 	// cast it to its own payload
 	payload, ok := p.(*KairosDBPayload)
 	if !ok {
-		// NOTE: it's fatal because user should know what the type of payload and choose right client
-		log.Fatal("must pass KairosDBPayload to KairosDBClient")
-		return nil
+		log.Panic("must pass KairosDBPayload to KairosDBClient")
 	}
+
 	payload.Bytes()
 	return nil
 }

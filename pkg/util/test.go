@@ -25,6 +25,7 @@ func ViperReadTestConfig() {
 }
 
 func TestKairosDB() bool {
+	// TODO: maybe using testing.Short()
 	if os.Getenv("TEST_KAIROSDB") == "1" {
 		// TODO: maybe need to ping to make sure the db is running
 		return true

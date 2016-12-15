@@ -60,4 +60,5 @@ func TestKairosDBHTTPClient_Initialize(t *testing.T) {
 	}
 	client := KairosDBHTTPClient{Config: c}
 	client.Initialize()
+	client.Shutdown()
 }
