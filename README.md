@@ -11,7 +11,7 @@
 
 [![Build Status](https://travis-ci.org/xephonhq/xephon-b.svg?branch=feature%2Fdata-generation)](https://travis-ci.org/xephonhq/xephon-b)
 [![Join the chat at https://gitter.im/xephonhq/xephon-b](https://badges.gitter.im/xephonhq/xephon-b.svg)](https://gitter.im/xephonhq/xephon-b?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
+[![GoDoc](https://godoc.org/github.com/xephonhq/xephon-b?status.svg)](https://godoc.org/github.com/xephonhq/xephon-b)
 
 A time series database benchmark tool and benchmark result sharing platform
 
