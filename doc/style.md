@@ -11,14 +11,15 @@
 
 ## Test
 
-- If you do have time, ie: Algo test tommorrow, then don't write tests!
+- No need to test if everything is unstable
+- If you don't have time, ie: Algo test tommorrow, then don't write tests!
 - Coverage is important but 100% coverage always ruin a good day, so have a nice day!
 
 ## Language Specific
 
 ### Bash
 
-- write the `!#/usr/bin/bash` line
+- write the `#!/usr/bin/env bash` line
 - DO NOT use zsh
 
 ### Java
@@ -29,19 +30,69 @@
 
 - use Golang 1.7
 - use `vendor` with [glide](https://github.com/Masterminds/glide) for dependency management
-- use specific version for you dependency
-
+- use specific version for you dependency, do NOT use latest
 
 #### Interface 
 
-- each package put interface in its package name file, ie: `generator/generator.go`
+- TODO: each package put interface in its package name file, ie: `generator/generator.go`
 - check implementation match interface in package name test file, ie : `generator/generator_test.go`, 
 using `var _ InterafaceName = (*ImplementationName)(nil)`
 
 ### JavaScript
 
-- do what ever you want
+- TBD
 
-### PHP
+## Golang
 
-- it's the best language
+### Error handling
+
+- deal with error first, avoid nesting
+- panic when the developer made some stupid mistake
+- wrap the error using `pkg/errors`
+- use type conversion to extract information from specific error
+- don't parse/check error string unless in test, `Error()` is for human
+
+Bad
+
+````go
+if err := doA(); err == nil {
+      if err = doB(); err == nil {
+          fmt.Println("a and b success")
+      }else{
+          return err
+      }
+}else{
+    return err
+}
+````
+
+Good 
+
+````go
+if err := doA(); err != nil {
+    return err
+}
+if err = doB(); err != nil {
+    return err
+}
+fmt.Println("a and b success")
+````
+
+### Package organization
+
+- use as namespace, nest when there is need
+- split one package into server files by their functionality
+
+### Test
+
+- use `t.Parallel()` whenever you can
+- test race problem
+
+### Log
+
+- separate logger for each package
+
+### Doc 
+
+- NO need to add doc if it is WIP and/or very unstable
+- remove outdated regularly
