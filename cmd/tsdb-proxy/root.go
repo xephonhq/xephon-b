@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/dyweb/Ayi/util"
+	"github.com/xephonhq/xephon-b/pkg/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
