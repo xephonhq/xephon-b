@@ -6,12 +6,13 @@ import:
 - package: github.com/spf13/viper
   vcs: git
   version: 50515b700e02658272117a72bd641b6b7f1222e5
-- package: github.com/stretchr/testify
-  vcs: git
-  version: 976c720a22c8eb4eb6a0b4348ad85ad12491a506
 - package: github.com/pkg/errors
   vcs: git
   version: 248dadf4e9068a0b3e79f02ed0a610d935de5302
 - package: github.com/dyweb/Ayi
   vcs: git
-  version: common-util/log
+  version: b3578036864243a6a5d9186ce2acac0fe6d5d85e
+testImport:
+- package: github.com/stretchr/testify
+  vcs: git
+  version: 2402e8e7a02fc811447d11f881aa9746cdc57983
