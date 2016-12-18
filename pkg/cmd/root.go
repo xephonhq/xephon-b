@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/xephonhq/xephon-b/pkg/config"
@@ -12,9 +11,7 @@ import (
 )
 
 // Short name use in machine simulator package
-var log = util.Logger.WithFields(logrus.Fields{
-	"pkg": "x.cmd",
-})
+var log = util.Logger.NewEntry()
 
 // RootCmd is the top command, other commands should be its child
 var RootCmd = &cobra.Command{
@@ -34,6 +31,8 @@ func Execute() {
 }
 
 func init() {
+	log.AddField("pkg", "x.cmd")
+
 	cobra.OnInitialize(initConfig)
 
 	RootCmd.PersistentFlags().StringVar(&config.ConfigFile, "config", config.DefaultConfigFile, "config file (default is ./xephon-b.yml)")

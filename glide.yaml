@@ -9,10 +9,9 @@ import:
 - package: github.com/stretchr/testify
   vcs: git
   version: 976c720a22c8eb4eb6a0b4348ad85ad12491a506
-- package: github.com/Sirupsen/logrus
-  vcs: git
-  version: 0.11.0
 - package: github.com/pkg/errors
   vcs: git
-  version: 0.8.0
-
+  version: 248dadf4e9068a0b3e79f02ed0a610d935de5302
+- package: github.com/dyweb/Ayi
+  vcs: git
+  version: common-util/log

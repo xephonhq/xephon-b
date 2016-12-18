@@ -3,7 +3,6 @@ package kairosdb
 import (
 	"net/http"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/xephonhq/xephon-b/pkg/tsdb"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/config"
 
@@ -14,9 +13,7 @@ import (
 )
 
 // Short name use in KairosdDB client package
-var log = util.Logger.WithFields(logrus.Fields{
-	"pkg": "x.tsdb.kairosdb",
-})
+var log = util.Logger.NewEntry()
 
 type KairosDBHTTPClient struct {
 	Config      config.TSDBClientConfig
@@ -27,6 +24,10 @@ type KairosDBHTTPClient struct {
 }
 
 type KairosDBTelnetClient struct {
+}
+
+func init() {
+	log.AddField("pkg", "x.tsdb.kairosdb")
 }
 
 // Ping use KairosDB version API to check if it alive

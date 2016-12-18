@@ -6,7 +6,6 @@ import (
 
 	"io/ioutil"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/xephonhq/xephon-b/pkg/tsdb"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/config"
 	"github.com/xephonhq/xephon-b/pkg/util"
@@ -19,9 +18,11 @@ type InfluxDBClient struct {
 }
 
 // Short name use in InfluxDB client package
-var log = util.Logger.WithFields(logrus.Fields{
-	"pkg": "x.tsdb.influxdb",
-})
+var log = util.Logger.NewEntry()
+
+func init() {
+	log.AddField("pkg", "x.tsdb.influxdb")
+}
 
 // Ping use InfluxDB /ping API to check if InfluxDB is alive
 func (client *InfluxDBClient) Ping() error {

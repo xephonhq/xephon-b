@@ -5,22 +5,23 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/xephonhq/xephon-b/pkg/tsdb"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/config"
 	"github.com/xephonhq/xephon-b/pkg/util"
 )
 
 // Short name use in OpenTSDB client package
-var log = util.Logger.WithFields(logrus.Fields{
-	"pkg": "x.tsdb.opentsdb",
-})
+var log = util.Logger.NewEntry()
 
 type OpenTSDBHTTPClient struct {
 	Config config.TSDBClientConfig
 }
 
 type OpenTSDBTelnetClient struct {
+}
+
+func init() {
+	log.AddField("pkg", "x.tsdb.opentsdb")
 }
 
 func (client *OpenTSDBHTTPClient) Ping() error {
