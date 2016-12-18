@@ -8,15 +8,13 @@ import dlog "github.com/dyweb/Ayi/common/log"
 var Logger = dlog.NewLogger()
 
 // Short name use in util package
-var log = Logger.NewEntry()
+var log = Logger.NewEntryWithPkg("x.util")
 
 func init() {
 	f := dlog.NewTextFormatter()
 	f.EnableColor = true
 	Logger.Formatter = f
 	Logger.Level = dlog.InfoLevel
-	log.AddField("pkg", "x.util")
-
 }
 
 // UseVerboseLog set logger level to debug

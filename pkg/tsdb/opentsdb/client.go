@@ -11,17 +11,13 @@ import (
 )
 
 // Short name use in OpenTSDB client package
-var log = util.Logger.NewEntry()
+var log = util.Logger.NewEntryWithPkg("x.tsdb.opentsdb")
 
 type OpenTSDBHTTPClient struct {
 	Config config.TSDBClientConfig
 }
 
 type OpenTSDBTelnetClient struct {
-}
-
-func init() {
-	log.AddField("pkg", "x.tsdb.opentsdb")
 }
 
 func (client *OpenTSDBHTTPClient) Ping() error {

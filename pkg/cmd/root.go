@@ -11,7 +11,7 @@ import (
 )
 
 // Short name use in machine simulator package
-var log = util.Logger.NewEntry()
+var log = util.Logger.NewEntryWithPkg("x.cmd")
 
 // RootCmd is the top command, other commands should be its child
 var RootCmd = &cobra.Command{
@@ -31,8 +31,6 @@ func Execute() {
 }
 
 func init() {
-	log.AddField("pkg", "x.cmd")
-
 	cobra.OnInitialize(initConfig)
 
 	RootCmd.PersistentFlags().StringVar(&config.ConfigFile, "config", config.DefaultConfigFile, "config file (default is ./xephon-b.yml)")

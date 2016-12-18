@@ -10,16 +10,12 @@ import (
 )
 
 // Short name use in loader package
-var log = util.Logger.NewEntry()
+var log = util.Logger.NewEntryWithPkg("x.loader")
 
 type Loader struct {
 	config     config.LoaderConfig
 	source     io.Reader // use bufio.Scanner to read by line
 	serializer serialize.Serializer
-}
-
-func init() {
-	log.AddField("pkg", "x.loader")
 }
 
 func NewLoader(c config.LoaderConfig) *Loader {

@@ -13,7 +13,7 @@ import (
 )
 
 // Short name use in KairosdDB client package
-var log = util.Logger.NewEntry()
+var log = util.Logger.NewEntryWithPkg("x.tsdb.kairosdb")
 
 type KairosDBHTTPClient struct {
 	Config      config.TSDBClientConfig
@@ -24,10 +24,6 @@ type KairosDBHTTPClient struct {
 }
 
 type KairosDBTelnetClient struct {
-}
-
-func init() {
-	log.AddField("pkg", "x.tsdb.kairosdb")
 }
 
 // Ping use KairosDB version API to check if it alive

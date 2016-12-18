@@ -6,7 +6,7 @@ import (
 )
 
 // Short name use in machine simulator package
-var log = util.Logger.NewEntry()
+var log = util.Logger.NewEntryWithPkg("x.serialize")
 
 // Serializer transform point with series into underlying format
 type Serializer interface {
@@ -14,8 +14,4 @@ type Serializer interface {
 	WriteDouble(*common.DoublePointWithSeries) ([]byte, error)
 	ReadInt(s []byte) (*common.IntPointWithSeries, error)
 	ReadDouble(s []byte) (*common.DoublePointWithSeries, error)
-}
-
-func init() {
-	log.AddField("pkg", "x.serialize")
 }

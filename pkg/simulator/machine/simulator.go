@@ -13,7 +13,7 @@ import (
 )
 
 // Short name use in machine simulator package
-var log = util.Logger.NewEntry()
+var log = util.Logger.NewEntryWithPkg("x.s.machine")
 
 var defaultMachineNumber int64 = 0
 
@@ -22,10 +22,6 @@ type MachineSimulator struct {
 	machines   []*Machine
 	serializer serialize.Serializer
 	writer     io.Writer
-}
-
-func init() {
-	log.AddField("pkg", "x.s.machine")
 }
 
 func (ms *MachineSimulator) Type() string {

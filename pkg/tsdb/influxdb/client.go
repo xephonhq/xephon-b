@@ -18,11 +18,7 @@ type InfluxDBClient struct {
 }
 
 // Short name use in InfluxDB client package
-var log = util.Logger.NewEntry()
-
-func init() {
-	log.AddField("pkg", "x.tsdb.influxdb")
-}
+var log = util.Logger.NewEntryWithPkg("x.tsdb.influxdb")
 
 // Ping use InfluxDB /ping API to check if InfluxDB is alive
 func (client *InfluxDBClient) Ping() error {
