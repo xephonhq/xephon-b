@@ -1,7 +1,9 @@
 package kairosdb
 
 import (
+	"io"
 	"net/http"
+	"sync"
 
 	"github.com/xephonhq/xephon-b/pkg/tsdb"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/config"
@@ -16,11 +18,13 @@ import (
 var log = util.Logger.NewEntryWithPkg("x.tsdb.kairosdb")
 
 type KairosDBHTTPClient struct {
-	Config      config.TSDBClientConfig
-	transport   *http.Transport
-	httpClients []*http.Client
-	requestChan chan *http.Request // TODO: maybe a buffered channel
-	putURL      string
+	Config       config.TSDBClientConfig
+	transport    *http.Transport
+	httpClients  []*http.Client
+	requestChan  chan *http.Request // TODO: maybe a buffered channel
+	putURL       string
+	initializeWg sync.WaitGroup
+	shutdownWg   sync.WaitGroup
 }
 
 type KairosDBTelnetClient struct {
@@ -52,7 +56,7 @@ func (client *KairosDBHTTPClient) Ping() error {
 	return nil
 }
 
-// Initialize creates a bunch of http clients
+// Initialize creates a bunch of http clients and waits for every goroutine to start
 func (client *KairosDBHTTPClient) Initialize() error {
 	if client.Config.ConcurrentConnection < 1 {
 		log.Panic("concurrent connection must be larger thant 1")
@@ -71,16 +75,38 @@ func (client *KairosDBHTTPClient) Initialize() error {
 	}
 	client.requestChan = make(chan *http.Request)
 	client.putURL = client.Config.Host.HostURL() + "/api/v1/datapoints"
-	// TODO: start go routine for each client
-	// TODO: external methods to shut down all go routines, (close the channel seems to be the best)
-	// TODO: give each go routine and id for debug
-
+	client.initializeWg.Add(concurrency)
+	client.shutdownWg.Add(concurrency)
+	for i := 0; i < concurrency; i++ {
+		// TODO: a separate function for this
+		go func(i int) {
+			log.Debugf("http client %d routine started", i)
+			// log.Infof("http client %d routine started", i)
+			httpClient := client.httpClients[i]
+			client.initializeWg.Done()
+			for req := range client.requestChan {
+				res, err := httpClient.Do(req)
+				if err != nil {
+					log.Warn(err)
+				} else {
+					io.Copy(ioutil.Discard, res.Body)
+					// TODO: I wrote a 'FIXME: now the request is canceled' comment in mini-impl/ab code
+					res.Body.Close()
+				}
+			}
+			log.Debugf("http client %d routine stopped", i)
+			// log.Infof("http client %d routine stopped", i)
+			client.shutdownWg.Done()
+		}(i)
+	}
+	client.initializeWg.Wait()
 	return nil
 }
 
-// Shutdown stops all go routine
+// Shutdown close the request channel and waits for all the goroutine to return
 func (client *KairosDBHTTPClient) Shutdown() {
 	close(client.requestChan)
+	client.shutdownWg.Wait()
 }
 
 // Put sends payload using one of the many http clients

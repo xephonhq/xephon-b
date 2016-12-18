@@ -10,7 +10,7 @@ import (
 	"github.com/xephonhq/xephon-b/pkg/util"
 )
 
-// Short name use in machine simulator package
+// Short name use in cmd package
 var log = util.Logger.NewEntryWithPkg("x.cmd")
 
 // RootCmd is the top command, other commands should be its child
