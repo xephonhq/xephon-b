@@ -3,10 +3,13 @@ package requests
 import (
 	"encoding/json"
 
+	"net/http"
+
 	"github.com/pkg/errors"
 )
 
 type Response struct {
+	Res  *http.Response
 	Text []byte
 }
 

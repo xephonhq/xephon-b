@@ -20,6 +20,7 @@ func Get(url string) (*Response, error) {
 	if err != nil {
 		return response, errors.Wrap(err, "error reading body")
 	}
+	response.Res = res
 	response.Text = resContent
 	return response, nil
 }

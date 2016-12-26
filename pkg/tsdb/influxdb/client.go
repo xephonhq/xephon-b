@@ -1,14 +1,13 @@
 package influxdb
 
 import (
-	"errors"
 	"net/http"
 
-	"io/ioutil"
-
+	"github.com/pkg/errors"
 	"github.com/xephonhq/xephon-b/pkg/tsdb"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/config"
 	"github.com/xephonhq/xephon-b/pkg/util"
+	"github.com/xephonhq/xephon-b/pkg/util/requests"
 )
 
 const influxDBVersionHeader = "X-Influxdb-Version"
@@ -23,27 +22,15 @@ var log = util.Logger.NewEntryWithPkg("x.tsdb.influxdb")
 // Ping use InfluxDB /ping API to check if InfluxDB is alive
 func (client *InfluxDBClient) Ping() error {
 	// https://docs.influxdata.com/influxdb/v1.1/tools/api/
-	res, err := http.Get(client.Config.Host.HostURL() + "/ping")
+	pingURL := client.Config.Host.HostURL() + "/ping"
+	res, err := requests.Get(pingURL)
 	if err != nil {
-		log.Warn("can't get InfluxDB version")
-		log.Debug(err.Error())
-		return err
+		return errors.Wrap(err, "can't reach InfluxDB")
 	}
-	defer res.Body.Close()
-	// InfluxDB use header
-	resContent, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		log.Warn("can't read response body")
-		log.Debug(err.Error())
-		return err
+	if res.Res.StatusCode != http.StatusNoContent {
+		return errors.Wrapf(err, "wrong status code returned %d, body is %s", res.Res.StatusCode, res.Text)
 	}
-	if res.StatusCode != http.StatusNoContent {
-		err = errors.New(string(resContent))
-		log.Warnf("wrong status code returned %d", res.StatusCode)
-		log.Debug(err.Error())
-		return err
-	}
-	log.Info("InfluxDB version is " + res.Header.Get(influxDBVersionHeader))
+	log.Info("InfluxDB version is " + res.Res.Header.Get(influxDBVersionHeader))
 	return nil
 }
 
