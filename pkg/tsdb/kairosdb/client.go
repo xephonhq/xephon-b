@@ -10,6 +10,7 @@ import (
 
 	"io/ioutil"
 
+	"github.com/pkg/errors"
 	"github.com/xephonhq/xephon-b/pkg/util"
 	"github.com/xephonhq/xephon-b/pkg/util/requests"
 )
@@ -32,11 +33,12 @@ type KairosDBTelnetClient struct {
 
 // Ping use KairosDB version API to check if it alive
 // Ping does not require Initialize to be called
+// FIXME: this call also works for OpenTSDB
 func (client *KairosDBHTTPClient) Ping() error {
 	versionURL := client.Config.Host.HostURL() + "/api/v1/version"
 	res, err := requests.GetJSON(versionURL)
 	if err != nil {
-		return err
+		return errors.Wrapf(err, "can't reach KairosDB via %s", versionURL)
 	}
 	log.Info("KairosDB version is " + res["version"])
 	return nil

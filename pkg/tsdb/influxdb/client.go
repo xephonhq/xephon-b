@@ -25,7 +25,7 @@ func (client *InfluxDBClient) Ping() error {
 	pingURL := client.Config.Host.HostURL() + "/ping"
 	res, err := requests.Get(pingURL)
 	if err != nil {
-		return errors.Wrap(err, "can't reach InfluxDB")
+		return errors.Wrapf(err, "can't reach InfluxDB via %s", pingURL)
 	}
 	if res.Res.StatusCode != http.StatusNoContent {
 		return errors.Wrapf(err, "wrong status code returned %d, body is %s", res.Res.StatusCode, res.Text)
