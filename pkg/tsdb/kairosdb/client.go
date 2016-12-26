@@ -8,10 +8,10 @@ import (
 	"github.com/xephonhq/xephon-b/pkg/tsdb"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/config"
 
-	"encoding/json"
 	"io/ioutil"
 
 	"github.com/xephonhq/xephon-b/pkg/util"
+	"github.com/xephonhq/xephon-b/pkg/util/requests"
 )
 
 // Short name use in KairosdDB client package
@@ -33,26 +33,12 @@ type KairosDBTelnetClient struct {
 // Ping use KairosDB version API to check if it alive
 // Ping does not require Initialize to be called
 func (client *KairosDBHTTPClient) Ping() error {
-	res, err := http.Get(client.Config.Host.HostURL() + "/api/v1/version")
+	versionURL := client.Config.Host.HostURL() + "/api/v1/version"
+	res, err := requests.GetJSON(versionURL)
 	if err != nil {
-		log.Warn("can't get kairosdb version")
-		log.Debug(err.Error())
 		return err
 	}
-	defer res.Body.Close()
-	resContent, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		log.Warn("can't read response body")
-		log.Debug(err.Error())
-		return err
-	}
-	var resData map[string]string
-	if err := json.Unmarshal(resContent, &resData); err != nil {
-		log.Warn("can't parse json")
-		log.Debug(err.Error())
-		return err
-	}
-	log.Info("KairosDB version is " + resData["version"])
+	log.Info("KairosDB version is " + res["version"])
 	return nil
 }
 
