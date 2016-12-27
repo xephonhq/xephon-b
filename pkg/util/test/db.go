@@ -9,8 +9,8 @@ import (
 	"github.com/xephonhq/xephon-b/pkg/tsdb/kairosdb"
 )
 
-var pinged st.Set
-var running st.Set
+var pinged = st.NewSet()
+var running = st.NewSet()
 
 // KairosDB determines if we should run test that requires KairosDB up and running
 // - if the environment variable is set, we test
