@@ -1,11 +1,12 @@
-hash: 19ad1fc03653053fb417f5727038e8adbe53fb04d9b7db9d9135cbcfd5eea7b5
-updated: 2016-12-17T23:33:56.920233432-08:00
+hash: 8751f97b8d8d8fd954c18d3294681ea44710412bcbe060299cdd32fc362b472b
+updated: 2016-12-25T23:08:46.803065111-08:00
 imports:
 - name: github.com/dyweb/Ayi
-  version: b3578036864243a6a5d9186ce2acac0fe6d5d85e
+  version: b4a6686e94132edd85833a30ba25c27658175e00
   vcs: git
   subpackages:
   - common/log
+  - common/structure
 - name: github.com/fsnotify/fsnotify
   version: 30411dbcefb7a1da7e84f75530ad3abe4011b4f8
 - name: github.com/hashicorp/hcl
@@ -30,7 +31,7 @@ imports:
 - name: github.com/pelletier/go-buffruneio
   version: df1e16fde7fc330a0ca68167c23bf7ed6ac31d6d
 - name: github.com/pelletier/go-toml
-  version: 017119f7a78a0b5fc0ea39ef6be09f03acf3345d
+  version: 45932ad32dfdd20826f5671da37a5f3ce9f26a8d
 - name: github.com/pkg/errors
   version: 248dadf4e9068a0b3e79f02ed0a610d935de5302
   vcs: git

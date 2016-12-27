@@ -11,7 +11,7 @@ import:
   version: 248dadf4e9068a0b3e79f02ed0a610d935de5302
 - package: github.com/dyweb/Ayi
   vcs: git
-  version: b3578036864243a6a5d9186ce2acac0fe6d5d85e
+  version: b4a6686e94132edd85833a30ba25c27658175e00
 testImport:
 - package: github.com/stretchr/testify
   vcs: git
