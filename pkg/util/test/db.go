@@ -17,6 +17,7 @@ var running = st.NewSet()
 // TODO: this may mess up the running database, but sicne we use docker, the data can lost
 // - if we can ping the database using provided config, we test
 func KairosDB() bool {
+	// NOTE: you need to add `// +build !race` to your integration test
 	if running.Contains(common.KairosDB) {
 		return true
 	}
