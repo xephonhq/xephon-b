@@ -1,7 +1,6 @@
 package opentsdb
 
 import (
-
 	"github.com/pkg/errors"
 	"github.com/xephonhq/xephon-b/pkg/tsdb"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/config"
