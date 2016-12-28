@@ -1,31 +1,110 @@
 package kairosdb
 
 import (
+	"io"
+	"net/http"
+	"sync"
+
 	"github.com/xephonhq/xephon-b/pkg/tsdb"
+	"github.com/xephonhq/xephon-b/pkg/tsdb/config"
+
+	"io/ioutil"
+
+	"github.com/pkg/errors"
 	"github.com/xephonhq/xephon-b/pkg/util"
-	"github.com/Sirupsen/logrus"
+	"github.com/xephonhq/xephon-b/pkg/util/requests"
 )
 
-// Short name use in loader package
-var log = util.Logger.WithFields(logrus.Fields{
-	"pkg": "x.tsdb.kairosdb",
-})
+// Short name use in KairosdDB client package
+var log = util.Logger.NewEntryWithPkg("x.tsdb.kairosdb")
 
 type KairosDBHTTPClient struct {
+	Config       config.TSDBClientConfig
+	transport    *http.Transport
+	httpClients  []*http.Client
+	requestChan  chan *http.Request // TODO: maybe a buffered channel
+	putURL       string
+	initializeWg sync.WaitGroup
+	shutdownWg   sync.WaitGroup
 }
 
 type KairosDBTelnetClient struct {
 }
 
-func (client *KairosDBHTTPClient) Put(p tsdb.TSDBPayload) error{
+// Ping use KairosDB version API to check if it alive
+// Ping does not require Initialize to be called
+// FIXME: this call also works for OpenTSDB
+func (client *KairosDBHTTPClient) Ping() error {
+	versionURL := client.Config.Host.HostURL() + "/api/v1/version"
+	res, err := requests.GetJSON(versionURL)
+	if err != nil {
+		return errors.Wrapf(err, "can't reach KairosDB via %s", versionURL)
+	}
+	log.Info("KairosDB version is " + res["version"])
+	return nil
+}
+
+// Initialize creates a bunch of http clients and waits for every goroutine to start
+func (client *KairosDBHTTPClient) Initialize() error {
+	if client.Config.ConcurrentConnection < 1 {
+		log.Panic("concurrent connection must be larger thant 1")
+	}
+
+	concurrency := client.Config.ConcurrentConnection
+	client.transport = &http.Transport{
+		MaxIdleConnsPerHost: concurrency,
+	}
+	// create clients based on concurrent connection
+	// all clients share one transport
+	for i := 0; i < concurrency; i++ {
+		// TODO: should allocate a fixed size array and assign
+		client.httpClients = append(client.httpClients,
+			&http.Client{Transport: client.transport})
+	}
+	client.requestChan = make(chan *http.Request)
+	client.putURL = client.Config.Host.HostURL() + "/api/v1/datapoints"
+	client.initializeWg.Add(concurrency)
+	client.shutdownWg.Add(concurrency)
+	for i := 0; i < concurrency; i++ {
+		// TODO: a separate function for this
+		go func(i int) {
+			log.Debugf("http client %d routine started", i)
+			// log.Infof("http client %d routine started", i)
+			httpClient := client.httpClients[i]
+			client.initializeWg.Done()
+			for req := range client.requestChan {
+				res, err := httpClient.Do(req)
+				if err != nil {
+					log.Warn(err)
+				} else {
+					io.Copy(ioutil.Discard, res.Body)
+					// TODO: I wrote a 'FIXME: now the request is canceled' comment in mini-impl/ab code
+					res.Body.Close()
+				}
+			}
+			log.Debugf("http client %d routine stopped", i)
+			// log.Infof("http client %d routine stopped", i)
+			client.shutdownWg.Done()
+		}(i)
+	}
+	client.initializeWg.Wait()
+	return nil
+}
+
+// Shutdown close the request channel and waits for all the goroutine to return
+func (client *KairosDBHTTPClient) Shutdown() {
+	close(client.requestChan)
+	client.shutdownWg.Wait()
+}
+
+// Put sends payload using one of the many http clients
+func (client *KairosDBHTTPClient) Put(p tsdb.TSDBPayload) error {
 	// cast it to its own payload
 	payload, ok := p.(*KairosDBPayload)
 	if !ok {
-		// TODO: the logic here is quite ... strange, fatal would exit the program, but what if
-		// people want to continue? They should not, it's a problem of developer not using the right type
-		log.Fatal("must pass KairosDBPayload to KairosDBClient")
-		return nil
+		log.Panic("must pass KairosDBPayload to KairosDBClient")
 	}
+
 	payload.Bytes()
 	return nil
 }

@@ -1,6 +1,8 @@
 install:
     - go install github.com/xephonhq/xephon-b/cmd/xb
     - go install github.com/xephonhq/xephon-b/cmd/xephon-b
+    - go install github.com/xephonhq/xephon-b/cmd/tsdb-proxy
+    
 test:
     - go test -v -cover ./pkg/...
     - go test -race ./pkg/...

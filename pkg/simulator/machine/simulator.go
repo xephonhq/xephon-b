@@ -8,15 +8,12 @@ import (
 	"github.com/xephonhq/xephon-b/pkg/config"
 	gt "github.com/xephonhq/xephon-b/pkg/generator/time"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/xephonhq/xephon-b/pkg/serialize"
 	"github.com/xephonhq/xephon-b/pkg/util"
 )
 
 // Short name use in machine simulator package
-var log = util.Logger.WithFields(logrus.Fields{
-	"pkg": "x.s.machine",
-})
+var log = util.Logger.NewEntryWithPkg("x.s.machine")
 
 var defaultMachineNumber int64 = 0
 

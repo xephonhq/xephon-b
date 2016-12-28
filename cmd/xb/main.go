@@ -5,5 +5,7 @@ import (
 )
 
 func main() {
+	// call me xb
+	cmd.RootCmd.Use = "xb"
 	cmd.Execute()
 }

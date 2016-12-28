@@ -3,6 +3,7 @@ package util
 // Test util
 
 import (
+	"os"
 	"path"
 	"runtime"
 
@@ -21,4 +22,13 @@ func ViperReadTestConfig() {
 	log.Debug(filePath)
 	viper.SetConfigFile(filePath)
 	viper.ReadInConfig()
+}
+
+func TestKairosDB() bool {
+	// TODO: maybe using testing.Short()
+	if os.Getenv("TEST_KAIROSDB") == "1" {
+		// TODO: maybe need to ping to make sure the db is running and then cache the result
+		return true
+	}
+	return false
 }

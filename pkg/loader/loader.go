@@ -4,16 +4,13 @@ import (
 	"bufio"
 	"io"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/serialize"
 	"github.com/xephonhq/xephon-b/pkg/util"
 )
 
 // Short name use in loader package
-var log = util.Logger.WithFields(logrus.Fields{
-	"pkg": "x.loader",
-})
+var log = util.Logger.NewEntryWithPkg("x.loader")
 
 type Loader struct {
 	config     config.LoaderConfig
