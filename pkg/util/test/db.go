@@ -27,6 +27,7 @@ func KairosDB() bool {
 	}
 	// env var goes before ping, pinged is empty at first, so env var is triggered first
 	// TODO: get environment variable name from the `common` package instead hardcoded here
+	// TODO: disable DB test on Travis CI
 	if os.Getenv("TEST_KAIROSDB") == "1" {
 		running.Add(common.KairosDB)
 		return true
