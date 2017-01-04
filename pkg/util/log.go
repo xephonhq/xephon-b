@@ -1,6 +1,6 @@
 package util
 
-import dlog "github.com/dyweb/Ayi/common/log"
+import dlog "github.com/dyweb/gommon/log"
 
 // Log util
 

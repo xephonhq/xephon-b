@@ -1,12 +1,13 @@
-hash: 8751f97b8d8d8fd954c18d3294681ea44710412bcbe060299cdd32fc362b472b
-updated: 2016-12-25T23:08:46.803065111-08:00
+hash: 199190b6b0e23df6b9346f252cd82579b9b1c7923cf7877a8fb9c95ffa3ee296
+updated: 2017-01-03T23:42:20.361289836-08:00
 imports:
-- name: github.com/dyweb/Ayi
-  version: b4a6686e94132edd85833a30ba25c27658175e00
+- name: github.com/dyweb/gommon
+  version: 7aad4c9c1ff32b9473a816ba27158bf59bfec307
   vcs: git
   subpackages:
-  - common/log
-  - common/structure
+  - log
+  - requests
+  - structure
 - name: github.com/fsnotify/fsnotify
   version: 30411dbcefb7a1da7e84f75530ad3abe4011b4f8
 - name: github.com/hashicorp/hcl

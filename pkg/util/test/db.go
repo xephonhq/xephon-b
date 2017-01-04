@@ -3,7 +3,7 @@ package test
 import (
 	"os"
 
-	st "github.com/dyweb/Ayi/common/structure"
+	st "github.com/dyweb/gommon/structure"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/common"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/config"
 	"github.com/xephonhq/xephon-b/pkg/tsdb/kairosdb"
