@@ -10,9 +10,9 @@ import (
 
 	"io/ioutil"
 
+	"github.com/dyweb/gommon/requests"
 	"github.com/pkg/errors"
 	"github.com/xephonhq/xephon-b/pkg/util"
-	"github.com/xephonhq/xephon-b/pkg/util/requests"
 )
 
 // Short name use in KairosdDB client package

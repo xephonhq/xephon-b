@@ -9,9 +9,9 @@ import:
 - package: github.com/pkg/errors
   vcs: git
   version: 248dadf4e9068a0b3e79f02ed0a610d935de5302
-- package: github.com/dyweb/Ayi
+- package: github.com/dyweb/gommon
   vcs: git
-  version: b4a6686e94132edd85833a30ba25c27658175e00
+  version: 7aad4c9c1ff32b9473a816ba27158bf59bfec307
 testImport:
 - package: github.com/stretchr/testify
   vcs: git
