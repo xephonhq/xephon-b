@@ -24,9 +24,8 @@ A time series database benchmark tool and benchmark result sharing platform
 
 Q: How can I get involved?
 
-A: Thanks for your interest, but this project is still in very early stage (most development are still in private repository for various reasons),
-the best we can provide you for now is the [reading list](doc/reading.md) and [awesome list](https://github.com/xephonhq/awesome-time-series-database),
-which can provide you some insight on both usage and internals of time series databases.
+A: Thanks for your interest, but this project is not actively maintained, most of its code has been migrated
+to [Xephon-K](https://github.com/xephonhq/xephon-k) as its load tester.
 
 Q: Is this benchmark suite for time series database only?
 
