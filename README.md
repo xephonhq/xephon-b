@@ -20,6 +20,8 @@ A time series database benchmark tool and benchmark result sharing platform
 
 ![system design](doc/system-design.png)
 
+NOTE: this repository is outdated, the development is now in a monolithic repository [Xephon-K](https://github.com/xephonhq/xephon-k)
+
 ## FAQ
 
 Q: How can I get involved?
