@@ -1,9 +1,7 @@
 package main
 
-import (
-	"github.com/xephonhq/xephon-b/pkg/cmd"
-)
+import "fmt"
 
 func main() {
-	cmd.Execute()
+	fmt.Println("TODO: real xephon-b cli")
 }

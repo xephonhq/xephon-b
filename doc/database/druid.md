@@ -5,7 +5,7 @@
 - [Druid A Real-time Analytics Data Store](http://static.druid.io/docs/druid.pdf)
 - [The RADStack: Open Source Lambda Architecture for Interactive Analytics](http://static.druid.io/docs/radstack.pdf)
 - [Optimizing Druid with Roaring bitmaps](http://dl.acm.org/citation.cfm?id=2938515&CFID=861733520&CFTOKEN=37174930)
-- [](http://druid.io/blog/2014/03/17/benchmarking-druid.html)
+- [Benchmarking Druid](http://druid.io/blog/2014/03/17/benchmarking-druid.html)
 
 ## Code
 
