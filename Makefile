@@ -13,3 +13,12 @@ install:
 .PHONY: fmt
 fmt:
 	gofmt -d -l -w ./pkg ./cmd
+
+.PHONY: package
+package: install
+	cp $(shell which xb) .
+	cp $(shell which xab) .
+	zip xb-$(VERSION).zip xb
+	zip xab-$(VERSION).zip xab
+	rm xb
+	rm xab

@@ -6,8 +6,8 @@ import (
 	"runtime"
 
 	icli "github.com/at15/go.ice/ice/cli"
-	"github.com/xephonhq/xephon-b/pkg/util/logutil"
 	"github.com/spf13/cobra"
+	"github.com/xephonhq/xephon-b/pkg/util/logutil"
 	"net/http"
 )
 

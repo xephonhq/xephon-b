@@ -16,3 +16,6 @@ vendor
 
 # Generated data
 *.dat
+
+# packages
+*.zip
