@@ -1,5 +1,12 @@
 # Road map
 
+2018/02/16
+
+- [ ] an ab like util, which simply generate load on a http server
+  - https://github.com/istio/fortio
+- [ ] ts workload generator
+- [ ] server mode, listen for control instruction, used for distributed testing
+
 2016/10/23
 
 - [ ] choose the first batch of databases to do benchmark on
