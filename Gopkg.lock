@@ -16,6 +16,7 @@
     "errors",
     "log",
     "log/handlers/cli",
+    "requests",
     "structure",
     "util",
     "util/color",
@@ -26,6 +27,16 @@
   revision = "a9768ace27e47bd6f1b2afb93fdd73350fb2ab95"
 
 [[projects]]
+  name = "github.com/gogo/protobuf"
+  packages = [
+    "gogoproto",
+    "proto",
+    "protoc-gen-gogo/descriptor"
+  ]
+  revision = "1adfc126b41513cc696b209667c8656ea7aac67c"
+  version = "v1.0.0"
+
+[[projects]]
   name = "github.com/inconshreveable/mousetrap"
   packages = ["."]
   revision = "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75"
@@ -34,8 +45,22 @@
 [[projects]]
   branch = "master"
   name = "github.com/libtsdb/libtsdb-go"
-  packages = ["libtsdb/config"]
-  revision = "c3a7a81500b8fe7474d705a86597e41d013bedab"
+  packages = [
+    "libtsdb",
+    "libtsdb/client/genericw",
+    "libtsdb/client/graphitew",
+    "libtsdb/client/influxdbw",
+    "libtsdb/client/kairosdbw",
+    "libtsdb/common",
+    "libtsdb/common/graphite",
+    "libtsdb/common/influxdb",
+    "libtsdb/common/kairosdb",
+    "libtsdb/config",
+    "libtsdb/libtsdbpb",
+    "libtsdb/util/bytesutil",
+    "libtsdb/util/logutil"
+  ]
+  revision = "21cced24eb603820d7adeac3df928b5fec41360b"
 
 [[projects]]
   name = "github.com/spf13/cobra"
@@ -50,6 +75,12 @@
   version = "v1.0.0"
 
 [[projects]]
+  branch = "master"
+  name = "golang.org/x/net"
+  packages = ["proxy"]
+  revision = "22ae77b79946ea320088417e4d50825671d82d57"
+
+[[projects]]
   name = "gopkg.in/yaml.v2"
   packages = ["."]
   revision = "7f97868eec74b32b0982dd158a51a446d1da7eb5"
@@ -58,6 +89,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "bfdd1d943c515ffbeb3a2888d37b6f9d03803b69367f1146322b8ce2d8a266eb"
+  inputs-digest = "75d7cfc94e8b10989c4740ac2d1ea64d31285eb42d01336792b57ec57b69848f"
   solver-name = "gps-cdcl"
   solver-version = 1

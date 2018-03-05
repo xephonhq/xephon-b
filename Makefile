@@ -14,6 +14,10 @@ install:
 fmt:
 	gofmt -d -l -w ./pkg ./cmd
 
+.PHONY: generate
+generate:
+	gommon generate -v
+
 .PHONY: package
 package: install
 	cp $(shell which xb) .
