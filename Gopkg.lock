@@ -4,7 +4,10 @@
 [[projects]]
   branch = "master"
   name = "github.com/at15/go.ice"
-  packages = ["ice/cli"]
+  packages = [
+    "ice/cli",
+    "ice/util/logutil"
+  ]
   revision = "c8561aa9ce40b5223941dbc8e87552a574f18694"
 
 [[projects]]
@@ -89,6 +92,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "48e39cfee3c033488d5bba97627c66b54e65505f8ce20c30feceded78709fdd5"
+  inputs-digest = "aea922917eabfa22d8e08156b6ea1b7f4db97ed772be1a0614c0ba2f8a68a9d7"
   solver-name = "gps-cdcl"
   solver-version = 1

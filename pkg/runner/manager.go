@@ -6,11 +6,6 @@ import (
 	dlog "github.com/dyweb/gommon/log"
 	"sync"
 
-	"github.com/libtsdb/libtsdb-go/libtsdb"
-	"github.com/libtsdb/libtsdb-go/libtsdb/client/graphitew"
-	"github.com/libtsdb/libtsdb-go/libtsdb/client/influxdbw"
-	"github.com/libtsdb/libtsdb-go/libtsdb/client/kairosdbw"
-
 	"github.com/xephonhq/xephon-b/pkg/config"
 )
 
@@ -41,18 +36,17 @@ func (m *Manager) Run(ctx context.Context) error {
 		return errors.Errorf("unknown limit %s", cfg.Limit)
 	}
 
-	// read database config,
-	var dbcfg *config.DatabaseConfig
-	for i := range cfg.Databases {
-		c := cfg.Databases[i]
-		if c.Name == cfg.Database {
-			m.log.Infof("target database is %s type %s", c.Name, c.Type)
-			dbcfg = &c
-			break
-		}
+	// read config
+	var (
+		dbcfg config.DatabaseConfig
+		wlcfg config.WorkloadConfig
+		err   error
+	)
+	if dbcfg, err = m.selectDatabase(); err != nil {
+		return err
 	}
-	if dbcfg == nil {
-		return errors.Errorf("databse %s does not have config, check name in databases section", cfg.Database)
+	if wlcfg, err = m.selectWorkload(); err != nil {
+		return err
 	}
 
 	var wg sync.WaitGroup
@@ -62,33 +56,47 @@ func (m *Manager) Run(ctx context.Context) error {
 	if cfg.Worker.Num <= 0 {
 		return errors.Errorf("invalid worker number %d", cfg.Worker.Num)
 	}
+	// create workers, exit if any of them has error
+	workers := make([]*Worker, cfg.Worker.Num)
 	for i := 0; i < cfg.Worker.Num; i++ {
-		c, err := createClient(*dbcfg)
-		if err != nil {
-			m.log.Errorf("can't create tsdb client use config %s", err.Error())
-			cancel()
-			break
+		if wk, err := NewWorker(wlcfg, dbcfg); err != nil {
+			return errors.Wrap(err, "can't create worker")
+		} else {
+			workers[i] = wk
 		}
+	}
+	// run workers
+	for i := 0; i < cfg.Worker.Num; i++ {
 		wg.Add(1)
-		go func(c libtsdb.WriteClient) {
-			m.log.Infof("TODO: make request")
+		go func(wk *Worker) {
+			// TODO: cancel when error
+			wk.Run(ctx)
 			wg.Done()
-		}(c)
+		}(workers[i])
 	}
 	wg.Wait()
 	cancel()
 	return nil
 }
 
-func createClient(cfg config.DatabaseConfig) (libtsdb.WriteClient, error) {
-	switch cfg.Type {
-	case "influxdb":
-		return influxdbw.New(*cfg.Influxdb)
-	case "kairosdb":
-		return kairosdbw.New(*cfg.Kairosdb)
-	case "graphite":
-		return graphitew.New(*cfg.Graphite)
-	default:
-		return nil, errors.Errorf("unknown databse %s", cfg.Type)
+func (m *Manager) selectDatabase() (config.DatabaseConfig, error) {
+	for _, c := range m.cfg.Databases {
+		if c.Name == m.cfg.Database {
+			m.log.Infof("target database is %s type %s", c.Name, c.Type)
+			return c, nil
+		}
 	}
+	return config.DatabaseConfig{},
+		errors.Errorf("databse %s does not have config, check name in databases section", m.cfg.Database)
+}
+
+func (m *Manager) selectWorkload() (config.WorkloadConfig, error) {
+	for _, c := range m.cfg.Workloads {
+		if c.Name == m.cfg.Workload {
+			m.log.Infof("workload is %s series %d value generator is %v", c.Name, c.Series.Num, c.Value.Generator)
+			return c, nil
+		}
+	}
+	return config.WorkloadConfig{},
+		errors.Errorf("workload %s does not have config, check name in workloads section", m.cfg.Workload)
 }

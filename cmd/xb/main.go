@@ -6,6 +6,8 @@ import (
 	"runtime"
 
 	icli "github.com/at15/go.ice/ice/cli"
+	goicelog "github.com/at15/go.ice/ice/util/logutil"
+
 	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/util/logutil"
 )
@@ -14,7 +16,7 @@ const (
 	myname = "xb"
 )
 
-// TODO: we should not use lib log as top registry, but they are same struct, so it should work
+// FIXME: debug logging is not working ....
 var log = logutil.Registry
 
 var (
@@ -49,4 +51,8 @@ func mustLoadConfig() {
 	if err := cli.LoadConfigTo(&cfg); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func init() {
+	log.AddChild(goicelog.Registry)
 }

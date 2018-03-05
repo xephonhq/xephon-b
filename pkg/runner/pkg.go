@@ -1,7 +1,7 @@
 package runner
 
 import (
-	"github.com/libtsdb/libtsdb-go/libtsdb/util/logutil"
+	"github.com/xephonhq/xephon-b/pkg/util/logutil"
 )
 
 var log = logutil.NewPackageLogger()
