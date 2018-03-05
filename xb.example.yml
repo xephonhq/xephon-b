@@ -5,7 +5,7 @@ workload: workload_0
 database: influxdb_0
 limit: time
 #limit: points
-duration: "1m"
+duration: "10s"
 worker:
   num: 10
 workloads:

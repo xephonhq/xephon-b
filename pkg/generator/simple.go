@@ -12,6 +12,13 @@ type Constant struct {
 	d float64
 }
 
+func NewConstant(i int, d float64) *Constant {
+	return &Constant{
+		i: i,
+		d: d,
+	}
+}
+
 func NewConstantInt(v int) *Constant {
 	return &Constant{
 		i: v,

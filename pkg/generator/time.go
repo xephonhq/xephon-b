@@ -1,6 +1,9 @@
 package generator
 
-import "time"
+import (
+	"github.com/dyweb/gommon/errors"
+	"time"
+)
 
 var _ TimeGenerator = (*FixIntervalTime)(nil)
 
@@ -12,7 +15,7 @@ type FixIntervalTime struct {
 }
 
 // A Duration represents the elapsed time between two instants as an int64 nanosecond count.
-func NewFixIntervalTime(interval time.Duration, precision time.Duration) *FixIntervalTime {
+func NewFixIntervalTime(interval time.Duration, precision time.Duration) (*FixIntervalTime, error) {
 	now := time.Now().UnixNano()
 	var (
 		step  int64
@@ -29,14 +32,13 @@ func NewFixIntervalTime(interval time.Duration, precision time.Duration) *FixInt
 		start = now
 		step = int64(interval)
 	default:
-		// TODO: should return error
-		log.Panicf("unsupported precision %s", precision)
+		return nil, errors.Errorf("unsupported precision %s", precision)
 	}
 	return &FixIntervalTime{
 		start: start,
 		step:  step,
 		cur:   start,
-	}
+	}, nil
 }
 
 func (g *FixIntervalTime) NextTime() int64 {

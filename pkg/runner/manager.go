@@ -59,7 +59,7 @@ func (m *Manager) Run(ctx context.Context) error {
 	// create workers, exit if any of them has error
 	workers := make([]*Worker, cfg.Worker.Num)
 	for i := 0; i < cfg.Worker.Num; i++ {
-		if wk, err := NewWorker(wlcfg, dbcfg); err != nil {
+		if wk, err := NewWorker(i, wlcfg, dbcfg); err != nil {
 			return errors.Wrap(err, "can't create worker")
 		} else {
 			workers[i] = wk
