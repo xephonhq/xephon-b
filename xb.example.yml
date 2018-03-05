@@ -10,6 +10,7 @@ worker:
   num: 10
 workloads:
   - name: workload_0
+  # TODO: specify what is a batch ...
     batch:
       totalPoints:
     series:

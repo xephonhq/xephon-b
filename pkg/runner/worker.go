@@ -23,14 +23,19 @@ type Worker struct {
 	wcfg config.WorkloadConfig
 	dcfg config.DatabaseConfig
 	c    libtsdb.WriteClient
-	t    generator.TimeGenerator
-	v    generator.ValueGenerator
+	sGen generator.SeriesGenerator
+	tGen generator.TimeGenerator
+	vGen generator.ValueGenerator
 
 	log *dlog.Logger
 }
 
 func NewWorker(id int, wcfg config.WorkloadConfig, dcfg config.DatabaseConfig) (*Worker, error) {
 	c, err := createClient(dcfg)
+	if err != nil {
+		return nil, err
+	}
+	s, err := createSeriesGenerator(wcfg.Series)
 	if err != nil {
 		return nil, err
 	}
@@ -47,8 +52,9 @@ func NewWorker(id int, wcfg config.WorkloadConfig, dcfg config.DatabaseConfig) (
 		wcfg: wcfg,
 		dcfg: dcfg,
 		c:    c,
-		t:    t,
-		v:    v,
+		sGen: s,
+		tGen: t,
+		vGen: v,
 	}
 	dlog.NewStructLogger(log, w)
 	return w, nil
@@ -79,6 +85,10 @@ func createClient(cfg config.DatabaseConfig) (libtsdb.WriteClient, error) {
 	default:
 		return nil, errors.Errorf("unknown database %s", cfg.Type)
 	}
+}
+
+func createSeriesGenerator(cfg config.SeriesConfig) (generator.SeriesGenerator, error) {
+	return generator.NewGenericSeries(cfg)
 }
 
 func createTimeGenerator(cfg config.TimeConfig, precision time.Duration) (generator.TimeGenerator, error) {

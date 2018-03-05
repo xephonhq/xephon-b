@@ -22,6 +22,10 @@ fmt:
 generate:
 	gommon generate -v
 
+.PHONY: loc
+loc:
+	cloc --exclude-dir=vendor,.idea,playground .
+
 .PHONY: package
 package: install
 	cp $(shell which xb) .
