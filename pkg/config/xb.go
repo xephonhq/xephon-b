@@ -29,6 +29,7 @@ type WorkloadConfig struct {
 }
 
 type SeriesConfig struct {
+	Prefix        string        `yaml:"prefix"`
 	Num           int           `yaml:"num"`
 	Churn         bool          `yaml:"churn"`
 	ChurnDuration time.Duration `yaml:"churnDuration"`
@@ -43,11 +44,17 @@ type TimeConfig struct {
 type ValueConfig struct {
 	Generator string                        `yaml:"generator"`
 	Constant  *ConstantValueGeneratorConfig `yaml:"constant"`
+	Random    *RandomValueGeneratorConfig   `yaml:"random"`
 }
 
 type ConstantValueGeneratorConfig struct {
 	Int    int     `yaml:"int"`
 	Double float64 `yaml:"double"`
+}
+
+type RandomValueGeneratorConfig struct {
+	Min float64 `yaml:"min"`
+	Max float64 `yaml:"max"`
 }
 
 type DatabaseConfig struct {

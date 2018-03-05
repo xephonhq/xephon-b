@@ -89,6 +89,9 @@ func createValueGenerator(cfg config.ValueConfig) (generator.ValueGenerator, err
 	switch cfg.Generator {
 	case "constant":
 		return generator.NewConstant(cfg.Constant.Int, cfg.Constant.Double), nil
+	case "random":
+		// TODO: apply config, min, max
+		return generator.NewRandom(), nil
 	default:
 		return nil, errors.Errorf("unknown generator %s", cfg.Generator)
 	}

@@ -1,12 +1,16 @@
 package generator
 
 import (
+	pb "github.com/libtsdb/libtsdb-go/libtsdb/libtsdbpb"
 	"github.com/xephonhq/xephon-b/pkg/util/logutil"
 )
 
 var log = logutil.NewPackageLogger()
 
-// TODO: time generator need precision, this should be from config ...
+type SeriesGenerator interface {
+	NextSeries() pb.EmptySeries
+}
+
 type TimeGenerator interface {
 	NextTime() int64
 }

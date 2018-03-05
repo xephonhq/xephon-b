@@ -63,7 +63,7 @@
     "libtsdb/util/bytesutil",
     "libtsdb/util/logutil"
   ]
-  revision = "560cbdce22a8d2b65b510eb290367f8520786eb3"
+  revision = "674cb5bd22325dc5fd9259d9517a40721c49f401"
 
 [[projects]]
   name = "github.com/spf13/cobra"
@@ -92,6 +92,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "aea922917eabfa22d8e08156b6ea1b7f4db97ed772be1a0614c0ba2f8a68a9d7"
+  inputs-digest = "b72e8b8fd2201c649c64868063618b6f2db2a38f9884cface9662fd0f464fc05"
   solver-name = "gps-cdcl"
   solver-version = 1
