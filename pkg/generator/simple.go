@@ -5,6 +5,8 @@ import (
 	"time"
 )
 
+var _ ValueGenerator = (*Constant)(nil)
+
 type Constant struct {
 	i int
 	d float64
@@ -31,6 +33,8 @@ func (g *Constant) NextInt() int {
 func (g *Constant) NextDouble() float64 {
 	return g.d
 }
+
+var _ ValueGenerator = (*Random)(nil)
 
 type Random struct {
 	// don't use global rand methods because it is mutex protected
@@ -73,5 +77,5 @@ func (g *Sequential) NextSeq() int64 {
 	return g.cur
 }
 
-type Counter struct {
-}
+//type Counter struct {
+//}

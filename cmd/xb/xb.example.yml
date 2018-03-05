@@ -1,5 +1,7 @@
 # example config of xephon-b
-workload: default
+# select workload
+workload: workload_0
+# select database
 database: influxdb_0
 limit: time
 #limit: points
@@ -7,18 +9,27 @@ duration: "1m"
 worker:
   num: 10
 workloads:
-  - name: default
-    type: constant
-    constat:
-      int: 1
-      double: 12.3
-  - name: default_random
-    type: random
-    random:
-      intmin: 0
-      intmax: 100
-      doublemin: 0.5
-      doublemax: 95.2
+  - name: workload_0
+    series:
+      num: 1 # number of series per worker
+      churn: true # switch to new set of series
+      churnDuration: "5s"
+      numTags: 1
+    time:
+      interval: "1ms"
+      # TODO: noise
+    value:
+      generator: constant
+      constant:
+        int: 1
+        double: 12.3
+#  - name: workload_1
+#    type: random
+#    random:
+#      intmin: 0
+#      intmax: 100
+#      doublemin: 0.5
+#      doublemax: 95.2
 databases:
   - name: influxdb_0
     type: influxdb

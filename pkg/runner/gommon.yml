@@ -1,3 +1,5 @@
 loggers:
   - struct: "*Manager"
     receiver: "m"
+  - struct: "*Worker"
+    receiver: "w"

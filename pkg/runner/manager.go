@@ -28,22 +28,20 @@ func NewManager(cfg config.XephonBConfig) (*Manager, error) {
 }
 
 func (m *Manager) Run(ctx context.Context) error {
-	ctx, cancel := context.WithCancel(ctx)
 	cfg := m.cfg
+
+	// set stop condition
+	ctx, cancel := context.WithCancel(ctx)
 	switch cfg.Limit {
 	case "time":
 		ctx, cancel = context.WithTimeout(ctx, cfg.Duration)
 	case "points":
-		// TODO: do something
+		// noop
 	default:
 		return errors.Errorf("unknown limit %s", cfg.Limit)
 	}
-	if cfg.Worker.Num <= 0 {
-		return errors.Errorf("invalid worker number %d", cfg.Worker.Num)
-	}
-	var wg sync.WaitGroup
-	// TODO: first start reporter
 
+	// read database config,
 	var dbcfg *config.DatabaseConfig
 	for i := range cfg.Databases {
 		c := cfg.Databases[i]
@@ -55,6 +53,14 @@ func (m *Manager) Run(ctx context.Context) error {
 	}
 	if dbcfg == nil {
 		return errors.Errorf("databse %s does not have config, check name in databases section", cfg.Database)
+	}
+
+	var wg sync.WaitGroup
+	// TODO: first start reporter
+
+	// worker
+	if cfg.Worker.Num <= 0 {
+		return errors.Errorf("invalid worker number %d", cfg.Worker.Num)
 	}
 	for i := 0; i < cfg.Worker.Num; i++ {
 		c, err := createClient(*dbcfg)
