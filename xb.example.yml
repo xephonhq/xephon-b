@@ -12,7 +12,8 @@ workloads:
   - name: workload_0
   # TODO: specify what is a batch ...
     batch:
-      totalPoints:
+      series: 1 # only one series in one request
+      points: 1 # only one 1 point in series
     series:
       prefix: "xbw0"
       num: 1 # number of series per worker
@@ -36,10 +37,10 @@ databases:
   - name: influxdb_0
     type: influxdb
     influxdb:
-      addr: localhost:8080
-      database: libtsdbtest
+      addr: http://localhost:8086
+      database: xephonb
   - name: influxdb_1
     type: influxdb
     influxdb:
-      addr: 202.102.0.1:8080
+      addr: http://202.102.0.1:8086
       database: libtsdbtest

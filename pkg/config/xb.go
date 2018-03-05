@@ -22,10 +22,15 @@ type WorkerConfig struct {
 
 type WorkloadConfig struct {
 	Name   string       `yaml:"name"`
-	Type   string       `yaml:"type"`
+	Batch  BatchConfig  `yaml:"batch"`
 	Series SeriesConfig `yaml:"series"`
 	Time   TimeConfig   `yaml:"time"`
 	Value  ValueConfig  `yaml:"value"`
+}
+
+type BatchConfig struct {
+	Series int `yaml:"series"`
+	Points int `yaml:"points"`
 }
 
 type SeriesConfig struct {

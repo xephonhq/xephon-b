@@ -11,6 +11,7 @@ import (
 	"github.com/libtsdb/libtsdb-go/libtsdb/client/graphitew"
 	"github.com/libtsdb/libtsdb-go/libtsdb/client/influxdbw"
 	"github.com/libtsdb/libtsdb-go/libtsdb/client/kairosdbw"
+	pb "github.com/libtsdb/libtsdb-go/libtsdb/libtsdbpb"
 
 	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/generator"
@@ -31,6 +32,10 @@ type Worker struct {
 }
 
 func NewWorker(id int, wcfg config.WorkloadConfig, dcfg config.DatabaseConfig) (*Worker, error) {
+	// check workload config
+	if wcfg.Batch.Series <= 0 || wcfg.Batch.Points <= 0 {
+		return nil, errors.Errorf("invalid batch series %d or points %d", wcfg.Batch.Series, wcfg.Batch.Points)
+	}
 	c, err := createClient(dcfg)
 	if err != nil {
 		return nil, err
@@ -61,17 +66,42 @@ func NewWorker(id int, wcfg config.WorkloadConfig, dcfg config.DatabaseConfig) (
 }
 
 func (w *Worker) Run(ctx context.Context) error {
-	w.log.Infof("TODO: worker should do something")
+	w.log.Infof("worker %d started", w.id)
 	for {
 		select {
 		case <-ctx.Done():
 			log.Infof("worker %d exit due to context", w.id)
 			return nil
 		default:
-			time.Sleep(time.Second)
+			w.genBatch()
+			// TODO: should return result code etc.
+			if err := w.c.Flush(); err != nil {
+				log.Warnf("failed to flush %s", err.Error())
+			}
 		}
 	}
 	return nil
+}
+
+func (w *Worker) genBatch() {
+	t := w.tGen.NextTime()
+	for i := 0; i < w.wcfg.Batch.Series; i++ {
+		sMeta := w.sGen.NextSeries()
+		for j := 0; j < w.wcfg.Batch.Points; j++ {
+			// FIXME: we hardcoded to use float, should allow mix them ...
+			v := w.vGen.NextDouble()
+			p := pb.PointDoubleTagged{
+				Name: sMeta.Name,
+				Tags: sMeta.Tags,
+				Point: pb.PointDouble{
+					T: t,
+					V: v,
+				},
+			}
+			// TODO: we should put many points in a series for tsdb that supports this, i.e. KairosDB, OpenTSDB, it is not supported by libtsdb yet
+			w.c.WriteDoublePoint(&p)
+		}
+	}
 }
 
 func createClient(cfg config.DatabaseConfig) (libtsdb.WriteClient, error) {
