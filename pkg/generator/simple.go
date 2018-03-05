@@ -54,5 +54,24 @@ func (g *Random) NextDouble() float64 {
 	return g.r.Float64()
 }
 
+type Sequential struct {
+	start    int64
+	interval int64
+	cur      int64
+}
+
+func NewSequential(start int64, interval int64) *Sequential {
+	return &Sequential{
+		start:    start,
+		interval: interval,
+		cur:      start,
+	}
+}
+
+func (g *Sequential) NextSeq() int64 {
+	g.cur += g.interval
+	return g.cur
+}
+
 type Counter struct {
 }

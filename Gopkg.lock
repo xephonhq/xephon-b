@@ -5,7 +5,7 @@
   branch = "master"
   name = "github.com/at15/go.ice"
   packages = ["ice/cli"]
-  revision = "5aa595e30ed9e64a5aab8cf1021471bf2025de2b"
+  revision = "c8561aa9ce40b5223941dbc8e87552a574f18694"
 
 [[projects]]
   branch = "master"
@@ -13,6 +13,7 @@
   packages = [
     "cast",
     "config",
+    "errors",
     "log",
     "log/handlers/cli",
     "structure",
@@ -22,7 +23,7 @@
     "util/logutil",
     "util/runtimeutil"
   ]
-  revision = "391e17305c8fd0af4d0d83aad7aba55f768089b7"
+  revision = "a9768ace27e47bd6f1b2afb93fdd73350fb2ab95"
 
 [[projects]]
   name = "github.com/inconshreveable/mousetrap"
@@ -31,10 +32,10 @@
   version = "v1.0"
 
 [[projects]]
-  name = "github.com/pkg/errors"
-  packages = ["."]
-  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
-  version = "v0.8.0"
+  branch = "master"
+  name = "github.com/libtsdb/libtsdb-go"
+  packages = ["libtsdb/config"]
+  revision = "c3a7a81500b8fe7474d705a86597e41d013bedab"
 
 [[projects]]
   name = "github.com/spf13/cobra"
@@ -49,14 +50,14 @@
   version = "v1.0.0"
 
 [[projects]]
-  branch = "v2"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
-  revision = "d670f9405373e636a5a2765eea47fac0c9bc91a4"
+  revision = "7f97868eec74b32b0982dd158a51a446d1da7eb5"
+  version = "v2.1.1"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "459b68ab0b741c5f88a64ee7e8800aa92cc0a6867162c8421c2428ab65ab2bd8"
+  inputs-digest = "bfdd1d943c515ffbeb3a2888d37b6f9d03803b69367f1146322b8ce2d8a266eb"
   solver-name = "gps-cdcl"
   solver-version = 1

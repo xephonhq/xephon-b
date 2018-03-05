@@ -1,0 +1,27 @@
+# example config of xephon-b
+workload: default
+database: influxdb_0
+workloads:
+  - name: default
+    type: constant
+    constat:
+      int: 1
+      double: 12.3
+  - name: default_random
+    type: random
+    random:
+      intmin: 0
+      intmax: 100
+      doublemin: 0.5
+      doublemax: 95.2
+databases:
+  - name: influxdb_0
+    type: influxdb
+    influxdb:
+      addr: localhost:8080
+      database: libtsdbtest
+  - name: influxdb_1
+    type: influxdb
+    influxdb:
+      addr: 202.102.0.1:8080
+      database: libtsdbtest

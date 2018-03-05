@@ -23,3 +23,10 @@ func TestRandom_NextInt(t *testing.T) {
 	t.Log(r.NextDouble())
 	t.Log(r.NextDouble())
 }
+
+func TestSequential_NextSeq(t *testing.T) {
+	s := NewSequential(1024, 1)
+	t.Log(s.NextSeq())
+	t.Log(s.NextSeq())
+	t.Log(s.NextSeq())
+}
