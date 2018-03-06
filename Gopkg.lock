@@ -4,8 +4,11 @@
 [[projects]]
   branch = "master"
   name = "github.com/at15/go.ice"
-  packages = ["ice/cli"]
-  revision = "5aa595e30ed9e64a5aab8cf1021471bf2025de2b"
+  packages = [
+    "ice/cli",
+    "ice/util/logutil"
+  ]
+  revision = "deec51d9e614a851687494040cd33f77b91d07e8"
 
 [[projects]]
   branch = "master"
@@ -13,8 +16,10 @@
   packages = [
     "cast",
     "config",
+    "errors",
     "log",
     "log/handlers/cli",
+    "requests",
     "structure",
     "util",
     "util/color",
@@ -22,7 +27,17 @@
     "util/logutil",
     "util/runtimeutil"
   ]
-  revision = "391e17305c8fd0af4d0d83aad7aba55f768089b7"
+  revision = "719ff88d7f9e380efa99a722e9f7d060b438377d"
+
+[[projects]]
+  name = "github.com/gogo/protobuf"
+  packages = [
+    "gogoproto",
+    "proto",
+    "protoc-gen-gogo/descriptor"
+  ]
+  revision = "1adfc126b41513cc696b209667c8656ea7aac67c"
+  version = "v1.0.0"
 
 [[projects]]
   name = "github.com/inconshreveable/mousetrap"
@@ -31,10 +46,24 @@
   version = "v1.0"
 
 [[projects]]
-  name = "github.com/pkg/errors"
-  packages = ["."]
-  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
-  version = "v0.8.0"
+  branch = "master"
+  name = "github.com/libtsdb/libtsdb-go"
+  packages = [
+    "libtsdb",
+    "libtsdb/client/genericw",
+    "libtsdb/client/graphitew",
+    "libtsdb/client/influxdbw",
+    "libtsdb/client/kairosdbw",
+    "libtsdb/common",
+    "libtsdb/common/graphite",
+    "libtsdb/common/influxdb",
+    "libtsdb/common/kairosdb",
+    "libtsdb/config",
+    "libtsdb/libtsdbpb",
+    "libtsdb/util/bytesutil",
+    "libtsdb/util/logutil"
+  ]
+  revision = "09a33bbdf741912ed5c1bacf2e6e88b3830cac42"
 
 [[projects]]
   name = "github.com/spf13/cobra"
@@ -49,14 +78,20 @@
   version = "v1.0.0"
 
 [[projects]]
-  branch = "v2"
+  branch = "master"
+  name = "golang.org/x/net"
+  packages = ["proxy"]
+  revision = "22ae77b79946ea320088417e4d50825671d82d57"
+
+[[projects]]
   name = "gopkg.in/yaml.v2"
   packages = ["."]
-  revision = "d670f9405373e636a5a2765eea47fac0c9bc91a4"
+  revision = "7f97868eec74b32b0982dd158a51a446d1da7eb5"
+  version = "v2.1.1"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "459b68ab0b741c5f88a64ee7e8800aa92cc0a6867162c8421c2428ab65ab2bd8"
+  inputs-digest = "c59b0f460eb8ce3a8396885f6ba20893d66028c5a66dadad1f9e7994df9688f5"
   solver-name = "gps-cdcl"
   solver-version = 1

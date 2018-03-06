@@ -10,9 +10,21 @@ install:
 	go install -ldflags "$(FLAGS)" ./cmd/xab
 	go install -ldflags "$(FLAGS)" ./cmd/xb
 
+.PHONY: test
+test:
+	go test -v -cover ./pkg/...
+
 .PHONY: fmt
 fmt:
 	gofmt -d -l -w ./pkg ./cmd
+
+.PHONY: generate
+generate:
+	gommon generate -v
+
+.PHONY: loc
+loc:
+	cloc --exclude-dir=vendor,.idea,playground .
 
 .PHONY: package
 package: install

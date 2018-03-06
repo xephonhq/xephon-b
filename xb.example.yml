@@ -1,0 +1,56 @@
+# example config of xephon-b
+# select workload
+workload: workload_0
+# select database
+#database: influxdb_0
+#database: kairosdb_0
+database: graphite_0
+limit: time
+#limit: points
+duration: "10s"
+worker:
+  num: 10
+workloads:
+  - name: workload_0
+  # TODO: specify what is a batch ...
+    batch:
+      series: 1 # only one series in one request
+      points: 1 # only one 1 point in series
+    series:
+      prefix: "xbw0"
+      num: 1 # number of series per worker
+      churn: true # switch to new set of series
+      churnDuration: "5s"
+      numTags: 1
+    time:
+      interval: "1ms"
+      # TODO: noise
+    value:
+      generator: constant
+#      generator: random
+      constant:
+        int: 1
+        double: 12.3
+      random:
+        min: 0
+        max: 100
+        # TODO: distribution
+databases:
+  - name: influxdb_0
+    type: influxdb
+    influxdb:
+      addr: http://localhost:8086
+      database: xephonb
+  - name: kairosdb_0
+    type: kairosdb
+    kairosdb:
+      addr: http://localhost:8080
+  - name: graphite_0
+    type: graphite
+    graphite:
+      addr: localhost:2003
+  - name: influxdb_1
+    type: influxdb
+    influxdb:
+      addr: http://202.102.0.1:8086
+      database: libtsdbtest
