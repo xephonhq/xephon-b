@@ -2,7 +2,8 @@
 # select workload
 workload: workload_0
 # select database
-database: influxdb_0
+#database: influxdb_0
+database: kairosdb_0
 limit: time
 #limit: points
 duration: "10s"
@@ -39,6 +40,10 @@ databases:
     influxdb:
       addr: http://localhost:8086
       database: xephonb
+  - name: kairosdb_0
+    type: kairosdb
+    kairosdb:
+      addr: http://localhost:8080
   - name: influxdb_1
     type: influxdb
     influxdb:
