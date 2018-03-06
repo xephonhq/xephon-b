@@ -8,7 +8,7 @@
     "ice/cli",
     "ice/util/logutil"
   ]
-  revision = "c8561aa9ce40b5223941dbc8e87552a574f18694"
+  revision = "deec51d9e614a851687494040cd33f77b91d07e8"
 
 [[projects]]
   branch = "master"
@@ -27,7 +27,7 @@
     "util/logutil",
     "util/runtimeutil"
   ]
-  revision = "a9768ace27e47bd6f1b2afb93fdd73350fb2ab95"
+  revision = "719ff88d7f9e380efa99a722e9f7d060b438377d"
 
 [[projects]]
   name = "github.com/gogo/protobuf"
@@ -63,7 +63,7 @@
     "libtsdb/util/bytesutil",
     "libtsdb/util/logutil"
   ]
-  revision = "674cb5bd22325dc5fd9259d9517a40721c49f401"
+  revision = "09a33bbdf741912ed5c1bacf2e6e88b3830cac42"
 
 [[projects]]
   name = "github.com/spf13/cobra"
@@ -92,6 +92,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "b72e8b8fd2201c649c64868063618b6f2db2a38f9884cface9662fd0f464fc05"
+  inputs-digest = "c59b0f460eb8ce3a8396885f6ba20893d66028c5a66dadad1f9e7994df9688f5"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -29,6 +29,10 @@
   branch = "master"
 
 [[constraint]]
+  name = "github.com/libtsdb/libtsdb-go"
+  branch = "master"
+
+[[constraint]]
   name = "github.com/dyweb/gommon"
   branch = "master"
 
