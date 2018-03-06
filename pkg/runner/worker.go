@@ -107,10 +107,19 @@ func (w *Worker) genBatch() {
 func createClient(cfg config.DatabaseConfig) (libtsdb.WriteClient, error) {
 	switch cfg.Type {
 	case "influxdb":
+		if cfg.Influxdb == nil {
+			return nil, errors.New("influxdb is selected but no config")
+		}
 		return influxdbw.New(*cfg.Influxdb)
 	case "kairosdb":
+		if cfg.Kairosdb == nil {
+			return nil, errors.New("kairosdb is selected but no config")
+		}
 		return kairosdbw.New(*cfg.Kairosdb)
 	case "graphite":
+		if cfg.Graphite == nil {
+			return nil, errors.New("graphite is selected but no config")
+		}
 		return graphitew.New(*cfg.Graphite)
 	default:
 		return nil, errors.Errorf("unknown database %s", cfg.Type)

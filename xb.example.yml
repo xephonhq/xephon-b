@@ -3,7 +3,8 @@
 workload: workload_0
 # select database
 #database: influxdb_0
-database: kairosdb_0
+#database: kairosdb_0
+database: graphite_0
 limit: time
 #limit: points
 duration: "10s"
@@ -44,6 +45,10 @@ databases:
     type: kairosdb
     kairosdb:
       addr: http://localhost:8080
+  - name: graphite_0
+    type: graphite
+    graphite:
+      addr: localhost:2003
   - name: influxdb_1
     type: influxdb
     influxdb:
