@@ -7,6 +7,8 @@ import (
 	"sync"
 
 	"github.com/xephonhq/xephon-b/pkg/config"
+	"github.com/xephonhq/xephon-b/pkg/metrics"
+	"github.com/xephonhq/xephon-b/pkg/reporter"
 )
 
 type Manager struct {
@@ -50,8 +52,14 @@ func (m *Manager) Run(ctx context.Context) error {
 	}
 
 	var wg sync.WaitGroup
-	// TODO: first start reporter
+	resChan := make(chan metrics.Result, cfg.Worker.Num)
 
+	// reporter
+	rep := reporter.NewCounter()
+	repCtx, repCancel := context.WithCancel(ctx)
+	go func() {
+		rep.Run(repCtx, resChan)
+	}()
 	// worker
 	if cfg.Worker.Num <= 0 {
 		return errors.Errorf("invalid worker number %d", cfg.Worker.Num)
@@ -59,7 +67,7 @@ func (m *Manager) Run(ctx context.Context) error {
 	// create workers, exit if any of them has error
 	workers := make([]*Worker, cfg.Worker.Num)
 	for i := 0; i < cfg.Worker.Num; i++ {
-		if wk, err := NewWorker(i, wlcfg, dbcfg); err != nil {
+		if wk, err := NewWorker(i, wlcfg, dbcfg, resChan); err != nil {
 			return errors.Wrap(err, "can't create worker")
 		} else {
 			workers[i] = wk
@@ -76,6 +84,8 @@ func (m *Manager) Run(ctx context.Context) error {
 	}
 	wg.Wait()
 	cancel()
+	repCancel()
+	rep.Finalize()
 	return nil
 }
 
