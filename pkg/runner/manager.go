@@ -2,10 +2,11 @@ package runner
 
 import (
 	"context"
+	"fmt"
 	"github.com/dyweb/gommon/errors"
-	dlog "github.com/dyweb/gommon/log"
 	"sync"
 
+	dlog "github.com/dyweb/gommon/log"
 	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/metrics"
 	"github.com/xephonhq/xephon-b/pkg/reporter"
@@ -42,6 +43,7 @@ func (m *Manager) Run(ctx context.Context) error {
 	var (
 		dbcfg config.DatabaseConfig
 		wlcfg config.WorkloadConfig
+		rpcfg config.ReporterConfig
 		err   error
 	)
 	if dbcfg, err = m.selectDatabase(); err != nil {
@@ -50,12 +52,18 @@ func (m *Manager) Run(ctx context.Context) error {
 	if wlcfg, err = m.selectWorkload(); err != nil {
 		return err
 	}
+	if rpcfg, err = m.selectReporter(); err != nil {
+		return err
+	}
 
 	var wg sync.WaitGroup
-	resChan := make(chan metrics.Result, cfg.Worker.Num)
+	resChan := make(chan metrics.Response, cfg.Worker.Num)
 
 	// reporter
-	rep := reporter.NewCounter()
+	rep, err := createReporter(rpcfg)
+	if err != nil {
+		return err
+	}
 	repCtx, repCancel := context.WithCancel(ctx)
 	go func() {
 		rep.Run(repCtx, resChan)
@@ -85,7 +93,14 @@ func (m *Manager) Run(ctx context.Context) error {
 	wg.Wait()
 	cancel()
 	repCancel()
-	rep.Finalize()
+	if err := rep.Finalize(); err != nil {
+		return errors.Wrap(err, "can't finalize reporter")
+	}
+	if err := rep.Flush(); err != nil {
+		return errors.Wrap(err, "can't flush reporter")
+	}
+	fmt.Println(rep.TextReport())
+	// TODO: write text and json report to somewhere ...
 	return nil
 }
 
@@ -97,7 +112,7 @@ func (m *Manager) selectDatabase() (config.DatabaseConfig, error) {
 		}
 	}
 	return config.DatabaseConfig{},
-		errors.Errorf("databse %s does not have config, check name in databases section", m.cfg.Database)
+		errors.Errorf("database %s does not have config, check name in databases section", m.cfg.Database)
 }
 
 func (m *Manager) selectWorkload() (config.WorkloadConfig, error) {
@@ -109,4 +124,27 @@ func (m *Manager) selectWorkload() (config.WorkloadConfig, error) {
 	}
 	return config.WorkloadConfig{},
 		errors.Errorf("workload %s does not have config, check name in workloads section", m.cfg.Workload)
+}
+
+func (m *Manager) selectReporter() (config.ReporterConfig, error) {
+	for _, c := range m.cfg.Reporters {
+		if c.Name == m.cfg.Reporter {
+			m.log.Infof("reporter %s is type %s", c.Name, c.Type)
+			return c, nil
+		}
+	}
+	return config.ReporterConfig{},
+		errors.Errorf("reporter %s does not have config, check name in reporters section", m.cfg.Reporter)
+}
+
+func createReporter(cfg config.ReporterConfig) (reporter.Sink, error) {
+	switch cfg.Type {
+	// TODO: define string as constant in config package ReporterTypeCounter etc.
+	case "counter":
+		if cfg.Counter == nil {
+			return nil, errors.Errorf("counter is selected but no config")
+		}
+		return reporter.NewCounter(*cfg.Counter), nil
+	}
+	return nil, errors.Errorf("unknown reporter type %s", cfg.Type)
 }

@@ -2,15 +2,19 @@ package reporter
 
 import (
 	"context"
+	"fmt"
 	"time"
 
-	"fmt"
 	dlog "github.com/dyweb/gommon/log"
+	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/metrics"
 )
 
+var _ Sink = (*Counter)(nil)
+
 // Counter simply counts requests
 type Counter struct {
+	cfg config.CounterReporterConfig
 	// TODO: failed requests
 	totalRequests  int
 	failedRequests int
@@ -30,8 +34,9 @@ type Counter struct {
 	log *dlog.Logger
 }
 
-func NewCounter() *Counter {
+func NewCounter(cfg config.CounterReporterConfig) *Counter {
 	c := &Counter{
+		cfg:           cfg,
 		errorMessages: make(map[string]int),
 		codes:         make(map[int]int),
 	}
@@ -39,7 +44,7 @@ func NewCounter() *Counter {
 	return c
 }
 
-func (c *Counter) Run(ctx context.Context, resCh <-chan metrics.Result) {
+func (c *Counter) Run(ctx context.Context, resCh <-chan metrics.Response) {
 	c.startTime = time.Now()
 	for {
 		select {
@@ -51,26 +56,40 @@ func (c *Counter) Run(ctx context.Context, resCh <-chan metrics.Result) {
 				c.log.Info("counter reporter stopped by closed channel")
 				goto END
 			}
-			c.Report(&res)
+			c.Record(res)
 		}
 	}
 END:
 	c.endTime = time.Now()
 }
 
-// TODO: change to record? etc.?
-func (c *Counter) Report(res *metrics.Result) {
+func (c *Counter) Record(res metrics.Response) {
 	c.totalRequests++
-	if res.Error {
+	if res.GetError() {
 		c.failedRequests++
 		// default value for non existence key is 0
-		c.errorMessages[res.ErrorMessage] = c.errorMessages[res.ErrorMessage] + 1
+		c.errorMessages[res.GetErrorMessage()] = c.errorMessages[res.GetErrorMessage()] + 1
 	}
-	c.codes[res.Code] = c.codes[res.Code] + 1
-	c.requestsSize += res.RequestSize
+	c.codes[res.GetCode()] = c.codes[res.GetCode()] + 1
+	c.requestsSize += res.GetRequestSize()
 }
 
-func (c *Counter) Finalize() {
-	// FIXME: real printer, write to json or database etc.
-	fmt.Printf("%#v", *c)
+func (c *Counter) Finalize() error {
+	c.log.Info("finalize counter reporter, nothing to do")
+	return nil
+}
+
+func (c *Counter) Flush() error {
+	c.log.Info("flush counter reporter, nothing to do")
+	return nil
+}
+
+func (c *Counter) TextReport() string {
+	return fmt.Sprintf("%#v", *c)
+}
+
+func (c *Counter) JsonReport() interface{} {
+	return map[string]interface{}{
+		"totalRequests": c.totalRequests,
+	}
 }
