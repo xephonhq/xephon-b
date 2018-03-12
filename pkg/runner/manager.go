@@ -3,9 +3,9 @@ package runner
 import (
 	"context"
 	"fmt"
-	"github.com/dyweb/gommon/errors"
 	"sync"
 
+	"github.com/dyweb/gommon/errors"
 	dlog "github.com/dyweb/gommon/log"
 	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/metrics"
@@ -35,6 +35,7 @@ func (m *Manager) Run(ctx context.Context) error {
 		ctx, cancel = context.WithTimeout(ctx, cfg.Duration)
 	case "points":
 		// noop
+		// FIXME: limit by points is not implemented
 	default:
 		return errors.Errorf("unknown limit %s", cfg.Limit)
 	}
