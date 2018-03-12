@@ -34,11 +34,12 @@ type BatchConfig struct {
 }
 
 type SeriesConfig struct {
-	Prefix        string        `yaml:"prefix"`
-	Num           int           `yaml:"num"`
-	Churn         bool          `yaml:"churn"`
-	ChurnDuration time.Duration `yaml:"churnDuration"`
-	NumTags       int           `yaml:"numTags"`
+	Prefix              string        `yaml:"prefix"`
+	Num                 int           `yaml:"num"`
+	Churn               bool          `yaml:"churn"`
+	ChurnDuration       time.Duration `yaml:"churnDuration"`
+	NumTags             int           `yaml:"numTags"`
+	GroupPointsBySeries bool          `yaml:"groupPointsBySeries"`
 }
 
 type TimeConfig struct {

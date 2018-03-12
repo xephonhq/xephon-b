@@ -48,6 +48,7 @@ func main() {
 }
 
 func mustLoadConfig() {
+	// TODO: go.ice should use UnmarshalStrict, and might just use direct load ...
 	if err := cli.LoadConfigTo(&cfg); err != nil {
 		log.Fatal(err)
 	}

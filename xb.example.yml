@@ -2,9 +2,11 @@
 # select workload
 workload: workload_0
 # select database
-#database: influxdb_0
+database: influxdb_0
 #database: kairosdb_0
-database: graphite_0
+#database: graphite_0
+# select reporter
+reporter: counter
 limit: time
 #limit: points
 duration: "10s"
@@ -22,6 +24,7 @@ workloads:
       churn: true # switch to new set of series
       churnDuration: "5s"
       numTags: 1
+      groupPointsBySeries: false
     time:
       interval: "1ms"
       # TODO: noise
@@ -54,3 +57,11 @@ databases:
     influxdb:
       addr: http://202.102.0.1:8086
       database: libtsdbtest
+reporters:
+  - name: counter
+    type: counter
+  - name: influxdb
+    type: tsdb
+    influxdb:
+      addr: http://localhost:8086
+      database: xephonbresult

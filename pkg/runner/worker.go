@@ -15,23 +15,24 @@ import (
 
 	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/generator"
+	"github.com/xephonhq/xephon-b/pkg/metrics"
 )
 
 type Worker struct {
-	// TODO: each worker should have a generator
-	// TODO: reporter
 	id   int
 	wcfg config.WorkloadConfig
 	dcfg config.DatabaseConfig
 	c    libtsdb.WriteClient
+	// generator
 	sGen generator.SeriesGenerator
 	tGen generator.TimeGenerator
 	vGen generator.ValueGenerator
-
-	log *dlog.Logger
+	// reporter TODO: use pointer for result?
+	resChan chan<- metrics.Result
+	log     *dlog.Logger
 }
 
-func NewWorker(id int, wcfg config.WorkloadConfig, dcfg config.DatabaseConfig) (*Worker, error) {
+func NewWorker(id int, wcfg config.WorkloadConfig, dcfg config.DatabaseConfig, resChan chan<- metrics.Result) (*Worker, error) {
 	// check workload config
 	if wcfg.Batch.Series <= 0 || wcfg.Batch.Points <= 0 {
 		return nil, errors.Errorf("invalid batch series %d or points %d", wcfg.Batch.Series, wcfg.Batch.Points)
@@ -53,13 +54,14 @@ func NewWorker(id int, wcfg config.WorkloadConfig, dcfg config.DatabaseConfig) (
 		return nil, err
 	}
 	w := &Worker{
-		id:   id,
-		wcfg: wcfg,
-		dcfg: dcfg,
-		c:    c,
-		sGen: s,
-		tGen: t,
-		vGen: v,
+		id:      id,
+		wcfg:    wcfg,
+		dcfg:    dcfg,
+		c:       c,
+		sGen:    s,
+		tGen:    t,
+		vGen:    v,
+		resChan: resChan,
 	}
 	dlog.NewStructLogger(log, w)
 	return w, nil
@@ -75,9 +77,20 @@ func (w *Worker) Run(ctx context.Context) error {
 		default:
 			w.genBatch()
 			// TODO: should return result code etc.
-			if err := w.c.Flush(); err != nil {
+			start := time.Now()
+			res := metrics.Result{
+				Time: time.Now().UnixNano(),
+			}
+			err := w.c.Flush()
+			// FIXME: res should use two int64 ...
+			res.Duration = time.Now().Sub(start)
+			// TODO: get status code etc. from supported client ..
+			if err != nil {
+				res.Error = true
+				res.ErrorMessage = err.Error()
 				log.Warnf("failed to flush %s", err.Error())
 			}
+			w.resChan <- res
 		}
 	}
 	return nil
@@ -88,7 +101,7 @@ func (w *Worker) genBatch() {
 	for i := 0; i < w.wcfg.Batch.Series; i++ {
 		sMeta := w.sGen.NextSeries()
 		for j := 0; j < w.wcfg.Batch.Points; j++ {
-			// FIXME: we hardcoded to use float, should allow mix them ...
+			// FIXME: we hardcoded to use float, should allow mix them or at least pick one ...
 			v := w.vGen.NextDouble()
 			p := pb.PointDoubleTagged{
 				Name: sMeta.Name,
