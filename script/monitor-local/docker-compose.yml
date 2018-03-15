@@ -1,7 +1,7 @@
 version: '2'
 services:
   cadvisor:
-      image: google/cadvisor:v0.24.1
+      image: google/cadvisor:v0.29.0
       container_name: cadvisor
       volumes:
         - /:/rootfs:ro

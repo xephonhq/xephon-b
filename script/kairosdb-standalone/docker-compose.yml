@@ -1,0 +1,8 @@
+# docker-compose up
+# docker-compose down
+version: '3'
+services:
+  kaiorsdb:
+    build: .
+    ports:
+      - "8080:8081"
