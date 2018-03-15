@@ -6,7 +6,7 @@ database: influxdb_0
 #database: kairosdb_0
 #database: graphite_0
 # select reporter
-reporter: counter
+reporter: counter_0
 limit: time
 #limit: points
 duration: "10s"
@@ -58,10 +58,15 @@ databases:
       addr: http://202.102.0.1:8086
       database: libtsdbtest
 reporters:
-  - name: counter
+  - name: counter_0
     type: counter
-  - name: influxdb
+    counter:
+      foo: bar
+  - name: influxdb_0
     type: tsdb
-    influxdb:
-      addr: http://localhost:8086
-      database: xephonbresult
+    tsdb:
+      database:
+        type: influxdb
+        influxdb:
+          addr: http://localhost:8086
+          database: xephonbresult

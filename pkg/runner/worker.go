@@ -27,12 +27,14 @@ type Worker struct {
 	sGen generator.SeriesGenerator
 	tGen generator.TimeGenerator
 	vGen generator.ValueGenerator
-	// reporter TODO: use pointer for result?
-	resChan chan<- metrics.Result
+	// reporter
+	resChan chan<- metrics.Response
 	log     *dlog.Logger
 }
 
-func NewWorker(id int, wcfg config.WorkloadConfig, dcfg config.DatabaseConfig, resChan chan<- metrics.Result) (*Worker, error) {
+func NewWorker(id int,
+	wcfg config.WorkloadConfig, dcfg config.DatabaseConfig,
+	resChan chan<- metrics.Response) (*Worker, error) {
 	// check workload config
 	if wcfg.Batch.Series <= 0 || wcfg.Batch.Points <= 0 {
 		return nil, errors.Errorf("invalid batch series %d or points %d", wcfg.Batch.Series, wcfg.Batch.Points)
@@ -76,21 +78,18 @@ func (w *Worker) Run(ctx context.Context) error {
 			return nil
 		default:
 			w.genBatch()
-			// TODO: should return result code etc.
-			start := time.Now()
-			res := metrics.Result{
-				Time: time.Now().UnixNano(),
+			res := metrics.DefaultResponse{
+				StartTime: time.Now().UnixNano(),
 			}
 			err := w.c.Flush()
-			// FIXME: res should use two int64 ...
-			res.Duration = time.Now().Sub(start)
+			res.EndTime = time.Now().UnixNano()
 			// TODO: get status code etc. from supported client ..
 			if err != nil {
 				res.Error = true
 				res.ErrorMessage = err.Error()
 				log.Warnf("failed to flush %s", err.Error())
 			}
-			w.resChan <- res
+			w.resChan <- &res
 		}
 	}
 	return nil

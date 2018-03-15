@@ -14,6 +14,8 @@ type XephonBConfig struct {
 	Workloads []WorkloadConfig `yaml:"workloads"`
 	Database  string           `yaml:"database"`
 	Databases []DatabaseConfig `yaml:"databases"`
+	Reporter  string           `yaml:"reporter"`
+	Reporters []ReporterConfig `yaml:"reporters"`
 }
 
 type WorkerConfig struct {
@@ -69,4 +71,19 @@ type DatabaseConfig struct {
 	Influxdb *config.InfluxdbClientConfig `yaml:"influxdb"`
 	Kairosdb *config.KairosdbClientConfig `yaml:"kairosdb"`
 	Graphite *config.GraphiteClientConfig `yaml:"graphite"`
+}
+
+type CounterReporterConfig struct {
+	Foo string `yaml:"foo"`
+}
+
+type TSDBReporterConfig struct {
+	Database DatabaseConfig `yaml:"database"`
+}
+
+type ReporterConfig struct {
+	Name    string                 `yaml:"name"`
+	Type    string                 `yaml:"type"`
+	Counter *CounterReporterConfig `yaml:"counter"`
+	TSDB    *TSDBReporterConfig    `yaml:"tsdb"`
 }
