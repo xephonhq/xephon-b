@@ -13,8 +13,8 @@ duration: "10s"
 worker:
   num: 10
 workloads:
+  # 1 point, 1 series
   - name: workload_0
-  # TODO: specify what is a batch ...
     batch:
       series: 1 # only one series in one request
       points: 1 # only one 1 point in series
@@ -31,6 +31,29 @@ workloads:
     value:
       generator: constant
 #      generator: random
+      constant:
+        int: 1
+        double: 12.3
+      random:
+        min: 0
+        max: 100
+        # TODO: distribution
+  - name: workload_1
+    batch:
+      series: 1 # only one series in one request
+      points: 1 # only one 1 point in series
+    series:
+      prefix: "xbw0"
+      num: 1 # number of series per worker
+      churn: true # switch to new set of series
+      churnDuration: "5s"
+      numTags: 1
+      groupPointsBySeries: false
+    time:
+      interval: "1ms"
+    value:
+#      generator: constant
+      generator: random
       constant:
         int: 1
         double: 12.3
