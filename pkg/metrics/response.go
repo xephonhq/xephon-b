@@ -1,6 +1,5 @@
 package metrics
 
-// TODO: we can have the HttpTrace in libtsdb-go implement this interface
 type Response interface {
 	// GetError specifies if this result is an error
 	GetError() bool
@@ -12,11 +11,12 @@ type Response interface {
 	GetStartTime() int64
 	// GetEndTime is when the request is finished, response is drained, error or not
 	GetEndTime() int64
-	// GetRequestSize is the size of the payload excluding header etc.
-	GetRequestSize() int
-	// TODO: what about meta? it is a big cost indeed
-	// GetDataSize is the actually data point size
-	GetDataSize() int
+	// GetPayloadSize is the size of the payload excluding header etc.
+	GetPayloadSize() int
+	// GetRawSize is the size in byte for meta and points written without serialization, see libtsdbpb sizer.go
+	GetRawSize() int
+	// GetRawMetaSize is the size in byte for meta data written without serialization, series name tags etc.
+	GetRawMetaSize() int
 }
 
 var _ Response = (*DefaultResponse)(nil)
@@ -27,8 +27,9 @@ type DefaultResponse struct {
 	Code         int
 	StartTime    int64
 	EndTime      int64
-	RequestSize  int
-	DataSize     int
+	PayloadSize  int
+	RawSize      int
+	RawMetaSize  int
 }
 
 func (r *DefaultResponse) GetError() bool {
@@ -51,10 +52,14 @@ func (r *DefaultResponse) GetEndTime() int64 {
 	return r.EndTime
 }
 
-func (r *DefaultResponse) GetRequestSize() int {
-	return r.RequestSize
+func (r *DefaultResponse) GetPayloadSize() int {
+	return r.PayloadSize
 }
 
-func (r *DefaultResponse) GetDataSize() int {
-	return r.DataSize
+func (r *DefaultResponse) GetRawSize() int {
+	return r.RawSize
+}
+
+func (r *DefaultResponse) GetRawMetaSize() int {
+	return r.RawMetaSize
 }
