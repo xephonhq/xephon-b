@@ -8,7 +8,7 @@
     "ice/cli",
     "ice/util/logutil"
   ]
-  revision = "deec51d9e614a851687494040cd33f77b91d07e8"
+  revision = "1eae51f02b6b9b0e8adf781c6dc570458c18db77"
 
 [[projects]]
   branch = "master"
@@ -27,7 +27,7 @@
     "util/logutil",
     "util/runtimeutil"
   ]
-  revision = "719ff88d7f9e380efa99a722e9f7d060b438377d"
+  revision = "ae7701f9d583472626a924dd9ce761157fc7ee05"
 
 [[projects]]
   name = "github.com/gogo/protobuf"
@@ -50,11 +50,13 @@
   name = "github.com/libtsdb/libtsdb-go"
   packages = [
     "libtsdb",
+    "libtsdb/client/akumuliw",
     "libtsdb/client/genericw",
     "libtsdb/client/graphitew",
     "libtsdb/client/influxdbw",
     "libtsdb/client/kairosdbw",
     "libtsdb/common",
+    "libtsdb/common/akumuli",
     "libtsdb/common/graphite",
     "libtsdb/common/influxdb",
     "libtsdb/common/kairosdb",
@@ -63,7 +65,7 @@
     "libtsdb/util/bytesutil",
     "libtsdb/util/logutil"
   ]
-  revision = "09a33bbdf741912ed5c1bacf2e6e88b3830cac42"
+  revision = "b8eb5a7ca131790c2246d985c8f843f76f83b85c"
 
 [[projects]]
   name = "github.com/spf13/cobra"
@@ -81,7 +83,7 @@
   branch = "master"
   name = "golang.org/x/net"
   packages = ["proxy"]
-  revision = "22ae77b79946ea320088417e4d50825671d82d57"
+  revision = "24dd3780ca4f75fed9f321890729414a4b5d3f13"
 
 [[projects]]
   name = "gopkg.in/yaml.v2"
@@ -92,6 +94,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "c59b0f460eb8ce3a8396885f6ba20893d66028c5a66dadad1f9e7994df9688f5"
+  inputs-digest = "5c940ed0dc8a22730cf28d94a7f00ff21413b72d6711abc2bcefa72f77faaf84"
   solver-name = "gps-cdcl"
   solver-version = 1

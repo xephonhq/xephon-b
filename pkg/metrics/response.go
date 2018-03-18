@@ -1,22 +1,9 @@
 package metrics
 
+import "github.com/libtsdb/libtsdb-go/libtsdb"
+
 type Response interface {
-	// GetError specifies if this result is an error
-	GetError() bool
-	// GetErrorMessage is empty if Error is false
-	GetErrorMessage() string
-	// GetCode is response code from server, normally http status code
-	GetCode() int
-	// GetStartTime is when the request is started
-	GetStartTime() int64
-	// GetEndTime is when the request is finished, response is drained, error or not
-	GetEndTime() int64
-	// GetPayloadSize is the size of the payload excluding header etc.
-	GetPayloadSize() int
-	// GetRawSize is the size in byte for meta and points written without serialization, see libtsdbpb sizer.go
-	GetRawSize() int
-	// GetRawMetaSize is the size in byte for meta data written without serialization, series name tags etc.
-	GetRawMetaSize() int
+	libtsdb.Trace
 }
 
 var _ Response = (*DefaultResponse)(nil)

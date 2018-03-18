@@ -86,13 +86,18 @@ func (m *Manager) Run(ctx context.Context) error {
 	for i := 0; i < cfg.Worker.Num; i++ {
 		wg.Add(1)
 		go func(wk *Worker) {
-			// TODO: cancel when error
-			wk.Run(ctx)
+			if err := wk.Run(ctx); err != nil {
+				cancel()
+			}
 			wg.Done()
 		}(workers[i])
 	}
 	wg.Wait()
-	cancel()
+	m.log.Info("all worker finished")
+	// TODO: which one should be done first? https://github.com/xephonhq/xephon-b/issues/43
+	m.log.Info("close resChan")
+	close(resChan)
+	m.log.Info("canceling reporter context")
 	repCancel()
 	if err := rep.Finalize(); err != nil {
 		return errors.Wrap(err, "can't finalize reporter")

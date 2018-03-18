@@ -71,6 +71,11 @@ databases:
     type: kairosdb
     kairosdb:
       addr: http://localhost:8080
+  - name: kairosdb_telnet
+    type: kairosdb
+    kairosdb:
+      addr: http://localhost:8080
+      telnet: true
   - name: graphite_0
     type: graphite
     graphite:

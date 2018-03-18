@@ -68,9 +68,10 @@ type RandomValueGeneratorConfig struct {
 type DatabaseConfig struct {
 	Name     string                       `yaml:"name"`
 	Type     string                       `yaml:"type"`
+	Akumuli  *config.AkumuliClientConfig  `yaml:"akumuli"`
+	Graphite *config.GraphiteClientConfig `yaml:"graphite"`
 	Influxdb *config.InfluxdbClientConfig `yaml:"influxdb"`
 	Kairosdb *config.KairosdbClientConfig `yaml:"kairosdb"`
-	Graphite *config.GraphiteClientConfig `yaml:"graphite"`
 }
 
 type CounterReporterConfig struct {
