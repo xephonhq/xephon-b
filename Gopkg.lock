@@ -65,7 +65,7 @@
     "libtsdb/util/bytesutil",
     "libtsdb/util/logutil"
   ]
-  revision = "d37ae5698143dceee05967d16afa6670dc938bb6"
+  revision = "419c24436f340441f068a4af150b01ec34eb51ba"
 
 [[projects]]
   name = "github.com/spf13/cobra"

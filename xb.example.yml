@@ -4,8 +4,9 @@ workload: workload_0
 # select database
 #database: influxdb_0
 #database: kairosdb_0
+database: kairosdb_telnet
 #database: graphite_0
-database: akumuli_0
+#database: akumuli_0
 # select reporter
 reporter: counter_0
 limit: time
@@ -80,6 +81,7 @@ databases:
     type: kairosdb
     kairosdb:
       addr: http://localhost:8080
+      telnetAddr: localhost:4242
       telnet: true
   - name: graphite_0
     type: graphite
