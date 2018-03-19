@@ -13,6 +13,7 @@ import (
 	"github.com/libtsdb/libtsdb-go/libtsdb/client/kairosdbw"
 	pb "github.com/libtsdb/libtsdb-go/libtsdb/libtsdbpb"
 
+	"github.com/libtsdb/libtsdb-go/libtsdb/client/akumuliw"
 	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/generator"
 	"github.com/xephonhq/xephon-b/pkg/metrics"
@@ -22,14 +23,17 @@ type Worker struct {
 	id   int
 	wcfg config.WorkloadConfig
 	dcfg config.DatabaseConfig
-	c    libtsdb.WriteClient
+	c    libtsdb.TracedWriteClient
+
 	// generator
 	sGen generator.SeriesGenerator
 	tGen generator.TimeGenerator
 	vGen generator.ValueGenerator
+
 	// reporter
 	resChan chan<- metrics.Response
-	log     *dlog.Logger
+
+	log *dlog.Logger
 }
 
 func NewWorker(id int,
@@ -78,18 +82,11 @@ func (w *Worker) Run(ctx context.Context) error {
 			return nil
 		default:
 			w.genBatch()
-			res := metrics.DefaultResponse{
-				StartTime: time.Now().UnixNano(),
-			}
 			err := w.c.Flush()
-			res.EndTime = time.Now().UnixNano()
-			// TODO: get status code etc. from supported client ..
 			if err != nil {
-				res.Error = true
-				res.ErrorMessage = err.Error()
 				log.Warnf("failed to flush %s", err.Error())
 			}
-			w.resChan <- &res
+			w.resChan <- w.c.Trace()
 		}
 	}
 	return nil
@@ -116,8 +113,18 @@ func (w *Worker) genBatch() {
 	}
 }
 
-func createClient(cfg config.DatabaseConfig) (libtsdb.WriteClient, error) {
+func createClient(cfg config.DatabaseConfig) (libtsdb.TracedWriteClient, error) {
 	switch cfg.Type {
+	case "akumuli":
+		if cfg.Akumuli == nil {
+			return nil, errors.New("akumuli is selected but no config")
+		}
+		return akumuliw.New(*cfg.Akumuli)
+	case "graphite":
+		if cfg.Graphite == nil {
+			return nil, errors.New("graphite is selected but no config")
+		}
+		return graphitew.New(*cfg.Graphite)
 	case "influxdb":
 		if cfg.Influxdb == nil {
 			return nil, errors.New("influxdb is selected but no config")
@@ -127,18 +134,17 @@ func createClient(cfg config.DatabaseConfig) (libtsdb.WriteClient, error) {
 		if cfg.Kairosdb == nil {
 			return nil, errors.New("kairosdb is selected but no config")
 		}
-		return kairosdbw.New(*cfg.Kairosdb)
-	case "graphite":
-		if cfg.Graphite == nil {
-			return nil, errors.New("graphite is selected but no config")
+		if cfg.Kairosdb.Telnet {
+			return kairosdbw.NewTcp(*cfg.Kairosdb)
 		}
-		return graphitew.New(*cfg.Graphite)
+		return kairosdbw.NewHttp(*cfg.Kairosdb)
 	default:
 		return nil, errors.Errorf("unknown database %s", cfg.Type)
 	}
 }
 
 func createSeriesGenerator(cfg config.SeriesConfig) (generator.SeriesGenerator, error) {
+	// TODO: allow more than one g
 	return generator.NewGenericSeries(cfg)
 }
 
