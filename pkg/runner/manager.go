@@ -3,13 +3,12 @@ package runner
 import (
 	"context"
 	"fmt"
-	"sync"
-
 	"github.com/dyweb/gommon/errors"
 	dlog "github.com/dyweb/gommon/log"
 	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/metrics"
 	"github.com/xephonhq/xephon-b/pkg/reporter"
+	"sync"
 )
 
 type Manager struct {
@@ -66,9 +65,12 @@ func (m *Manager) Run(ctx context.Context) error {
 		return err
 	}
 	// https://github.com/xephonhq/xephon-b/issues/43
+	var rwg sync.WaitGroup
 	repCtx, repCancel := context.WithCancel(context.Background())
+	rwg.Add(1)
 	go func() {
 		rep.Run(repCtx, resChan)
+		rwg.Done()
 	}()
 	// worker
 	if cfg.Worker.Num <= 0 {
@@ -93,13 +95,12 @@ func (m *Manager) Run(ctx context.Context) error {
 			wg.Done()
 		}(workers[i])
 	}
+	m.log.Info("all worker started")
 	wg.Wait()
 	m.log.Info("all worker finished")
-	// TODO: which one should be done first? https://github.com/xephonhq/xephon-b/issues/43
-	//m.log.Info("close resChan")
-	//close(resChan)
 	m.log.Info("canceling reporter context")
 	repCancel()
+	rwg.Wait()
 	if err := rep.Finalize(); err != nil {
 		return errors.Wrap(err, "can't finalize reporter")
 	}

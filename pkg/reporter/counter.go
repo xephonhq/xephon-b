@@ -2,10 +2,10 @@ package reporter
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"time"
 
-	"encoding/json"
 	dlog "github.com/dyweb/gommon/log"
 	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/metrics"
