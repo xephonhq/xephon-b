@@ -21,7 +21,7 @@ type Counter struct {
 	errorMessages  map[string]int
 	codes          map[int]int
 
-	totalPoints int64
+	totalPoints int
 	// TODO: need to rely on config to calculate series
 	//series int
 	payloadSize int
@@ -38,6 +38,8 @@ type Counter struct {
 	// calculated
 	requestPerSecond int64
 	pointsPerSecond  int64
+	duration         time.Duration
+	dataRatio        int // in percentage, i.e. 90 means 90% is data 10% is meta
 
 	log *dlog.Logger
 }
@@ -83,8 +85,8 @@ func (c *Counter) Record(res metrics.Response) {
 		c.errorMessages[res.GetErrorMessage()] = c.errorMessages[res.GetErrorMessage()] + 1
 	}
 	c.codes[res.GetCode()] = c.codes[res.GetCode()] + 1
-	// TODO: trace need to add points
-	//c.totalPoints += res.Get
+	//c.log.Infof("points %d", res.GetPoints())
+	c.totalPoints += res.GetPoints()
 	c.payloadSize += res.GetPayloadSize()
 	c.rawSize += res.GetRawSize()
 	c.rawMetaSize += res.GetRawMetaSize()
@@ -101,10 +103,12 @@ func (c *Counter) Record(res metrics.Response) {
 
 func (c *Counter) Finalize() error {
 	c.log.Info("finalize counter reporter, calculate throughput")
-	duration := int64(c.endTime.Sub(c.startTime) / time.Second)
+	c.duration = c.endTime.Sub(c.startTime)
+	// TODO: if the duration is less than 1s, we would have divide by zero ...
+	duration := int64(c.duration / time.Second)
 	c.requestPerSecond = c.totalRequests / duration
-	// FIXME: totalPoints is not updated
-	c.pointsPerSecond = c.totalPoints / duration
+	c.pointsPerSecond = int64(c.totalPoints) / duration
+	c.dataRatio = (c.rawSize - c.rawMetaSize) * 100 / c.rawSize
 	return nil
 }
 
@@ -124,11 +128,13 @@ func (c *Counter) TextReport() string {
 
 func (c *Counter) JsonReport() interface{} {
 	return map[string]interface{}{
+		"duration":       c.duration,
 		"totalRequests":  c.totalRequests,
 		"failedRequests": c.failedRequests,
 		"totalPoints":    c.totalPoints,
 		"payloadSize":    c.payloadSize,
 		"rawSize":        c.rawSize,
 		"rawMetaSize":    c.rawMetaSize,
+		"dataRatio":      c.dataRatio,
 	}
 }
