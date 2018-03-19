@@ -136,5 +136,8 @@ func (c *Counter) JsonReport() interface{} {
 		"rawSize":        c.rawSize,
 		"rawMetaSize":    c.rawMetaSize,
 		"dataRatio":      c.dataRatio,
+		"minLatency":     c.minLatency,
+		"maxLatency":     c.maxLatency,
+		"avgLatency":     c.avgLatency,
 	}
 }
