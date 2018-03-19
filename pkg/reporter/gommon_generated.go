@@ -15,3 +15,15 @@ func (c *Counter) GetLogger() *dlog.Logger {
 func (c *Counter) LoggerIdentity(justCallMe func() *dlog.Identity) *dlog.Identity {
 	return justCallMe()
 }
+
+func (d *TSDB) SetLogger(logger *dlog.Logger) {
+	d.log = logger
+}
+
+func (d *TSDB) GetLogger() *dlog.Logger {
+	return d.log
+}
+
+func (d *TSDB) LoggerIdentity(justCallMe func() *dlog.Identity) *dlog.Identity {
+	return justCallMe()
+}

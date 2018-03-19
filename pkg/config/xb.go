@@ -79,6 +79,8 @@ type CounterReporterConfig struct {
 }
 
 type TSDBReporterConfig struct {
+	// Sample is 1 from n samples, will ignore everything if n < 1
+	Sample   int            `yaml:"sample"`
 	Database DatabaseConfig `yaml:"database"`
 }
 
