@@ -65,7 +65,8 @@ func (m *Manager) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	repCtx, repCancel := context.WithCancel(ctx)
+	// https://github.com/xephonhq/xephon-b/issues/43
+	repCtx, repCancel := context.WithCancel(context.Background())
 	go func() {
 		rep.Run(repCtx, resChan)
 	}()
@@ -95,8 +96,8 @@ func (m *Manager) Run(ctx context.Context) error {
 	wg.Wait()
 	m.log.Info("all worker finished")
 	// TODO: which one should be done first? https://github.com/xephonhq/xephon-b/issues/43
-	m.log.Info("close resChan")
-	close(resChan)
+	//m.log.Info("close resChan")
+	//close(resChan)
 	m.log.Info("canceling reporter context")
 	repCancel()
 	if err := rep.Finalize(); err != nil {
