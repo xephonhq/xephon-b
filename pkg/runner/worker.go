@@ -8,15 +8,13 @@ import (
 	dlog "github.com/dyweb/gommon/log"
 
 	"github.com/libtsdb/libtsdb-go/libtsdb"
-	"github.com/libtsdb/libtsdb-go/libtsdb/client/graphitew"
-	"github.com/libtsdb/libtsdb-go/libtsdb/client/influxdbw"
-	"github.com/libtsdb/libtsdb-go/libtsdb/client/kairosdbw"
+
 	pb "github.com/libtsdb/libtsdb-go/libtsdb/libtsdbpb"
 
-	"github.com/libtsdb/libtsdb-go/libtsdb/client/akumuliw"
 	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/generator"
 	"github.com/xephonhq/xephon-b/pkg/metrics"
+	"github.com/xephonhq/xephon-b/pkg/util/tsdbutil"
 )
 
 type Worker struct {
@@ -43,7 +41,7 @@ func NewWorker(id int,
 	if wcfg.Batch.Series <= 0 || wcfg.Batch.Points <= 0 {
 		return nil, errors.Errorf("invalid batch series %d or points %d", wcfg.Batch.Series, wcfg.Batch.Points)
 	}
-	c, err := createClient(dcfg)
+	c, err := tsdbutil.CreateClient(dcfg)
 	if err != nil {
 		return nil, err
 	}
@@ -110,36 +108,6 @@ func (w *Worker) genBatch() {
 			// TODO: we should put many points in a series for tsdb that supports this, i.e. KairosDB, OpenTSDB, it is not supported by libtsdb yet
 			w.c.WriteDoublePoint(&p)
 		}
-	}
-}
-
-func createClient(cfg config.DatabaseConfig) (libtsdb.TracedWriteClient, error) {
-	switch cfg.Type {
-	case "akumuli":
-		if cfg.Akumuli == nil {
-			return nil, errors.New("akumuli is selected but no config")
-		}
-		return akumuliw.New(*cfg.Akumuli)
-	case "graphite":
-		if cfg.Graphite == nil {
-			return nil, errors.New("graphite is selected but no config")
-		}
-		return graphitew.New(*cfg.Graphite)
-	case "influxdb":
-		if cfg.Influxdb == nil {
-			return nil, errors.New("influxdb is selected but no config")
-		}
-		return influxdbw.New(*cfg.Influxdb)
-	case "kairosdb":
-		if cfg.Kairosdb == nil {
-			return nil, errors.New("kairosdb is selected but no config")
-		}
-		if cfg.Kairosdb.Telnet {
-			return kairosdbw.NewTcp(*cfg.Kairosdb)
-		}
-		return kairosdbw.NewHttp(*cfg.Kairosdb)
-	default:
-		return nil, errors.Errorf("unknown database %s", cfg.Type)
 	}
 }
 

@@ -60,7 +60,7 @@ func (m *Manager) Run(ctx context.Context) error {
 	resChan := make(chan metrics.Response, cfg.Worker.Num)
 
 	// reporter
-	rep, err := createReporter(rpcfg)
+	rep, err := createReporter(rpcfg, cfg)
 	if err != nil {
 		return err
 	}
@@ -145,7 +145,7 @@ func (m *Manager) selectReporter() (config.ReporterConfig, error) {
 		errors.Errorf("reporter %s does not have config, check name in reporters section", m.cfg.Reporter)
 }
 
-func createReporter(cfg config.ReporterConfig) (reporter.Sink, error) {
+func createReporter(cfg config.ReporterConfig, gcfg config.XephonBConfig) (reporter.Sink, error) {
 	switch cfg.Type {
 	// TODO: define string as constant in config package ReporterTypeCounter etc.
 	case "counter":
@@ -153,6 +153,11 @@ func createReporter(cfg config.ReporterConfig) (reporter.Sink, error) {
 			return nil, errors.Errorf("counter is selected but no config")
 		}
 		return reporter.NewCounter(*cfg.Counter), nil
+	case "tsdb":
+		if cfg.TSDB == nil {
+			return nil, errors.Errorf("tsdb is selected but no config")
+		}
+		return reporter.NewTSDB(*cfg.TSDB, gcfg)
 	}
 	return nil, errors.Errorf("unknown reporter type %s", cfg.Type)
 }

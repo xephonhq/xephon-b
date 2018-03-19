@@ -1,3 +1,5 @@
 loggers:
   - struct: "*Counter"
     receiver: "c"
+  - struct: "*TSDB"
+    receiver: "d"
