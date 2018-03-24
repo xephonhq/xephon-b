@@ -11,6 +11,7 @@
 [![Build Status](https://travis-ci.org/xephonhq/xephon-b.svg?branch=feature%2Fdata-generation)](https://travis-ci.org/xephonhq/xephon-b)
 [![Join the chat at https://gitter.im/xephonhq/xephon-b](https://badges.gitter.im/xephonhq/xephon-b.svg)](https://gitter.im/xephonhq/xephon-b?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![GoDoc](https://godoc.org/github.com/xephonhq/xephon-b?status.svg)](https://godoc.org/github.com/xephonhq/xephon-b)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fxephonhq%2Fxephon-b.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fxephonhq%2Fxephon-b?ref=badge_shield)
 
 A time series database benchmark tool. NOTE: it is under major rewrite
 
@@ -29,6 +30,9 @@ A time series database benchmark tool. NOTE: it is under major rewrite
 ## License
 
 MIT
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fxephonhq%2Fxephon-b.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fxephonhq%2Fxephon-b?ref=badge_large)
 
 ## Authors
 
