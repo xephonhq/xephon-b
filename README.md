@@ -15,6 +15,7 @@
 
 A time series database benchmark tool. NOTE: it is under major rewrite
 
+- status: Under major rewrite, after libtsdb-go
 - [Documentation](doc)
 - [Slide: Introduce Xephon-B](http://www.slideshare.net/ssuser7e134a/intoduce-xephonb)
 
