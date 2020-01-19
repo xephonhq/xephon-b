@@ -1,7 +1,2 @@
-# Cli
+# Xephon-B binaries
 
-## Legacy
-
-- tsdb-proxy
-- xb is alias of xephon-b
-- xephon-b
