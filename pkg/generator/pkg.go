@@ -1,14 +1,15 @@
 package generator
 
 import (
-	pb "github.com/libtsdb/libtsdb-go/libtsdb/libtsdbpb"
-	"github.com/xephonhq/xephon-b/pkg/util/logutil"
+	dlog "github.com/dyweb/gommon/log"
+	"github.com/libtsdb/libtsdb-go/tspb"
 )
 
-var log = logutil.NewPackageLogger()
+var logReg = dlog.NewRegistry()
+var log = logReg.Logger()
 
 type SeriesGenerator interface {
-	NextSeries() pb.EmptySeries
+	NextSeries() tspb.EmptySeries
 }
 
 type TimeGenerator interface {

@@ -6,11 +6,8 @@ import (
 
 	"github.com/dyweb/gommon/errors"
 	dlog "github.com/dyweb/gommon/log"
-
-	"github.com/libtsdb/libtsdb-go/libtsdb"
-
-	pb "github.com/libtsdb/libtsdb-go/libtsdb/libtsdbpb"
-
+	"github.com/libtsdb/libtsdb-go/database"
+	"github.com/libtsdb/libtsdb-go/tspb"
 	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/generator"
 	"github.com/xephonhq/xephon-b/pkg/metrics"
@@ -21,7 +18,7 @@ type Worker struct {
 	id   int
 	wcfg config.WorkloadConfig
 	dcfg config.DatabaseConfig
-	c    libtsdb.TracedWriteClient
+	c    database.TracedWriteClient
 
 	// generator
 	sGen generator.SeriesGenerator
@@ -87,7 +84,6 @@ func (w *Worker) Run(ctx context.Context) error {
 			w.resChan <- w.c.Trace()
 		}
 	}
-	return nil
 }
 
 func (w *Worker) genBatch() {
@@ -97,12 +93,12 @@ func (w *Worker) genBatch() {
 		for j := 0; j < w.wcfg.Batch.Points; j++ {
 			// FIXME: we hardcoded to use float, should allow mix them or at least pick one ...
 			v := w.vGen.NextDouble()
-			p := pb.PointDoubleTagged{
+			p := tspb.PointDoubleTagged{
 				Name: sMeta.Name,
 				Tags: sMeta.Tags,
-				Point: pb.PointDouble{
-					T: t,
-					V: v,
+				Point: tspb.PointDouble{
+					Time:  t,
+					Value: v,
 				},
 			}
 			// TODO: we should put many points in a series for tsdb that supports this, i.e. KairosDB, OpenTSDB, it is not supported by libtsdb yet

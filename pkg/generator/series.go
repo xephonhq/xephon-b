@@ -6,8 +6,7 @@ import (
 	"time"
 
 	"github.com/dyweb/gommon/errors"
-	pb "github.com/libtsdb/libtsdb-go/libtsdb/libtsdbpb"
-
+	"github.com/libtsdb/libtsdb-go/tspb"
 	"github.com/xephonhq/xephon-b/pkg/config"
 )
 
@@ -16,7 +15,7 @@ var _ SeriesGenerator = (*GenericSeries)(nil)
 // TODO: libtsdb does not have definition for series
 type GenericSeries struct {
 	cfg       config.SeriesConfig
-	series    []pb.EmptySeries
+	series    []tspb.EmptySeries
 	r         *rand.Rand
 	i         int
 	len       int
@@ -40,14 +39,14 @@ func NewGenericSeries(cfg config.SeriesConfig) (*GenericSeries, error) {
 }
 
 func (g *GenericSeries) gen() {
-	var series []pb.EmptySeries
+	var series []tspb.EmptySeries
 	r := g.r.Intn(1000)
 	for i := 0; i < g.cfg.Num; i++ {
-		s := pb.EmptySeries{Name: fmt.Sprintf("%s.series.%d.%d", g.cfg.Prefix, r, i)}
+		s := tspb.EmptySeries{Name: fmt.Sprintf("%s.series.%d.%d", g.cfg.Prefix, r, i)}
 		for j := 0; j < g.cfg.NumTags; j++ {
-			t := pb.Tag{
-				K: fmt.Sprintf("key%d%d", r, j),
-				V: fmt.Sprintf("val%d%d", r, j),
+			t := tspb.Tag{
+				Key:   fmt.Sprintf("key%d%d", r, j),
+				Value: fmt.Sprintf("val%d%d", r, j),
 			}
 			s.Tags = append(s.Tags, t)
 		}
@@ -73,7 +72,7 @@ func (g *GenericSeries) cur() int {
 	}
 }
 
-func (g *GenericSeries) NextSeries() pb.EmptySeries {
+func (g *GenericSeries) NextSeries() tspb.EmptySeries {
 	// generate a set of new series to simulate series churn
 	if g.cfg.Churn && time.Now().After(g.churnTime) {
 		g.gen()

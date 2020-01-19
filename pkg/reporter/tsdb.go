@@ -8,8 +8,8 @@ import (
 
 	"github.com/dyweb/gommon/errors"
 	dlog "github.com/dyweb/gommon/log"
-	"github.com/libtsdb/libtsdb-go/libtsdb"
-	pb "github.com/libtsdb/libtsdb-go/libtsdb/libtsdbpb"
+	"github.com/libtsdb/libtsdb-go/database"
+	"github.com/libtsdb/libtsdb-go/tspb"
 	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/metrics"
 	"github.com/xephonhq/xephon-b/pkg/util/tsdbutil"
@@ -21,7 +21,7 @@ var _ Sink = (*TSDB)(nil)
 type TSDB struct {
 	cfg          config.TSDBReporterConfig
 	globalConfig config.XephonBConfig
-	c            libtsdb.WriteClient
+	c            database.WriteClient
 	precision    time.Duration
 
 	bufferedPoints int
@@ -80,17 +80,17 @@ func (d *TSDB) Record(res metrics.Response) {
 		t = t / 1000
 	}
 	// TODO: distinguish worker ...
-	p := pb.PointIntTagged{
+	p := tspb.PointIntTagged{
 		Name: "latency",
-		Tags: []pb.Tag{
-			{K: "db", V: d.globalConfig.Database},
+		Tags: []tspb.Tag{
+			{Key: "db", Value: d.globalConfig.Database},
 			// TODO: actually response should pass worker id so they are stored in different series
-			{K: "totalWorker", V: fmt.Sprintf("%d", d.globalConfig.Worker.Num)},
-			{K: "workload", V: d.globalConfig.Workload},
+			{Key: "totalWorker", Value: fmt.Sprintf("%d", d.globalConfig.Worker.Num)},
+			{Key: "workload", Value: d.globalConfig.Workload},
 		},
-		Point: pb.PointInt{
-			T: t,
-			V: res.GetEndTime() - res.GetStartTime(),
+		Point: tspb.PointInt{
+			Time:  t,
+			Value: res.GetEndTime() - res.GetStartTime(),
 		},
 	}
 	d.c.WriteIntPoint(&p)

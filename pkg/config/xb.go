@@ -3,7 +3,7 @@ package config
 import (
 	"time"
 
-	"github.com/libtsdb/libtsdb-go/libtsdb/config"
+	"github.com/libtsdb/libtsdb-go/config"
 )
 
 type XephonBConfig struct {
