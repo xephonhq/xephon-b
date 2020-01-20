@@ -1,18 +1,11 @@
 # Mac
 .DS_Store
 
-# Logs
-log
-*.log
-log.txt
-
 # vendor
 vendor
 
 # IDE
 .idea
-
-# Config
 
 # Generated data
 *.dat
