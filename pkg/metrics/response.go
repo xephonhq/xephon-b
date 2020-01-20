@@ -1,7 +1,7 @@
 package metrics
 
-import "github.com/libtsdb/libtsdb-go/libtsdb"
+import "github.com/libtsdb/libtsdb-go/protocol"
 
 type Response interface {
-	libtsdb.Trace
+	protocol.Trace
 }

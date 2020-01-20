@@ -15,7 +15,7 @@
 
 A time series database benchmark tool. NOTE: it is under major rewrite
 
-- status: Under major rewrite, after libtsdb-go
+- status: Under major rewrite, along with [libtsdb-go](https://github.com/libtsdb/libtsdb-go)
 - [Documentation](doc)
 - [Slide: Introduce Xephon-B](http://www.slideshare.net/ssuser7e134a/intoduce-xephonb)
 
@@ -32,16 +32,13 @@ A time series database benchmark tool. NOTE: it is under major rewrite
 
 MIT
 
-
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fxephonhq%2Fxephon-b.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fxephonhq%2Fxephon-b?ref=badge_large)
 
 ## Authors
 
-- [Pinglei Guo](https://at15.github.io) [@at15](https://github.com/at15), [linkedin](https://www.linkedin.com/in/at1510086), [twitter](https://twitter.com/at1510086)
-- [Zheyuan Chen](http://czheo.github.io/) [@czheo](https://github.com/czheo), [linkedin](https://www.linkedin.com/in/zheyuan-chen), [twitter](https://twitter.com/czheo)
+- [Pinglei Guo](https://at15.github.io) [@at15](https://github.com/at15), [twitter](https://twitter.com/at1510086)
+- [Zheyuan Chen](http://czheo.github.io/) [@czheo](https://github.com/czheo), [twitter](https://twitter.com/czheo)
 
 ## About
 
 B is for benchmark and Xephon comes from the animation [RahXephon](https://en.wikipedia.org/wiki/RahXephon)
-
-It was merged into Xephon-K and now split out from it as a standalone project again

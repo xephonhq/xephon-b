@@ -7,7 +7,6 @@ FLAGS = -X main.version=$(VERSION) -X main.commit=$(BUILD_COMMIT) -X main.buildT
 
 .PHONY: install
 install:
-	go install -ldflags "$(FLAGS)" ./cmd/xab
 	go install -ldflags "$(FLAGS)" ./cmd/xb
 
 .PHONY: test
@@ -16,7 +15,7 @@ test:
 
 .PHONY: fmt
 fmt:
-	gofmt -d -l -w ./pkg ./cmd
+	goimports -d -l -w ./pkg ./cmd
 
 .PHONY: generate
 generate:

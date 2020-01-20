@@ -1,9 +1,10 @@
 package generator
 
 import (
-	"github.com/xephonhq/xephon-b/pkg/config"
 	"testing"
 	"time"
+
+	"github.com/xephonhq/xephon-b/pkg/config"
 )
 
 func TestGenericSeries_NextSeries(t *testing.T) {

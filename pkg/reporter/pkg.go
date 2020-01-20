@@ -2,11 +2,13 @@ package reporter
 
 import (
 	"context"
+
+	dlog "github.com/dyweb/gommon/log"
 	"github.com/xephonhq/xephon-b/pkg/metrics"
-	"github.com/xephonhq/xephon-b/pkg/util/logutil"
 )
 
-var log = logutil.NewPackageLogger()
+var logReg = dlog.NewRegistry()
+var log = logReg.Logger()
 
 type Sink interface {
 	// Run drain from response channel until it is closed or the context is canceled

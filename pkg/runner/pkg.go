@@ -1,7 +1,8 @@
 package runner
 
 import (
-	"github.com/xephonhq/xephon-b/pkg/util/logutil"
+	dlog "github.com/dyweb/gommon/log"
 )
 
-var log = logutil.NewPackageLogger()
+var logReg = dlog.NewRegistry()
+var log = logReg.Logger()

@@ -12,7 +12,7 @@ func (c *Counter) GetLogger() *dlog.Logger {
 	return c.log
 }
 
-func (c *Counter) LoggerIdentity(justCallMe func() *dlog.Identity) *dlog.Identity {
+func (c *Counter) LoggerIdentity(justCallMe func() dlog.Identity) dlog.Identity {
 	return justCallMe()
 }
 
@@ -24,6 +24,6 @@ func (d *TSDB) GetLogger() *dlog.Logger {
 	return d.log
 }
 
-func (d *TSDB) LoggerIdentity(justCallMe func() *dlog.Identity) *dlog.Identity {
+func (d *TSDB) LoggerIdentity(justCallMe func() dlog.Identity) dlog.Identity {
 	return justCallMe()
 }

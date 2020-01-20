@@ -5,19 +5,17 @@ import (
 	"os"
 	"runtime"
 
-	icli "github.com/at15/go.ice/ice/cli"
-	goicelog "github.com/at15/go.ice/ice/util/logutil"
-
+	icli "github.com/dyweb/go.ice/cli"
+	dlog "github.com/dyweb/gommon/log"
 	"github.com/xephonhq/xephon-b/pkg/config"
-	"github.com/xephonhq/xephon-b/pkg/util/logutil"
 )
 
 const (
 	myname = "xb"
 )
 
-// FIXME: debug logging is not working ....
-var log = logutil.Registry
+var logReg = dlog.NewRegistry()
+var log = logReg.Logger()
 
 var (
 	version   string
@@ -37,7 +35,6 @@ func main() {
 		icli.Name(myname),
 		icli.Description("Xephon-B Time Series Benchmark cli"),
 		icli.Version(buildInfo),
-		icli.LogRegistry(log),
 	)
 	root := cli.Command()
 	root.AddCommand(runCmd)
@@ -48,12 +45,7 @@ func main() {
 }
 
 func mustLoadConfig() {
-	// TODO: go.ice should use UnmarshalStrict, and might just use direct load ...
 	if err := cli.LoadConfigTo(&cfg); err != nil {
 		log.Fatal(err)
 	}
-}
-
-func init() {
-	log.AddChild(goicelog.Registry)
 }
