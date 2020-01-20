@@ -46,8 +46,7 @@ func NewWorker(id int,
 	if err != nil {
 		return nil, err
 	}
-	// FIXME: precision
-	t, err := createTimeGenerator(wcfg.Time, time.Second)
+	t, err := createTimeGenerator(wcfg.Time, c.Meta().TimePrecision)
 	if err != nil {
 		return nil, err
 	}

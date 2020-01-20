@@ -41,8 +41,7 @@ func NewTSDB(cfg config.TSDBReporterConfig, gcfg config.XephonBConfig) (*TSDB, e
 		cfg:          cfg,
 		globalConfig: gcfg,
 		c:            c,
-		// FIXME: need precision for generating workload, or just put it in config ...
-		//precision:    c.Meta().TimePrecision,
+		precision:    c.Meta().TimePrecision,
 	}
 	dlog.NewStructLogger(log, tsdb)
 	return tsdb, nil
