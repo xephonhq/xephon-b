@@ -7,17 +7,17 @@ import (
 	"github.com/dyweb/gommon/errors"
 	dlog "github.com/dyweb/gommon/log"
 	"github.com/libtsdb/libtsdb-go/database"
+	"github.com/libtsdb/libtsdb-go/libtsdb"
 	"github.com/libtsdb/libtsdb-go/tspb"
 	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/generator"
 	"github.com/xephonhq/xephon-b/pkg/metrics"
-	"github.com/xephonhq/xephon-b/pkg/util/tsdbutil"
 )
 
 type Worker struct {
 	id   int
 	wcfg config.WorkloadConfig
-	dcfg config.DatabaseConfig
+	dcfg libtsdb.DatabaseConfig
 	c    database.TracedWriteClient
 
 	// generator
@@ -32,13 +32,13 @@ type Worker struct {
 }
 
 func NewWorker(id int,
-	wcfg config.WorkloadConfig, dcfg config.DatabaseConfig,
+	wcfg config.WorkloadConfig, dcfg libtsdb.DatabaseConfig,
 	resChan chan<- metrics.Response) (*Worker, error) {
 	// check workload config
 	if wcfg.Batch.Series <= 0 || wcfg.Batch.Points <= 0 {
 		return nil, errors.Errorf("invalid batch series %d or points %d", wcfg.Batch.Series, wcfg.Batch.Points)
 	}
-	c, err := tsdbutil.CreateClient(dcfg)
+	c, err := libtsdb.CreateClient(dcfg)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,8 @@ func NewWorker(id int,
 	if err != nil {
 		return nil, err
 	}
-	t, err := createTimeGenerator(wcfg.Time, c.Meta().TimePrecision)
+	// FIXME: precision
+	t, err := createTimeGenerator(wcfg.Time, time.Second)
 	if err != nil {
 		return nil, err
 	}

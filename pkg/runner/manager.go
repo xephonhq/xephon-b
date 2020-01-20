@@ -3,12 +3,14 @@ package runner
 import (
 	"context"
 	"fmt"
+	"sync"
+
 	"github.com/dyweb/gommon/errors"
 	dlog "github.com/dyweb/gommon/log"
+	"github.com/libtsdb/libtsdb-go/libtsdb"
 	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/metrics"
 	"github.com/xephonhq/xephon-b/pkg/reporter"
-	"sync"
 )
 
 type Manager struct {
@@ -41,7 +43,7 @@ func (m *Manager) Run(ctx context.Context) error {
 
 	// read config
 	var (
-		dbcfg config.DatabaseConfig
+		dbcfg libtsdb.DatabaseConfig
 		wlcfg config.WorkloadConfig
 		rpcfg config.ReporterConfig
 		err   error
@@ -112,14 +114,14 @@ func (m *Manager) Run(ctx context.Context) error {
 	return nil
 }
 
-func (m *Manager) selectDatabase() (config.DatabaseConfig, error) {
+func (m *Manager) selectDatabase() (libtsdb.DatabaseConfig, error) {
 	for _, c := range m.cfg.Databases {
 		if c.Name == m.cfg.Database {
 			m.log.Infof("target database is %s type %s", c.Name, c.Type)
 			return c, nil
 		}
 	}
-	return config.DatabaseConfig{},
+	return libtsdb.DatabaseConfig{},
 		errors.Errorf("database %s does not have config, check name in databases section", m.cfg.Database)
 }
 

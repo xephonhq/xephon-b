@@ -6,13 +6,14 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/libtsdb/libtsdb-go/libtsdb"
+
 	"github.com/dyweb/gommon/errors"
 	dlog "github.com/dyweb/gommon/log"
 	"github.com/libtsdb/libtsdb-go/database"
 	"github.com/libtsdb/libtsdb-go/tspb"
 	"github.com/xephonhq/xephon-b/pkg/config"
 	"github.com/xephonhq/xephon-b/pkg/metrics"
-	"github.com/xephonhq/xephon-b/pkg/util/tsdbutil"
 )
 
 var _ Sink = (*TSDB)(nil)
@@ -32,7 +33,7 @@ type TSDB struct {
 }
 
 func NewTSDB(cfg config.TSDBReporterConfig, gcfg config.XephonBConfig) (*TSDB, error) {
-	c, err := tsdbutil.CreateClient(cfg.Database)
+	c, err := libtsdb.CreateClient(cfg.Database)
 	if err != nil {
 		return nil, errors.Wrap(err, "need tsdb client")
 	}
@@ -40,7 +41,8 @@ func NewTSDB(cfg config.TSDBReporterConfig, gcfg config.XephonBConfig) (*TSDB, e
 		cfg:          cfg,
 		globalConfig: gcfg,
 		c:            c,
-		precision:    c.Meta().TimePrecision,
+		// FIXME: need precision for generating workload, or just put it in config ...
+		//precision:    c.Meta().TimePrecision,
 	}
 	dlog.NewStructLogger(log, tsdb)
 	return tsdb, nil

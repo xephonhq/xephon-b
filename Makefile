@@ -15,7 +15,7 @@ test:
 
 .PHONY: fmt
 fmt:
-	gofmt -d -l -w ./pkg ./cmd
+	goimports -d -l -w ./pkg ./cmd
 
 .PHONY: generate
 generate:

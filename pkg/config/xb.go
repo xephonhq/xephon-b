@@ -3,19 +3,19 @@ package config
 import (
 	"time"
 
-	"github.com/libtsdb/libtsdb-go/config"
+	"github.com/libtsdb/libtsdb-go/libtsdb"
 )
 
 type XephonBConfig struct {
-	Limit     string           `yaml:"limit"`
-	Duration  time.Duration    `yaml:"duration"`
-	Worker    WorkerConfig     `yaml:"worker"`
-	Workload  string           `yaml:"workload"`
-	Workloads []WorkloadConfig `yaml:"workloads"`
-	Database  string           `yaml:"database"`
-	Databases []DatabaseConfig `yaml:"databases"`
-	Reporter  string           `yaml:"reporter"`
-	Reporters []ReporterConfig `yaml:"reporters"`
+	Limit     string                   `yaml:"limit"`
+	Duration  time.Duration            `yaml:"duration"`
+	Worker    WorkerConfig             `yaml:"worker"`
+	Workload  string                   `yaml:"workload"`
+	Workloads []WorkloadConfig         `yaml:"workloads"`
+	Database  string                   `yaml:"database"`
+	Databases []libtsdb.DatabaseConfig `yaml:"databases"`
+	Reporter  string                   `yaml:"reporter"`
+	Reporters []ReporterConfig         `yaml:"reporters"`
 }
 
 type WorkerConfig struct {
@@ -65,23 +65,14 @@ type RandomValueGeneratorConfig struct {
 	Max float64 `yaml:"max"`
 }
 
-type DatabaseConfig struct {
-	Name     string                       `yaml:"name"`
-	Type     string                       `yaml:"type"`
-	Akumuli  *config.AkumuliClientConfig  `yaml:"akumuli"`
-	Graphite *config.GraphiteClientConfig `yaml:"graphite"`
-	Influxdb *config.InfluxdbClientConfig `yaml:"influxdb"`
-	Kairosdb *config.KairosdbClientConfig `yaml:"kairosdb"`
-}
-
 type CounterReporterConfig struct {
 	Foo string `yaml:"foo"`
 }
 
 type TSDBReporterConfig struct {
 	// Sample is 1 from n samples, will ignore everything if n < 1
-	Sample   int            `yaml:"sample"`
-	Database DatabaseConfig `yaml:"database"`
+	Sample   int                    `yaml:"sample"`
+	Database libtsdb.DatabaseConfig `yaml:"database"`
 }
 
 type ReporterConfig struct {

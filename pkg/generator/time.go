@@ -1,8 +1,9 @@
 package generator
 
 import (
-	"github.com/dyweb/gommon/errors"
 	"time"
+
+	"github.com/dyweb/gommon/errors"
 )
 
 var _ TimeGenerator = (*FixIntervalTime)(nil)
