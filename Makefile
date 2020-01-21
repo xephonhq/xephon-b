@@ -4,6 +4,7 @@ BUILD_COMMIT = $(shell git rev-parse HEAD)
 BUILD_TIME = $(shell date +%Y-%m-%dT%H:%M:%S%z)
 CURRENT_USER = $(USER)
 FLAGS = -X main.version=$(VERSION) -X main.commit=$(BUILD_COMMIT) -X main.buildTime=$(BUILD_TIME) -X main.buildUser=$(CURRENT_USER)
+PKGST = ./pkg ./cmd ./embed
 
 .PHONY: install
 install:
@@ -15,21 +16,8 @@ test:
 
 .PHONY: fmt
 fmt:
-	goimports -d -l -w ./pkg ./cmd
+	goimports -d -l -w $(PKGST)
 
 .PHONY: generate
 generate:
 	gommon generate -v
-
-.PHONY: loc
-loc:
-	cloc --exclude-dir=vendor,.idea,playground .
-
-.PHONY: package
-package: install
-	cp $(shell which xb) .
-	cp $(shell which xab) .
-	zip xb-$(VERSION).zip xb
-	zip xab-$(VERSION).zip xab
-	rm xb
-	rm xab
