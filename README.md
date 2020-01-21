@@ -24,9 +24,9 @@ A time series database benchmark tool. NOTE: it is under major rewrite
 ## Related
 
 - [awesome-time-series-database](https://github.com/xephonhq/awesome-time-series-database)
+- [libtsdb](https://github.com/libtsdb)
 - [Xephon-K A time series database with multiple backends](https://github.com/xephonhq/xephon-k)
 - [BenchHub: Store benchmark result in database](https://github.com/benchhub)
-- [libtsdb](https://github.com/libtsdb)
 
 ## License
 
