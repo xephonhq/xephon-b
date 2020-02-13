@@ -13,7 +13,7 @@
 [![GoDoc](https://godoc.org/github.com/xephonhq/xephon-b?status.svg)](https://godoc.org/github.com/xephonhq/xephon-b)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fxephonhq%2Fxephon-b.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fxephonhq%2Fxephon-b?ref=badge_shield)
 
-A time series database benchmark tool. NOTE: it is under major rewrite
+A time series database benchmark tool. NOTE: it is under major rewrite, See [roadmap](doc/ROADMAP.md).
 
 - status: Under major rewrite, along with [libtsdb-go](https://github.com/libtsdb/libtsdb-go)
 - [Documentation](doc)
